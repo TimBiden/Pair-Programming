@@ -1,23 +1,23 @@
 #Pair Programming#
 
 ##The 5 Why's##
-What I want to make:
-	A pair-programming app.
+###What I want to make:###
+A pair-programming app.
 
 ###Why?###
-* I want an online text editor that 2 people can use at once to code on.
+I want an online text editor that 2 people can use at once to code on.
 
 ###Why?###
-* To make learning at Bloc easier for myself and other students.
+To make learning at Bloc easier for myself and other students.
 
 ###Why?###
-* Because screen sharing really isn’t pair programming. It’s show and tell.
+Because screen sharing really isn’t pair programming. It’s show and tell.
 
 ###Why?###
-* Because only 1 person can work on the code at a time.
+Because only 1 person can work on the code at a time.
 
 ###Why?###
-* Because they’re designed to show what 1 person is doing on their screen, not true sharing.
+Because they’re designed to show what 1 person is doing on their screen, not true sharing.
 
 #Features:#
 
