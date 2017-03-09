@@ -1,22 +1,22 @@
 {
-  "name": "Pair-Programming-App",
-  "version": "0.0.1",
-  "description": "A pair programming app",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TimBiden/Pair-Programming"
-  },
-  "keywords": [
-    "pair programming",
-    "node",
-    "websockets"
-  ],
-  "author": "Tim Biden",
-  "devDependencies": {
-    "eslint": "^3.17.1"
-  }
+    "name": "Pair-Programming-App",
+    "version": "0.0.1",
+    "description": "A pair programming app",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/TimBiden/Pair-Programming"
+    },
+    "keywords": [
+        "pair programming",
+        "node",
+        "websockets"
+    ],
+    "author": "Tim Biden",
+    "devDependencies": {
+        "eslint": "^3.17.1"
+    }
 }
