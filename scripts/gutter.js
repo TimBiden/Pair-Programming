@@ -1,29 +1,12 @@
 let totalLines = 1;
 
-//
-// Update the gutter with correct # of lines.
-//
 function updateGutter(allLines) {
   // console.log(allLines);
-
-  for (let i = 0; i < allLines.length; i += 1) {
-    document.getElementsByClassName('gutter').innerHTML = ' ';
-    const temp = document.createElement('div');
-    temp.innerHTML = allLines[i];
-    document.getElementsByClassName('gutter')[0].appendChild(temp);
+  for (let i = 0; i < allLines; i += 1) {
+    const element = document.getElementsByTagName('code')[0];
+    element.innerHTML = `${allLines}.`;
   }
 }
-
-//
-// Create array of numbers and `.` to make up gutter.
-//
-const lineNumbers = function lineNumbers(lines) {
-  let allLines = [];
-  for (let i = 1; i < lines; i += 1) {
-    allLines.push(`${i}.`);
-  }
-  updateGutter(allLines);
-};
 
 //
 // If the current # of lines = previous # of lines, do nothing.
@@ -32,7 +15,7 @@ const lineNumbers = function lineNumbers(lines) {
 function unEqual(linesTotal) {
   if (linesTotal !== totalLines) {
     totalLines = linesTotal;
-    lineNumbers(totalLines);
+    updateGutter(totalLines);
   }
 }
 
@@ -40,7 +23,7 @@ function unEqual(linesTotal) {
 // Get the length of the text box.
 //
 const getLength = function getLength(element) {
-  const linesTotal = element.querySelectorAll('div').length + 2;
+  const linesTotal = element.querySelectorAll('div').length + 1;
   unEqual(linesTotal);
 };
 
