@@ -1,5 +1,10 @@
 let totalLines = 1;
 
+//
+// Doesn't work!!!
+//
+// Update the numbers in the side gutter.
+//
 function updateGutter(allLines) {
   // console.log(allLines);
   for (let i = 0; i < allLines; i += 1) {
