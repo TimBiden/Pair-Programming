@@ -1,16 +1,19 @@
-/**
- * Gets the number of lines from .textBox
- * @param {element} element - The title of the book.
- * @returns {Integer} Current number of lines in .textBox
- */
-function getLength(element) {
-  let linesTotal = 0;
-  linesTotal = element.querySelectorAll('div').length + 1;
-  console.log(linesTotal);
-  return linesTotal;
-}
+const lineNumbers = function lineNumbers(lines) {
+  let allLines = '';
+  for (let i = 1; i < lines; i += 1) {
+    allLines = `${allLines}\n ${i}.`;
+  }
+  console.log(allLines);
+};
+
+const getLength = function getLength(element) {
+  const linesTotal = element.querySelectorAll('div').length + 1;
+  // console.log('getLength = ');
+  // console.log(linesTotal);
+  lineNumbers(linesTotal);
+};
 
 const box = document.querySelector('.textBox');
-box.addEventListener('keyup', function () {
+box.addEventListener('keyup', function() {
   getLength(box);
 });
