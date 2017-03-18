@@ -3,8 +3,11 @@ let totalLines = 1;
 //
 // Doesn't work!!!
 //
+// Version 1.
+//
 // Update the numbers in the side gutter.
 //
+
 function updateGutter(allLines) {
   // console.log(allLines);
   for (let i = 0; i < allLines; i += 1) {
@@ -12,6 +15,27 @@ function updateGutter(allLines) {
     element.innerHTML = `${allLines}.`;
   }
 }
+
+//
+// Doesn't work!!!
+//
+// Version 2.
+//
+// Update the numbers in the side gutter.
+//
+// function updateGutter(allLines) {
+//   const toAdd = document.createDocumentFragment();
+//
+//   for (let i = 0; i < allLines;) {
+//     i += 1;
+//     const newDiv = document.createElement('div');
+//     newDiv.id = 'r' + i;
+//     newDiv.className = 'ansbox';
+//     newDiv.innerHTML = `${i}.`;
+//     toAdd.appendChild(newDiv);
+//     document.getElementsByClassName('gutter')[0].appendChild(toAdd);
+//   }
+// }
 
 //
 // If the current # of lines = previous # of lines, do nothing.
