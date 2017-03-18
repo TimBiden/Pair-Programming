@@ -1,31 +1,11 @@
-let totalLines = 1;
+let totalLines = -1;
 
-//
-// Doesn't work!!!
-//
-// Version 1.
-//
-// Update the numbers in the side gutter.
-//
-
-// function updateGutter(allLines) {
-//   // console.log(allLines);
-//   for (let i = 0; i < allLines; i += 1) {
-//     const element = document.getElementsByTagName('code')[0];
-//     element.innerHTML = `${allLines}.`;
-//   }
-// }
-
-//
-// Doesn't work!!!
-//
-// Version 2.
 //
 // Update the numbers in the side gutter.
 //
 function updateGutter(allLines) {
   const toAdd = document.createDocumentFragment();
-
+document.getElementsByClassName('gutter')[0].innerHTML = '';
   for (let i = 0; i < allLines;) {
     i += 1;
     const newDiv = document.createElement('div');
