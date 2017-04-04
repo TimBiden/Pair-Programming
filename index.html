@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 
 <body>
@@ -11,21 +11,25 @@
     </div>
 
     <section class="container">
-        <p>This text can't be edited. Neither can the line numbers.</p>
-        <p>I need to get the line numbers to auto-increment as the text expands to more lines.</p>
+        <p>Please check the <a target="_blank" href="https://github.com/TimBiden/Pair-Programming/blob/master/README.md">README.md</a> for updates.</p>
 
         <div class="gutter" align="center">
-            <code>1.</code>
+            <div><code>1.</code></div>
         </div>
 
-        <div class="textBox" contenteditable>
-            <code>
-              This div can be edited in browsers that support HTML5.
-            </code>
+        <div class="textBox" id="textBox">
+            <tr>
+                <td colspan="3">
+                    <!--  -->
+                    <!-- Each character is 8.92 pixels wide. -->
+                    <!-- cols="99" -->
+                    <textarea id="mainTextArea" rows="20" wrap="off">Enter your code here...</textarea>
+                </td>
+            </tr>
         </div>
     </section>
-    
-    <script src="scripts/gutter.js"></script>
+
+    <script src="scripts/textarea.js"></script>
 </body>
 
 </html>
