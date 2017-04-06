@@ -1,13 +1,23 @@
 /**
- * Adds two numbers together.
+ * Save text in fileNameTextBox as a text file.
+ * File name and extension are set by user.
  * @returns {void}
  */
-function saveText() {
+function saveTextAsFile() {
   const textToSave = document.getElementById('mainTextArea').value;
   const textToSaveAsBlob = new Blob([textToSave], {
     type: 'text/plain'
   });
-  const fileName = document.getElementById('inputFileName').value;
-}
+  const textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+  const fileNameToSaveAs = document.getElementById('fileNameTextBox').value;
 
-saveText();
+  const downloadLink = document.createElement('a');
+  downloadLink.download = fileNameToSaveAs;
+  downloadLink.innerHTML = 'Download File';
+  downloadLink.href = textToSaveAsURL;
+  downloadLink.onclick = destroyClickedElement;
+  downloadLink.style.display = 'none';
+  document.body.appendChild(downloadLink);
+
+  downloadLink.click();
+}
