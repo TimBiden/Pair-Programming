@@ -20,16 +20,28 @@
         <div class="textBox" id="textBox">
             <tr>
                 <td colspan="3">
-                    <!--  -->
-                    <!-- Each character is 8.92 pixels wide. -->
-                    <!-- cols="99" -->
-                    <textarea id="mainTextArea" rows="20" wrap="off">Enter your code here...</textarea>
+                    <textarea id="mainTextArea" rows="15" wrap="off">Enter your code here...</textarea>
                 </td>
             </tr>
         </div>
+
+        <!-- Begin file save -->
+        <p> </p>
+        <div>
+            <strong>File Name:</strong> <input id='fileNameTextBox'></input> <button onclick='saveTextAsFile()'>Save File</button>
+        </div>
+        <p> </p>
+
+        <!-- Begin file load -->
+        <p> </p>
+        <div>
+            <strong>File to load:</strong> <input type='file' id='fileToLoad'></input> <button onclick='loadFile()'>Load File</button>
+        </div>
+        <p> </p>
     </section>
 
     <script src="scripts/textarea.js"></script>
+    <script src="scripts/textsave.js"></script>
 </body>
 
 </html>
