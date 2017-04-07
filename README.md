@@ -1,10 +1,10 @@
 #Pair Programming#
 
-This is my personal version of the app I'm creating for school.
+I'm a creating pair programming app for school because screen sharing isn't pair programming, it's show and tell.
+
+Work in progress.
 
 ##Need to add:##
-- File saving
 - Websocket connection
 - URL Generation
 - Multiple people viewing up to date version of specific URL
-- File importing
