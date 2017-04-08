@@ -34,4 +34,5 @@ function loadFile() {
     document.getElementById('mainTextArea').value = textFromFileLoaded;
   };
   fileReader.readAsText(fileToLoad, 'UTF-8');
+  document.getElementById('fileToLoad').value = '';
 }
