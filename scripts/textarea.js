@@ -3,6 +3,7 @@ window.onload = function() {
   const box = document.querySelector('.textBox');
   box.addEventListener('keyup', function() {
     getLines();
+    console.log('getlines runs from textarea.js');
   });
 
   // Run resize function

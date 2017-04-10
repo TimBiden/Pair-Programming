@@ -43,4 +43,6 @@ function loadFile() {
       document.getElementById('fileToLoad').value = '';
     }
   }
+  console.log('Time to run getLines');
+  getLines();
 }
