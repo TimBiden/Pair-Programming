@@ -29,10 +29,14 @@ function loadFile() {
   const fileToLoad = document.getElementById('fileToLoad').files[0];
   const fileReader = new FileReader();
 
-  fileReader.onload = function readFile(fileLoadedEvent) {
-    const textFromFileLoaded = fileLoadedEvent.target.result;
-    document.getElementById('mainTextArea').value = textFromFileLoaded;
-  };
-  fileReader.readAsText(fileToLoad, 'UTF-8');
-  document.getElementById('fileToLoad').value = '';
+  if (fileToLoad === undefined) {
+    alert('Please select a file to load.');
+  } else {
+    fileReader.onload = function readFile(fileLoadedEvent) {
+      const textFromFileLoaded = fileLoadedEvent.target.result;
+      document.getElementById('mainTextArea').value = textFromFileLoaded;
+    };
+    fileReader.readAsText(fileToLoad, 'UTF-8');
+    document.getElementById('fileToLoad').value = '';
+  }
 }
