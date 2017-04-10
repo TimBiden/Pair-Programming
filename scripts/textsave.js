@@ -32,11 +32,13 @@ function loadFile() {
   if (fileToLoad === undefined) {
     alert('Please select a file to load.');
   } else {
-    fileReader.onload = function readFile(fileLoadedEvent) {
-      const textFromFileLoaded = fileLoadedEvent.target.result;
-      document.getElementById('mainTextArea').value = textFromFileLoaded;
-    };
-    fileReader.readAsText(fileToLoad, 'UTF-8');
-    document.getElementById('fileToLoad').value = '';
+    if (confirm('Do you want to overwrite current file?')) {
+      fileReader.onload = function readFile(fileLoadedEvent) {
+        const textFromFileLoaded = fileLoadedEvent.target.result;
+        document.getElementById('mainTextArea').value = textFromFileLoaded;
+      };
+      fileReader.readAsText(fileToLoad, 'UTF-8');
+      document.getElementById('fileToLoad').value = '';
+    }
   }
 }
