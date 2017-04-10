@@ -32,14 +32,14 @@ function getLines() {
   console.log(`getlines finishes #${getLinestimesRun}`);
 }
 
-var observe;
+let observe;
 
 if (window.attachEvent) {
-  observe = function(element, event, handler) {
+  observe = function observeFunctionMain(element, event, handler) {
     element.attachEvent('on' + event, handler);
   };
 } else {
-  observe = function(element, event, handler) {
+  observe = function observeFunctionElse(element, event, handler) {
     element.addEventListener(event, handler, false);
   };
 }
