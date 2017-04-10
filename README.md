@@ -5,10 +5,9 @@ I'm a creating pair programming app for school because screen sharing isn't pair
 Work in progress.
 
 ## Need to add: ##
-- Calculate lines immediately upon import
-- Wipe file name after import ✅
-- Prevent from loading with blank file box ✅
-- Notification of overwriting existing file ✅
-- Websocket connection
-- URL Generation
-- Multiple people viewing up to date version of specific URL
+- Set up WebSocket server.
+  - After you get the Server example going, test it by hitting http://localhost:8080/ from different tabs (try on incognito).
+  - Construct a new page with a simple form to send messages to WS server via AJAX.
+- Connect to WebSocket server from the application.
+- Generate unique URL and store in database.
+- Scope session to unique key from URL.
