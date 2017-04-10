@@ -1,21 +1,5 @@
-window.onload = function() {
-  // Listen for Keyup to run getLength function.
-  const box = document.querySelector('.textBox');
-  box.addEventListener('keyup', function() {
-    getLines();
-  });
-
-  // Run resize function
-  resizeTextBox();
-};
-
-function getLines() {
-  const box = document.querySelector('#mainTextArea');
-
-  lineCount = ((box.value.split(/\n/g).length) + 1);
-
-  updateGutter(lineCount);
-}
+let getLinestimesRun = 0;
+let updateGuttertimesRun = 0;
 
 /**
  * Update the numbers in the side gutter.
@@ -25,6 +9,8 @@ function getLines() {
  * Called by {unEqual}
  **/
 function updateGutter(allLines) {
+  console.log('updateGutter runs');
+  updateGuttertimesRun += 1;
   const toAdd = document.createDocumentFragment();
   document.getElementsByClassName('gutter')[0].innerHTML = '';
 
@@ -34,16 +20,26 @@ function updateGutter(allLines) {
     toAdd.appendChild(newDiv);
     document.getElementsByClassName('gutter')[0].appendChild(toAdd);
   }
+  console.log(`updateGutter finishes #${updateGuttertimesRun}.`);
 }
 
-var observe;
+function getLines() {
+  getLinestimesRun += 1;
+  console.log('getlines runs');
+  const box = document.querySelector('#mainTextArea');
+  const lineCount = ((box.value.split(/\n/g).length) + 1);
+  updateGutter(lineCount);
+  console.log(`getlines finishes #${getLinestimesRun}`);
+}
+
+let observe;
 
 if (window.attachEvent) {
-  observe = function(element, event, handler) {
+  observe = function observeFunctionMain(element, event, handler) {
     element.attachEvent('on' + event, handler);
   };
 } else {
-  observe = function(element, event, handler) {
+  observe = function observeFunctionElse(element, event, handler) {
     element.addEventListener(event, handler, false);
   };
 }
@@ -69,3 +65,15 @@ function resizeTextBox() {
   text.select();
   resize();
 }
+
+window.onload = function() {
+  // Listen for Keyup to run getLength function.
+  const box = document.querySelector('.textBox');
+  box.addEventListener('keyup', function() {
+    getLines();
+    console.log('getlines runs from textarea.js');
+  });
+
+  // Run resize function
+  resizeTextBox();
+};
