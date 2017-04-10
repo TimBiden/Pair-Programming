@@ -10,14 +10,6 @@ window.onload = function() {
   resizeTextBox();
 };
 
-function getLines() {
-  const box = document.querySelector('#mainTextArea');
-
-  lineCount = ((box.value.split(/\n/g).length) + 1);
-
-  updateGutter(lineCount);
-}
-
 /**
  * Update the numbers in the side gutter.
  * @param {number} allLines total number of lines in the editor.
@@ -26,6 +18,7 @@ function getLines() {
  * Called by {unEqual}
  **/
 function updateGutter(allLines) {
+  console.log('updateGutter runs');
   const toAdd = document.createDocumentFragment();
   document.getElementsByClassName('gutter')[0].innerHTML = '';
 
@@ -35,6 +28,13 @@ function updateGutter(allLines) {
     toAdd.appendChild(newDiv);
     document.getElementsByClassName('gutter')[0].appendChild(toAdd);
   }
+}
+
+function getLines() {
+  console.log('getlines runs');
+  const box = document.querySelector('#mainTextArea');
+  const lineCount = ((box.value.split(/\n/g).length) + 1);
+  updateGutter(lineCount);
 }
 
 var observe;
