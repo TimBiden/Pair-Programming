@@ -29,9 +29,11 @@ function loadFile() {
   const fileToLoad = document.getElementById('fileToLoad').files[0];
   const fileReader = new FileReader();
 
+// Check if file is specified
   if (fileToLoad === undefined) {
     alert('Please select a file to load.');
   } else {
+    // Check for confirmation of overwriting existing content
     if (confirm('Do you want to overwrite current file?')) {
       fileReader.onload = function readFile(fileLoadedEvent) {
         const textFromFileLoaded = fileLoadedEvent.target.result;
