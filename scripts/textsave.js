@@ -38,11 +38,12 @@ function loadFile() {
       fileReader.onload = function readFile(fileLoadedEvent) {
         const textFromFileLoaded = fileLoadedEvent.target.result;
         document.getElementById('mainTextArea').value = textFromFileLoaded;
+        console.log('Time to run getLines');
+        getLines();
+        resizeTextBox();
       };
       fileReader.readAsText(fileToLoad, 'UTF-8');
       document.getElementById('fileToLoad').value = '';
     }
   }
-  console.log('Time to run getLines');
-  getLines();
 }
