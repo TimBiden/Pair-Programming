@@ -1,10 +1,10 @@
 window.onload = function() {
   // Get references to elements on page.
-  const form = document.getElementByID('message-form');
-  const messageField = document.getElementByID('message');
-  const messagesList = document.getElementByID('messages');
-  const socketStatus = document.getElementByID('status');
-  const closeButton = document.getElementByID('close');
+  const form = document.getElementById('message-form');
+  const messageField = document.getElementById('message');
+  const messagesList = document.getElementById('messages');
+  const socketStatus = document.getElementById('status');
+  const closeButton = document.getElementById('close');
 
   // Save for later code
 }
