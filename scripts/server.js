@@ -31,4 +31,9 @@ window.onload = function() {
     socketStatus.innerHTML = 'Connected to: ' + event.currentTarget.URL;
     socketStatus.classname = 'open';
   };
+
+  // Error Handling
+  socket.onerror = function(error) {
+    console.log(`WebSocket error: ${error}`);
+  };
 }
