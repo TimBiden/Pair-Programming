@@ -36,4 +36,23 @@ window.onload = function() {
   socket.onerror = function(error) {
     console.log(`WebSocket error: ${error}`);
   };
+
+  // Send a message.
+  form.onsubmit = function(e) {
+    e.preventDefault();
+
+    // retrieve message from textarea
+    const message = messageField.value;
+
+    // Send message through websocket
+    socket.send(message);
+
+    // add message to messagesList
+    messagesList.innerHTML += '<li class="sent"><span>Sent:</span>' + message + '</li>';
+
+    // clear out message field
+    messageField.value = '';
+
+    return false;
+  };
 }
