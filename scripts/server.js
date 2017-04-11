@@ -48,7 +48,7 @@ window.onload = function() {
     socket.send(message);
 
     // add message to messagesList
-    messagesList.innerHTML += '<li class="sent"><span>Sent:</span>' + message + '</li>';
+    messagesList.innerHTML += `<li class="sent"><span>Sent:</span>${message}</li>`;
 
     // clear out message field
     messageField.value = '';
