@@ -55,4 +55,10 @@ window.onload = function() {
 
     return false;
   };
+
+  // Receive messages
+  socket.onmessage = function(event) {
+    const message = event.data;
+    messagesList.innerHTML += `<li class="received"><span>Received:</span> ${message} </li>`
+  }
 }
