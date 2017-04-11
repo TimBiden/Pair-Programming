@@ -60,5 +60,21 @@ window.onload = function() {
   socket.onmessage = function(event) {
     const message = event.data;
     messagesList.innerHTML += `<li class="received"><span>Received:</span> ${message} </li>`
-  }
-}
+  };
+
+  // Closing connections
+  closeButton.onclick = function(e) {
+    e.preventDefault();
+
+    // Close the WebSocket
+    socket.close();
+
+    return false;
+  };
+
+  // Closing Message
+  socket.onclose = function(event) {
+    socketStatus.innerHTML = 'Disconnected from WebSocket server.';
+    socketStatus.classname = 'closed';
+  };
+};
