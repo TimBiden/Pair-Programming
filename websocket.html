@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
 
-<body>
-    <div>
-        <h1>Can I Make WebSockets Work?</h1>
-    </div>
+<head>
+    <link rel="stylesheet" href="style/WSstyle.css">
+</head>
 
-    <section class="container">
-        <textarea id="mainTextArea" rows="15" wrap="off">Who knows?!?!?</textarea>
-    </section>
+<body>
+    <h1>Can I Make WebSockets Work?</h1>
+    <div id="status">Connecting...</div>
+
+    <ul id="messages"></ul>
+
+    <form id="message-form" action="#" method="post">
+        <textarea id="message" placeholder="Write something." required></textarea>
+        <button type="submit">Send Message.</button>
+        <button type="button" id="close">Close Connection.</button>
+    </form>
+
+    <script src="scripts/app.js"></script>
 </body>
 
 </html>
