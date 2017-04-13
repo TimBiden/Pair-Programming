@@ -6,18 +6,20 @@
 </head>
 
 <body>
-    <h1>Can I Make WebSockets Work?</h1>
-    <div id="status">Connecting...</div>
+    <div id="page-wrapper">
+        <h1>Can I Make WebSockets Work?</h1>
+        <div id="status">Connecting...</div>
 
-    <ul id="messages"></ul>
+        <ul id="messages"></ul>
 
-    <form id="message-form" action="#" method="post">
-        <textarea id="message" placeholder="Write something." required></textarea>
-        <button type="submit">Send Message.</button>
-        <button type="button" id="close">Close Connection.</button>
-    </form>
+        <form id="message-form" action="#" method="post">
+            <textarea id="message" placeholder="Write something." required></textarea>
+            <button type="submit">Send Message.</button>
+            <button type="button" id="close">Close Connection.</button>
+        </form>
 
-    <script src="scripts/demo-code.js"></script>
+        <script src="scripts/demo-code.js"></script>
+    </div>
 </body>
 
 </html>
