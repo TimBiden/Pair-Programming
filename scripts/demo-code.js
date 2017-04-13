@@ -10,7 +10,7 @@ window.onload = function() {
   const closeButton = document.getElementById('close');
 
   // Create new WebSocket
-  const socket = new WebSocket('ws://echo.websocket.org');
+  const socket = new WebSocket('ws://localhost:8080');
 
   // Show "Connected." message when websocket opened successfully.
   socket.onopen = function(event) {
