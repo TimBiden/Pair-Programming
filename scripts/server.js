@@ -6,23 +6,23 @@ const wss = new WebSocket.Server({
 });
 
 const messages = [
-  'You\'re connected.',
+  'You are connected.',
   'Now get to work!',
 ];
 
 wss.on('connection', (ws) => {
-  // Sends entire history to all new session participants
-  for (let message of messages) {
+  // Send the existing message history to all new connections that join.
+  for (const message of messages) {
     ws.send(message);
   }
 
   ws.on('message', (data) => {
-    // Capture data sent to server
+    // Capture the data we received.
     messages.push(data);
 
-    // Broascast to everyone else... Not original sender
+    // Broadcast to everyone else.
     wss.clients.forEach((client) => {
-      if (client !== ws && client.readState === WebSocket.OPEN) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(data);
       }
     });
