@@ -61,14 +61,3 @@ function resizeTextBox() {
   text.select();
   resize();
 }
-
-window.onload = function() {
-  // Listen for Keyup to run getLength function.
-  const box = document.querySelector('.textBox');
-  box.addEventListener('keyup', function() {
-    getLines();
-  });
-
-  // Run resize function
-  resizeTextBox();
-};

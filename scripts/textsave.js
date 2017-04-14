@@ -29,7 +29,7 @@ function loadFile() {
   const fileToLoad = document.getElementById('fileToLoad').files[0];
   const fileReader = new FileReader();
 
-// Check if file is specified
+  // Check if file is specified
   if (fileToLoad === undefined) {
     alert('Please select a file to load.');
   } else {
@@ -40,6 +40,7 @@ function loadFile() {
         document.getElementById('mainTextArea').value = textFromFileLoaded;
         getLines();
         resizeTextBox();
+        sendData();
       };
       fileReader.readAsText(fileToLoad, 'UTF-8');
       document.getElementById('fileToLoad').value = '';
