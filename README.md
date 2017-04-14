@@ -8,7 +8,10 @@ Work in progress.
 - Set up WebSocket server.
   - After you get the Server example going, test it by hitting http://localhost:8080/ from different tabs (try on incognito). ✅
   - Construct a new page with a simple form to send messages to WS server via AJAX. ✅
-  - Add broadcast functionality.
+  - Add broadcast functionality. ✅
+  - Test keyup functionality. ✅
+  - Get editor to send and receive edits. ✅
+- Set up database to track changes
 - Connect to WebSocket server from the application.
 - Generate unique URL and store in database.
 - Scope session to unique key from URL.
