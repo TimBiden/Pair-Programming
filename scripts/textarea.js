@@ -46,7 +46,6 @@ function resizeTextBox() {
   function resize() {
     text.style.height = 'auto';
     text.style.height = (text.scrollHeight + 20) + 'px';
-    console.log('resize');
   }
   /* 0-timeout to get the already changed text */
   function delayedResize() {
@@ -60,18 +59,5 @@ function resizeTextBox() {
 
   text.focus();
   text.select();
-
-  console.log('resizeTextBox');
   resize();
 }
-
-// window.onload = function() {
-//   // Listen for Keyup to run getLength function.
-//   const box = document.querySelector('.textBox');
-//   box.addEventListener('keyup', function() {
-//     getLines();
-//   });
-//
-//   // Run resize function
-//   resizeTextBox();
-// };
