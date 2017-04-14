@@ -45,7 +45,12 @@ window.onload = function() {
   // Receive messages
   socket.onmessage = function(event) {
     const message = event.data;
-    messagesList.innerHTML += `<li class="received"><span>Received:</span> ${message} </li>`
+
+    // Comment out "Received" section
+    // messagesList.innerHTML += `<li class="received"><span>Received:</span> ${message} </li>`
+
+    // Print message value to all textarea boxes in session
+    document.getElementById('message').value = message;
   };
 
   // Closing connections
@@ -63,4 +68,14 @@ window.onload = function() {
     socketStatus.innerHTML = 'Disconnected from WebSocket server.';
     socketStatus.classname = 'closed';
   };
+
+  // Making magic happen!!!
+  messageField.addEventListener('keyup', () => {
+    console.log('it works!!!');
+    // retrieve data from textarea
+    const message = messageField.value;
+
+    // Send message data through websocket
+    socket.send(message);
+  });
 };
