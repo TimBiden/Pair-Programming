@@ -1,5 +1,6 @@
 let getLinestimesRun = 0;
 let updateGuttertimesRun = 0;
+let observe;
 
 /**
  * Update the numbers in the side gutter.
@@ -27,8 +28,6 @@ function getLines() {
   const lineCount = ((box.value.split(/\n/g).length) + 1);
   updateGutter(lineCount);
 }
-
-let observe;
 
 if (window.attachEvent) {
   observe = function observeFunctionMain(element, event, handler) {
