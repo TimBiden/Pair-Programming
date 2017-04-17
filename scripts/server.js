@@ -5,7 +5,7 @@ const wss = new WebSocket.Server({
   port: 8080,
 });
 
-const messages = ['Enter your code here'];
+const messages = ['Enter your code here...'];
 
 wss.on('connection', (ws) => {
   // Send the existing message history to all new connections that join.
