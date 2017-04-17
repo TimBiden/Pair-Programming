@@ -34,8 +34,6 @@ h1 {
     resize: horizontal;
     outline: none;
     resize: none;
-    /*overflow: hidden;
-    overflow-x: hidden;*/
     overflow-y: hidden;
     font-family: monospace;
     font-size: 15px;
