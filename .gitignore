@@ -1,2 +1,5 @@
 ###Ignore these files/locations###
 IgnoreMe
+
+scripts/server-old.js
+scripts/server-copied.js
