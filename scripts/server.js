@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const SocketServer = require('ws').Server;
+const SocketServer = require('ws');
 const path = require('path');
 
 const PORT = 5000;
@@ -11,7 +11,7 @@ const server = express()
   .use((req, res) => res.sendFile(INDEX))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-const wss = new SocketServer({
+const wss = new SocketServer.Server({
   server,
 });
 
