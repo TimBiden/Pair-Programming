@@ -30,4 +30,10 @@
   "dependencies": {
     "ws": "^2.2.3"
   }
+  "engines": {
+    "node": "6.10.0"
+  },
+  "scripts": {
+    "start": "node scripts/server.js"
+  }
 }
