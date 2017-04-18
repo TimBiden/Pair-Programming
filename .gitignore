@@ -1,5 +1,5 @@
 ###Ignore these files/locations###
 IgnoreMe
-node_modules
 
-demo-original.html
+scripts/server-old.js
+scripts/server-copied.js

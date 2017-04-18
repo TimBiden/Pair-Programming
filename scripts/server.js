@@ -1,8 +1,18 @@
-// WS Server code.
-const WebSocket = require('ws');
+'use strict';
 
-const wss = new WebSocket.Server({
-  port: 5000,
+const express = require('express');
+const SocketServer = require('ws');
+const path = require('path');
+
+const PORT = process.env.PORT || 5000;
+const INDEX = path.join(__dirname, 'index.html');
+
+const server = express()
+  .use((req, res) => res.sendFile(INDEX))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+const wss = new SocketServer.Server({
+  server,
 });
 
 const messages = ['Enter your code here...'];
@@ -19,7 +29,7 @@ wss.on('connection', (ws) => {
 
     // Broadcast to everyone else.
     wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
+      if (client !== ws && client.readyState === SocketServer.OPEN) {
         client.send(data);
       }
     });
