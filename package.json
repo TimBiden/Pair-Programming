@@ -31,7 +31,8 @@
     "ws": "^2.2.3"
   },
   "engines": {
-    "node": "6.10.0"
+    "node": "6.10.0",
+    "npm": "4.3.0"
   },
   "scripts": {
     "start": "node scripts/server.js"
