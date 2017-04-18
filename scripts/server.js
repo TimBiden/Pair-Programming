@@ -2,7 +2,7 @@
 const WebSocket = require('ws');
 
 const wss = new WebSocket.Server({
-  port: 8080,
+  port: 5000,
 });
 
 const messages = ['Enter your code here...'];
