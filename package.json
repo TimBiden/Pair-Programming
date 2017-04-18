@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "ws": "^2.2.3"
-  }
+  },
   "engines": {
     "node": "6.10.0"
   },
