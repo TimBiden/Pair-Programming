@@ -3,8 +3,7 @@ const messageField = document.getElementById('mainTextArea');
 // Create new WebSocket
 // const socket = new WebSocket('ws://sleepy-ridge-88571.herokuapp.com:5000');
 // Their Code:
-const HOST = location.origin.replace(/^http/, 'ws')
-const socket = new WebSocket(HOST);
+const socket = new WebSocket('ws://sleepy-ridge-88571.herokuapp.com');
 
 window.onload = function() {
   // Receive messages
