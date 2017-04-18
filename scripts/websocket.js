@@ -1,7 +1,7 @@
 // Get references to elements on page.
 const messageField = document.getElementById('mainTextArea');
 // Create new WebSocket
-const socket = new WebSocket('ws://pair-coding.herokuapp.com/:8080');
+const socket = new WebSocket('ws://localhost:8080');
 
 window.onload = function() {
   // Receive messages
