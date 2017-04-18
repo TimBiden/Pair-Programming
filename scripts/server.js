@@ -29,7 +29,7 @@ wss.on('connection', (ws) => {
 
     // Broadcast to everyone else.
     wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
+      if (client !== ws && client.readyState === SocketServer.OPEN) {
         client.send(data);
       }
     });
