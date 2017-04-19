@@ -5,6 +5,7 @@ I'm a creating pair programming app for school because screen sharing isn't pair
 Work in progress.
 
 ## Need to add: ##
+- Create useable text editor. ✅
 - Set up WebSocket server. ✅
 - Connect to WebSocket server from the application. ✅
 - Scope session to unique key from URL.
