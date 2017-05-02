@@ -1,8 +1,7 @@
 // Get references to elements on page.
 const messageField = document.getElementById('mainTextArea');
-// Create new WebSocket
-// const socket = new WebSocket('ws://sleepy-ridge-88571.herokuapp.com:5000');
-// Their Code:
+
+// Create new WebSocket on Heroku
 const socket = new WebSocket('ws://sleepy-ridge-88571.herokuapp.com');
 
 window.onload = function() {
@@ -14,6 +13,7 @@ window.onload = function() {
     document.getElementById('mainTextArea').value = message;
     resizeTextBox();
     getLines();
+    checkTime();
   };
 
   // Making magic happen!!!
