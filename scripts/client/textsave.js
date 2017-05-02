@@ -1,3 +1,5 @@
+import { getLines, resizeTextBox } from './utils/textarea';
+
 /**
  * Save text in fileNameTextBox as a text file.
  * File name and extension are set by user.

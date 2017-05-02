@@ -22,7 +22,7 @@ function updateGutter(allLines) {
   }
 }
 
-function getLines() {
+export function getLines() {
   getLinestimesRun += 1;
   const box = document.querySelector('#mainTextArea');
   const lineCount = ((box.value.split(/\n/g).length) + 1);
@@ -39,7 +39,7 @@ if (window.attachEvent) {
   };
 }
 
-function resizeTextBox() {
+export function resizeTextBox() {
   var text = document.getElementById('mainTextArea');
 
   function resize() {

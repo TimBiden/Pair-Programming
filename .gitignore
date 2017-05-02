@@ -1,3 +1,4 @@
 ###Ignore these files/locations###
 IgnoreMe
 node_modules
+public/
