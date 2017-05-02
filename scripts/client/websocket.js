@@ -1,3 +1,5 @@
+import { getLines, resizeTextBox } from './utils/textarea';
+
 // Get references to elements on page.
 const messageField = document.getElementById('mainTextArea');
 // Create new WebSocket
