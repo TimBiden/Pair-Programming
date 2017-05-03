@@ -1,14 +1,11 @@
 let timer;
-let toBlockOrNot;
-const textEditor = document.getElementById('mainTextArea')
 
 /**
  * Unblock text editor for recipient
  * @returns {void}
  */
 function unBlock() {
-  console.log('You can select text now');
-  document.getElementById('mainTextArea').setAttribute('user-select', 'auto');
+  document.getElementById('mainTextArea').disabled = false;
 }
 
 /**
@@ -16,8 +13,7 @@ function unBlock() {
  * @returns {void}
  */
 function reBlock() {
-  console.log('You are blocked now'); // Delete after blocking works
-  document.getElementById('mainTextArea').setAttribute('user-select', 'none');
+  document.getElementById('mainTextArea').disabled = true;
 }
 
 /**
