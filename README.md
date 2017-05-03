@@ -9,9 +9,11 @@ Work in progress.
 - Set up WebSocket server. ✅
 - Connect to WebSocket server from the application. ✅
 - Set up database to track changes
+  - Timer to reset after updating stops for set period of time.
+    - Allow other user to update text
+    - While unallowed to update, text highlighting prevented.
   - Reading & writing entire documents
-  - Split by line in database
+  - Split by line in Node
   - Updated line gets sent to local collection of lines before gets to database.
-  - Timer to reset after updating stops so other user can update text
 - Scope session to unique key from URL.
 - Generate unique URL and store in database.

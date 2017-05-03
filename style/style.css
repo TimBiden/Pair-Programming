@@ -1,46 +1,46 @@
 .container {
-    border: 3px solid grey;
+  border: 3px solid grey;
 }
 
 .gutter {
-    position: relative;
-    width: 55px;
-    border: 1px solid black;
-    float: left;
-    font-family: monospace;
-    font-size: 15px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-    line-height: 24px;
+  position: relative;
+  width: 55px;
+  border: 1px solid black;
+  float: left;
+  font-family: monospace;
+  font-size: 15px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 24px;
 }
 
 .textBox {
-    position: relative;
-    margin-left: 57px;
-    border: 1px solid black;
+  position: relative;
+  margin-left: 57px;
+  border: 1px solid black;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
 }
 
 #mainTextArea {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    border: none;
-    resize: horizontal;
-    outline: none;
-    resize: none;
-    overflow-y: hidden;
-    font-family: monospace;
-    font-size: 15px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-    line-height: 24px;
-    padding: 0;
-    resize: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  resize: horizontal;
+  outline: none;
+  resize: none;
+  overflow-y: hidden;
+  font-family: monospace;
+  font-size: 15px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 24px;
+  padding: 0;
+  resize: none;
 }
