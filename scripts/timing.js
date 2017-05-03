@@ -7,15 +7,15 @@ let toBlockOrNot;
  */
 function unBlock() {
   console.log('You can type now');
-  toBlockOrNot = false;
+  toBlockOrNot = false; // Delete after unblocking works
 }
 
 /**
- * Unblock text editor for recipient
+ * Reblock text editor for recipient
  * @returns {void}
  */
 function reBlock() {
-  console.log('You are blocked now');
+  console.log('You are blocked now'); // Delete after blocking works
   toBlockOrNot = true;
 }
 
