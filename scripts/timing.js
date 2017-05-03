@@ -1,5 +1,4 @@
 let timer;
-reBlock();
 
 /**
  * Unblock text editor for recipient
