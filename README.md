@@ -13,6 +13,7 @@ Work in progress.
 
   - Allow other user to update text. ✅
   - While unallowed to update, text highlighting prevented. ✅
+  - User shown appropriate message when they can and can't edit code. ✅ 
 
 - Set up database to track changes
 
