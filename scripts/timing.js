@@ -5,7 +5,10 @@ let timer;
  * @returns {void}
  */
 function unBlock() {
+  const warnText = 'You are now free to pair program with people around the planet. <br>Sorry. I can\'t afford interplanetary hosting yet. Care to donate?';
+
   document.getElementById('mainTextArea').disabled = false;
+  document.getElementById('CodingMessage').innerHTML = warnText;
 }
 
 /**
@@ -13,7 +16,11 @@ function unBlock() {
  * @returns {void}
  */
 function reBlock() {
+  const warnText = 'Someone else is currently coding.<br>Please extinguish your hyperdrive and wait your turn.';
+  const warnBlock = warnText.fontcolor('red');
+
   document.getElementById('mainTextArea').disabled = true;
+  document.getElementById('CodingMessage').innerHTML = warnBlock;
 }
 
 /**
@@ -26,5 +33,5 @@ function checkTime() {
   reBlock();
   timer = setTimeout(() => {
     unBlock();
-  }, 2000);
+  }, 1500);
 }

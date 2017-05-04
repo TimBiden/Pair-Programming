@@ -2,48 +2,54 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="style/style.css">
+  <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 
 <body>
+  <div>
+    <h1>Pair Programming Text Editor</h1>
+  </div>
+
+  <section class="container">
     <div>
-        <h1>Pair Programming Text Editor</h1>
+      <p>Please check the <a target="_blank" href="https://github.com/TimBiden/Pair-Programming/blob/master/README.md">README.md</a> for updates.</p>
     </div>
 
-    <section class="container">
-        <p>Please check the <a target="_blank" href="https://github.com/TimBiden/Pair-Programming/blob/master/README.md">README.md</a> for updates.</p>
+    <div id="CodingMessage">
+      <p>You are now free to code with people around the world.</p>
+    </div>
 
-        <div class="gutter" align="center">
-            <div><code>1.</code></div>
-        </div>
+    <div class="gutter" align="center">
+      <div><code>1.</code></div>
+    </div>
 
-        <div class="textBox" id="textBox">
-            <tr>
-                <td colspan="3">
-                    <textarea disabled id="mainTextArea" rows="15" wrap="off">Enter your code here...</textarea>
-                </td>
-            </tr>
-        </div>
+    <div class="textBox" id="textBox">
+      <tr>
+        <td colspan="3">
+          <textarea disabled id="mainTextArea" rows="15" wrap="off">Enter your code here...</textarea>
+        </td>
+      </tr>
+    </div>
 
-        <!-- Begin file save -->
-        <p> </p>
-        <div>
-            <strong>File Name:</strong> <input id='fileNameTextBox'></input> <button onclick='saveTextAsFile()'>Save File</button>
-        </div>
-        <p> </p>
+    <!-- Begin file save -->
+    <p> </p>
+    <div>
+      <strong>File Name:</strong> <input id='fileNameTextBox'></input> <button onclick='saveTextAsFile()'>Save File</button>
+    </div>
+    <p> </p>
 
-        <!-- Begin file load -->
-        <p> </p>
-        <div>
-            <strong>File to load:</strong> <input type='file' id='fileToLoad'></input> <button onclick='loadFile()'>Load File</button>
-        </div>
-        <p> </p>
-    </section>
+    <!-- Begin file load -->
+    <p> </p>
+    <div>
+      <strong>File to load:</strong> <input type='file' id='fileToLoad'></input> <button onclick='loadFile()'>Load File</button>
+    </div>
+    <p> </p>
+  </section>
 
-    <script src="scripts/textarea.js"></script>
-    <script src="scripts/textsave.js"></script>
-    <script src="scripts/websocket.js"></script>
-    <script src="scripts/timing.js"></script>
+  <script src="scripts/textarea.js"></script>
+  <script src="scripts/textsave.js"></script>
+  <script src="scripts/websocket.js"></script>
+  <script src="scripts/timing.js"></script>
 </body>
 
 </html>
