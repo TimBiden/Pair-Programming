@@ -13,10 +13,11 @@ Work in progress.
 
   - Allow other user to update text. ✅
   - While unallowed to update, text highlighting prevented. ✅
-  - User shown appropriate message when they can and can't edit code. ✅ 
+  - User shown appropriate message when they can and can't edit code. ✅
 
-- Set up database to track changes
+- Set up database to track changes. ⏯
 
+  - Reading the MEAN web dev book. ⏯
   - Reading & writing entire documents
   - Split by line in Node
   - Updated line gets sent to local collection of lines before gets to database.
