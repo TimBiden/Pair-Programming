@@ -1,27 +1,17 @@
 // WS Server code.
 const WebSocket = require('ws');
 const mongoose = require('mongoose');
+const messages = ['Enter your code here...'];
 
+// Database connection
 const PORT = process.env.PORT || 5000;
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://Terpenoid:warnText.fontcolor@ds131511.mlab.com:31511/heroku_m2vw9mgp');
 const db = mongoose.connection;
 
+// WebSocket connection
 const wss = new WebSocket.Server({
   port: PORT,
 });
-
-const messages = ['Enter your code here...'];
-
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('we\'re! finally! connected!');
-});
-
-var kittySchema = mongoose.Schema({
-    name: String
-});
-
-var Kitten = mongoose.model('Kitten', kittySchema);
 
 wss.on('connection', (ws) => {
   // Send the existing message history to all new connections that join.
