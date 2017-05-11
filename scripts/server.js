@@ -1,12 +1,20 @@
 // WS Server code.
+
+// Requirements
 const WebSocket = require('ws');
 const mongoose = require('mongoose');
+
+// Variables
 const messages = ['Enter your code here...'];
 
 // Database connection
 const PORT = process.env.PORT || 5000;
 mongoose.connect('mongodb://Terpenoid:warnText.fontcolor@ds131511.mlab.com:31511/heroku_m2vw9mgp');
 const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log('We\'re connected. I think.');
+});
 
 // WebSocket connection
 const wss = new WebSocket.Server({
