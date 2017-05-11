@@ -3,6 +3,15 @@ let updateGuttertimesRun = 0;
 let observe;
 
 /**
+ * Gets current value of textarea.
+ * Called by {sendTextarea} from timing.js
+ **/
+const textareaToDB = function textareaToDB() {
+  const textToSave = document.getElementById('mainTextArea').value;
+  return textToSave;
+};
+
+/**
  * Update the numbers in the side gutter.
  * @param {number} allLines total number of lines in the editor.
  * @returns {int} The width of textBox div.

@@ -1,4 +1,5 @@
-let timer;
+let timerMessage;
+let timerSend;
 
 /**
  * Unblock text editor for recipient
@@ -43,11 +44,23 @@ function blockMessage() {
  * @returns {void}
  */
 function checkTime() {
-  clearTimeout(timer);
+  clearTimeout(timerMessage);
   reBlock();
   blockMessage();
-  timer = setTimeout(() => {
+  timerMessage = setTimeout(() => {
     unBlock();
     unBlockMessage();
   }, 1500);
+}
+
+/**
+ * Check time since other user updated document.
+ * If > 30 seconds, update database with current textarea.
+ * @returns {void}
+ */
+function sendTextarea() {
+  clearTimeout(timerSend);
+  timerSend = setTimeout(() => {
+    textareaToDB();
+  });
 }
