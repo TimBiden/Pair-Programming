@@ -9,7 +9,7 @@ const messages = ['Enter your code here...'];
 
 // Database connection
 const PORT = process.env.PORT || 5000;
-mongoose.connect(uri);
+mongoose.connect('mongodb://Terpenoid:warnText.fontcolor@ds131511.mlab.com:31511/heroku_m2vw9mgp');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -26,9 +26,12 @@ const codeBoxModel = mongoose.model('codeBoxModel', editorSchema);
 const sessionIDModel = mongoose.model('sessionIDModel', editorSchema);
 // Delete after configuring session IDs
 const sessionID = PORT;
+const textareaToDB = 'Yada, yada, freaking yada...'
 
 let sesh = new sessionIDModel({ session: sessionID });
 let textbox = new codeBoxModel({ codeBox: textareaToDB });
+console.log(sesh.session);
+console.log(textbox.codeBox);
 
 // WebSocket connection
 const wss = new WebSocket.Server({
