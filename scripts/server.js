@@ -22,14 +22,15 @@ const editorSchema = mongoose.Schema({
   codeBox: String,
 });
 
-const codeBoxModel = mongoose.model('codeBoxModel', editorSchema);
-const sessionIDModel = mongoose.model('sessionIDModel', editorSchema);
+const SessionIDModel = mongoose.model('sessionIDModel', editorSchema);
+const CodeBoxModel = mongoose.model('codeBoxModel', editorSchema);
 // Delete after configuring session IDs
 const sessionID = PORT;
-const textareaToDB = 'Yada, yada, freaking yada...'
+const textareaToDB = 'Yada, yada, freaking yada...';
+// End deletion after configuring session IDs
 
-let sesh = new sessionIDModel({ session: sessionID });
-let textbox = new codeBoxModel({ codeBox: textareaToDB });
+const sesh = new SessionIDModel({ session: sessionID });
+const textbox = new CodeBoxModel({ codeBox: textareaToDB });
 console.log(sesh.session);
 console.log(textbox.codeBox);
 
