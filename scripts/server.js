@@ -22,21 +22,36 @@ const editorSchema = mongoose.Schema({
   codeBox: String,
 });
 
-const SessionIDModel = mongoose.model('sessionIDModel', editorSchema);
-const CodeBoxModel = mongoose.model('codeBoxModel', editorSchema);
+let Editor = mongoose.model('Editor', editorSchema);
+// const SessionIDModel = mongoose.model('sessionIDModel', editorSchema);
+// const CodeBoxModel = mongoose.model('codeBoxModel', editorSchema);
 // Delete after configuring session IDs
 const sessionID = PORT;
 const textareaToDB = 'Yada, yada, freaking yada...';
 // End deletion after configuring session IDs
 
-const sesh = new SessionIDModel({
-  session: sessionID
+// const sesh = new SessionIDModel({
+//   session: sessionID
+// });
+// const textbox = new CodeBoxModel({
+//   codeBox: textareaToDB
+// });
+// console.log(sesh.session);
+// console.log(textbox.codeBox);
+
+let editorInstance = new Editor({
+  session: sessionID,
+  codeBox: textareaToDB,
 });
-const textbox = new CodeBoxModel({
-  codeBox: textareaToDB
-});
-console.log(sesh.session);
-console.log(textbox.codeBox);
+
+function onEditorSave(error, model) {
+  if (error) {
+    return console.error(error);
+  }
+  console.log(model);
+}
+
+editorInstance.save(onEditorSave);
 
 // WebSocket connection
 const wss = new WebSocket.Server({
