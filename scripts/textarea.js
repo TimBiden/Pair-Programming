@@ -8,6 +8,7 @@ let observe;
  **/
 const textareaToDB = function textareaToDB() {
   const textToSave = document.getElementById('mainTextArea').value;
+  console.log(textToSave);
   return textToSave;
 };
 

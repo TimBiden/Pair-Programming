@@ -9,12 +9,26 @@ const messages = ['Enter your code here...'];
 
 // Database connection
 const PORT = process.env.PORT || 5000;
-mongoose.connect('mongodb://Terpenoid:warnText.fontcolor@ds131511.mlab.com:31511/heroku_m2vw9mgp');
+mongoose.connect(uri);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('We\'re connected. I think.');
 });
+
+// Define Mongo schema
+const editorSchema = mongoose.Schema({
+  session: String,
+  codeBox: String,
+});
+
+const codeBoxModel = mongoose.model('codeBoxModel', editorSchema);
+const sessionIDModel = mongoose.model('sessionIDModel', editorSchema);
+// Delete after configuring session IDs
+const sessionID = PORT;
+
+let sesh = new sessionIDModel({ session: sessionID });
+let textbox = new codeBoxModel({ codeBox: textareaToDB });
 
 // WebSocket connection
 const wss = new WebSocket.Server({
