@@ -29,8 +29,12 @@ const sessionID = PORT;
 const textareaToDB = 'Yada, yada, freaking yada...';
 // End deletion after configuring session IDs
 
-const sesh = new SessionIDModel({ session: sessionID });
-const textbox = new CodeBoxModel({ codeBox: textareaToDB });
+const sesh = new SessionIDModel({
+  session: sessionID
+});
+const textbox = new CodeBoxModel({
+  codeBox: textareaToDB
+});
 console.log(sesh.session);
 console.log(textbox.codeBox);
 
