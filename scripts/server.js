@@ -3,13 +3,13 @@
 // Requirements
 const WebSocket = require('ws');
 const mongoose = require('mongoose');
+const config = require('../scripts/config.js');
 
 // Variables
 const messages = ['Enter your code here...'];
-
 // Database connection
 const PORT = process.env.PORT || 5000;
-mongoose.connect('mongodb://Terpenoid:warnText.fontcolor@ds131511.mlab.com:31511/heroku_m2vw9mgp');
+mongoose.connect(process.env.DATABASE_URI);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -23,21 +23,10 @@ const editorSchema = mongoose.Schema({
 });
 
 let Editor = mongoose.model('Editor', editorSchema);
-// const SessionIDModel = mongoose.model('sessionIDModel', editorSchema);
-// const CodeBoxModel = mongoose.model('codeBoxModel', editorSchema);
 // Delete after configuring session IDs
 const sessionID = PORT;
 const textareaToDB = 'Yada, yada, freaking yada...';
 // End deletion after configuring session IDs
-
-// const sesh = new SessionIDModel({
-//   session: sessionID
-// });
-// const textbox = new CodeBoxModel({
-//   codeBox: textareaToDB
-// });
-// console.log(sesh.session);
-// console.log(textbox.codeBox);
 
 let editorInstance = new Editor({
   session: sessionID,
