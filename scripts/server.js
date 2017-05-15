@@ -7,6 +7,7 @@ const config = require('../scripts/config.js');
 
 // Variables
 const messages = ['Enter your code here...'];
+
 // Database connection
 const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.DATABASE_URI);
