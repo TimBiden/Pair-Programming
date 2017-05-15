@@ -1,12 +1,17 @@
-const sessionIDLength = Math.floor(Math.random() * (9 - 5)) + 5;
-console.log(`sessionIDLength = ${sessionIDLength}`);
+// Variables
+
+// Randomize ID length
+const genIDLength = Math.floor(Math.random() * (9 - 5)) + 5;
 const possibleChar = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-let sessionID = '';
+// Generate session ID
+const sessionID = function sessionID() {
+  let genID = '';
+  for (let i = 0; i < genIDLength; i += 1) {
+    // Pick char from possibleChar
+    genID += possibleChar.charAt(Math.floor(Math.random() * possibleChar.length));
+  }
+  return genID;
+};
 
-for (let i = 0; i < sessionIDLength; i += 1) {
-  sessionID += possibleChar.charAt(Math.floor(Math.random() * possibleChar.length));
-  console.log(`numChar = ${sessionID}`);
-}
-
-console.log(`numChar = ${sessionID}`);
+sessionID();
