@@ -1,4 +1,4 @@
-// WS Server code.
+// WS & Web Server code.
 
 // Requirements
 const WebSocket = require('ws');
