@@ -3,7 +3,7 @@
 // Requirements
 const WebSocket = require('ws');
 const mongoose = require('mongoose');
-const configReq = require('./config.js');
+// const configReq = require('./config.js');
 
 // Variables
 // Set WS port
