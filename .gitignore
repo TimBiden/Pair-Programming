@@ -1,3 +1,6 @@
-###Ignore these files/locations###
+###Ignore these locations###
 IgnoreMe
 node_modules
+
+###Ignore these files###
+scripts/config.js
