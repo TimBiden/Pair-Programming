@@ -2,13 +2,13 @@
 
 // Requirements
 const WebSocket = require('ws');
-const mongoose = require('mongoose');
-const configOverride = require('../scripts/config.js');
-
-// Variables
-const messages = ['Enter your code here...'];
-const dbConfig = process.env.MONGODB_URI || configOverride.MONGODB_URI;
-
+// const mongoose = require('mongoose');
+// const configOverride = require('../scripts/config.js');
+//
+// // Variables
+// const messages = ['Enter your code here...'];
+// const dbConfig = process.env.MONGODB_URI || configOverride.MONGODB_URI;
+// 
 // // Database connection
 // const PORT = process.env.PORT || 5000;
 // mongoose.connect(dbConfig);
