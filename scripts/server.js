@@ -2,16 +2,15 @@
 
 // Requirements
 const WebSocket = require('ws');
-// const mongoose = require('mongoose');
-// const configReq = require('../scripts/config.js');
-//
-// // Variables
-// const messages = ['Enter your code here...'];
-// const dbConfig = process.env.DATABASE_URI
-//
+const mongoose = require('mongoose');
+const configReq = require('../scripts/config.js');
 
+// Variables
 // Set WS port
 const PORT = process.env.PORT || 5000;
+// Set Web Server Variables
+const messages = ['Enter your code here...'];
+const dbConfig = process.env.DATABASE_URI
 
 // // Database connection
 // mongoose.connect(dbConfig);
