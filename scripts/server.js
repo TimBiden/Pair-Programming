@@ -9,8 +9,8 @@ const configReq = require('../scripts/config.js');
 // Set WS port
 const PORT = process.env.PORT || 5000;
 // Set Web Server Variables
-const messages = ['Enter your code here...'];
-const dbConfig = process.env.DATABASE_URI
+// const messages = ['Enter your code here...'];
+// const dbConfig = process.env.DATABASE_URI
 
 // // Database connection
 // mongoose.connect(dbConfig);
