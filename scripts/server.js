@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 // Variables
 // Set WS port
 const PORT = process.env.PORT || 5000;
-Set Web Server Variables
+// Set Web Server Variables
 const messages = ['Enter your code here...'];
 const dbConfig = process.env.MONGODB_URI
 
