@@ -9,8 +9,11 @@ const WebSocket = require('ws');
 // const messages = ['Enter your code here...'];
 // const dbConfig = process.env.DATABASE_URI
 //
+
+// Set WS port
+const PORT = process.env.PORT || 5000;
+
 // // Database connection
-// const PORT = process.env.PORT || 5000;
 // mongoose.connect(dbConfig);
 // const db = mongoose.connection;
 // db.on('error', console.error.bind(console, 'connection error:'));
