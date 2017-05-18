@@ -33,12 +33,18 @@ const sessionID = PORT;
 const textareaToDB = 'Yada, yada, freaking yada...';
 // End deletion after configuring session IDs
 
-let editorInstance = new Editor({
+const editorInstance = new Editor({
   session: sessionID,
   codeBox: textareaToDB,
 });
 console.log(`The sessionID is ${sessionID}.`);
 
+/**
+ * Error checking
+ * @param {string} error What's the error?
+ * @param {string} model What's the model?
+ * @returns {void} Assuming there's no error.
+ */
 function onEditorSave(error, model) {
   if (error) {
     return console.error(error);
