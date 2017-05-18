@@ -24,15 +24,27 @@ db.once('open', () => {
 const editorSchema = mongoose.Schema({
   session: String,
   codeBox: String,
-  dateCreated: Date,
-  lastUpdated: Date,
 });
 
 let Editor = mongoose.model('Editor', editorSchema);
 // Delete after configuring session IDs
-sessionID = PORT;
-textareaToDB = 'Yada, yada, freaking yada...';
+const sessionID = PORT;
+const textareaToDB = 'Yada, yada, freaking yada...';
 // End deletion after configuring session IDs
+
+let editorInstance = new Editor({
+  session: sessionID,
+  codeBox: textareaToDB,
+});
+
+function onEditorSave(error, model) {
+  if (error) {
+    return console.error(error);
+  }
+  console.log(model);
+}
+
+editorInstance.save(onEditorSave);
 
 // WebSocket connection
 const wss = new WebSocket.Server({
