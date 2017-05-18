@@ -10,6 +10,7 @@ const configReq = require('./config.js');
 const PORT = process.env.PORT || 5000;
 // Set Web Server Variables
 const messages = ['Enter your code here...'];
+// Set DB Config Variables
 const dbConfig = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
 // Database connection
@@ -36,6 +37,7 @@ let editorInstance = new Editor({
   session: sessionID,
   codeBox: textareaToDB,
 });
+console.log(`The sessionID is ${sessionID}.`);
 
 function onEditorSave(error, model) {
   if (error) {

@@ -4,9 +4,26 @@ const messageField = document.getElementById('mainTextArea');
 // Create new WebSocket on Heroku
 const socket = new WebSocket('ws://sleepy-ridge-88571.herokuapp.com');
 
-window.onload = function() {
+/**
+ * Retrieve data from textarea
+ * Send message data through websocket
+ * @returns {void}
+ */
+function sendData() {
+  // retrieve data from textarea
+  const message = messageField.value;
+
+  // Send message data through websocket
+  socket.send(message);
+}
+
+/**
+ * Send and receive message data through websocket
+ * @returns {void}
+ */
+window.onload = () => {
   // Receive messages
-  socket.onmessage = function(event) {
+  socket.onmessage = (event) => {
     const message = event.data;
 
     // Print message value to all textarea boxes in session
@@ -25,11 +42,3 @@ window.onload = function() {
   // Run numbering function
   getLines();
 };
-
-function sendData() {
-  // retrieve data from textarea
-  const message = messageField.value;
-
-  // Send message data through websocket
-  socket.send(message);
-}
