@@ -1,6 +1,6 @@
 // session.js
 //
-// Variables
+// Produce randomized session ID
 
 // Randomize ID length
 const genIDLength = Math.floor(Math.random() * (9 - 5)) + 5;

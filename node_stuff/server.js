@@ -5,6 +5,7 @@ const WebSocket = require('ws');
 const mongoose = require('mongoose');
 const configFile = require('./config.js');
 const sessionFile = require('./session.js');
+const textareaFile = require('../scripts/textarea.js');
 
 // Variables
 // Set WS port
@@ -28,10 +29,10 @@ const editorSchema = mongoose.Schema({
   codeBox: String,
 });
 
-let Editor = mongoose.model('Editor', editorSchema);
+const Editor = mongoose.model('Editor', editorSchema);
 // Delete after configuring session IDs
 const sessionID = sessionFile.sessionID();
-const textareaToDB = 'Yada, yada, freaking yada...';
+const textareaToDB = textareaFile.textareaToDB(); // Check this line. Still crash server?
 // End deletion after configuring session IDs
 
 const editorInstance = new Editor({
@@ -55,6 +56,20 @@ function onEditorSave(error, model) {
 
 editorInstance.save(onEditorSave);
 
+let timerSend;
+
+/**
+ * Check time since other user updated document.
+ * If > 30 seconds, update database with current textarea.
+ * @returns {void}
+ */
+function sendTextarea(data) {
+  clearTimeout(timerSend);
+  timerSend = setTimeout(() => {
+    textareaToDB(data);
+  }, 2000);
+}
+
 // WebSocket connection
 const wss = new WebSocket.Server({
   port: PORT,
@@ -69,6 +84,7 @@ wss.on('connection', (ws) => {
   ws.on('message', (data) => {
     // Capture the data we received.
     messages.push(data);
+    sendTextarea(data);
 
     // Broadcast to everyone else.
     wss.clients.forEach((client) => {
