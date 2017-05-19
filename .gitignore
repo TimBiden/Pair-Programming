@@ -3,4 +3,5 @@ IgnoreMe
 node_modules
 
 ###Ignore these files###
+node_files/config.js
 scripts/config.js
