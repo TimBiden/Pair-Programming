@@ -3,7 +3,8 @@
 // Requirements
 const WebSocket = require('ws');
 const mongoose = require('mongoose');
-const configReq = require('./config.js');
+const configFile = require('./config.js');
+const sessionFile = require('./session.js');
 
 // Variables
 // Set WS port
@@ -29,7 +30,7 @@ const editorSchema = mongoose.Schema({
 
 let Editor = mongoose.model('Editor', editorSchema);
 // Delete after configuring session IDs
-const sessionID = PORT;
+const sessionID = sessionFile.sessionID();
 const textareaToDB = 'Yada, yada, freaking yada...';
 // End deletion after configuring session IDs
 
