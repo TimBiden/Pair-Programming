@@ -61,6 +61,7 @@ let timerSend;
 /**
  * Check time since other user updated document.
  * If > 30 seconds, update database with current textarea.
+ * @param {string} data Complete text in textarea.
  * @returns {void}
  */
 function sendTextarea(data) {
