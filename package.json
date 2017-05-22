@@ -1,6 +1,7 @@
 {
   "name": "Pair-Programming-App",
   "version": "0.0.1",
+  "private": true,
   "description": "A pair programming app",
   "main": "index.js",
   "scripts": {
