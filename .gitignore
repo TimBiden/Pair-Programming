@@ -4,4 +4,4 @@ node_modules
 
 ###Ignore these files###
 node_stuff/config.js
-scripts/config.js
+frontend/config.js

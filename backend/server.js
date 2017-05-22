@@ -5,7 +5,7 @@ const WebSocket = require('ws');
 const mongoose = require('mongoose');
 const configFile = require('./config.js');
 const sessionFile = require('./session.js');
-const textareaFile = require('../scripts/textarea.js');
+const textareaFile = require('../frontend/textarea.js');
 
 // Variables
 // Set WS port
@@ -32,7 +32,8 @@ const editorSchema = mongoose.Schema({
 const Editor = mongoose.model('Editor', editorSchema);
 // Delete after configuring session IDs
 const sessionID = sessionFile.sessionID();
-const textareaToDB = textareaFile.textareaToDB(); // Check this line. Still crash server?
+const textareaToDB = 'yada yada freakin\' yada.';
+// const textareaToDB = textareaFile.textareaToDB(); // Check this line. Still crash server?
 // End deletion after configuring session IDs
 
 const editorInstance = new Editor({
