@@ -13,7 +13,10 @@ const PORT = process.env.PORT || 5000;
 // Set Web Server Variables
 const messages = ['Enter your code here...'];
 // Set DB Config Variables
-const dbConfig = process.env.DATABASE_URI || process.env.MONGODB_URI;
+// Local DB
+// const dbConfig = process.env.DATABASE_URI
+// Heroku DB
+const dbConfig = process.env.MONGODB_URI;
 
 // Database connection
 mongoose.connect(dbConfig);
