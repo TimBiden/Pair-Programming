@@ -2,7 +2,8 @@
 const messageField = document.getElementById('mainTextArea');
 
 // Create new WebSocket on Heroku
-const socket = new WebSocket('ws://sleepy-ridge-88571.herokuapp.com');
+// const socket = new WebSocket('ws://sleepy-ridge-88571.herokuapp.com');
+const socket = new WebSocket('ws://localhost:5000');
 
 /**
  * Retrieve data from textarea

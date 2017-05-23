@@ -3,7 +3,7 @@
 // Requirements
 const WebSocket = require('ws');
 const mongoose = require('mongoose');
-// const configFile = require('./node_files/config.js');
+const configFile = require('../node_files/config.js');
 const sessionFile = require('./session.js');
 // const textareaFile = require('../textarea.js');
 
@@ -32,7 +32,7 @@ const editorSchema = mongoose.Schema({
 const Editor = mongoose.model('Editor', editorSchema);
 // Delete after configuring session IDs
 const sessionID = sessionFile.sessionID();
-// const textareaToDB = 'yada yada freakin\' yada.';
+const textareaToDB = 'yada yada freakin\' yada.';
 // const textareaToDB = textareaFile.textareaToDB(); // Check this line. Still crash server?
 // End deletion after configuring session IDs
 
@@ -68,7 +68,10 @@ let timerSend;
 function sendTextarea(data) {
   clearTimeout(timerSend);
   timerSend = setTimeout(() => {
-    textareaToDB(data);
+    // textareaToDB(data);
+    console.log(`sending data to db ${data}`);
+    editorInstance.codeBox = data;
+    editorInstance.save(onEditorSave);
   }, 2000);
 }
 
