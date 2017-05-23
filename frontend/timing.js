@@ -1,4 +1,5 @@
-let timer;
+let timerMessage;
+let timerSend;
 
 /**
  * Unblock text editor for recipient
@@ -43,10 +44,10 @@ function blockMessage() {
  * @returns {void}
  */
 function checkTime() {
-  clearTimeout(timer);
+  clearTimeout(timerMessage);
   reBlock();
   blockMessage();
-  timer = setTimeout(() => {
+  timerMessage = setTimeout(() => {
     unBlock();
     unBlockMessage();
   }, 1500);

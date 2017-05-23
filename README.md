@@ -13,13 +13,13 @@ Work in progress.
 
   - Allow other user to update text. ✅
   - While unallowed to update, text highlighting prevented. ✅
-  - User shown appropriate message when they can and can't edit code. ✅ 
+  - User shown appropriate message when they can and can't edit code. ✅
 
-- Set up database to track changes
+- Set up database to track changes. ⏯
 
-  - Reading & writing entire documents
-  - Split by line in Node
-  - Updated line gets sent to local collection of lines before gets to database.
+  - Read & pushes entire document to the Heroku/MLab database. ✅
+  - Needs to recall entire documents by URL
 
+- Keep session open for specified amount of time.
 - Scope session to unique key from URL.
 - Generate unique URL and store in database.
