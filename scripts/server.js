@@ -3,7 +3,7 @@
 // Requirements
 const WebSocket = require('ws');
 const mongoose = require('mongoose');
-const configFile = require('./node_files/config.js');
+// const configFile = require('./node_files/config.js');
 const sessionFile = require('./session.js');
 const textareaFile = require('../textarea.js');
 
