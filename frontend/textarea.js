@@ -7,7 +7,7 @@ let observe;
  * Called by {sendTextarea} from timing.js
  * @returns {string} Complete contents of textarea.
  **/
-exports.textareaToDB = function textareaToDB() {
+const textareaToDB = function textareaToDB() {
   const textToSave = document.getElementById('mainTextArea').value;
   console.log(textToSave);
   return textToSave;
