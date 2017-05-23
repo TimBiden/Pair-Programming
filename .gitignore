@@ -4,4 +4,4 @@ node_modules
 Ignore_Files
 
 ###Ignore these files###
-backend/config.js
+node_files/config.js

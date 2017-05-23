@@ -1,1 +1,1 @@
-web: node frontend/server.js
+web: node scripts/server.js

@@ -5,7 +5,7 @@
   "description": "A pair programming app",
   "main": "index.js",
   "scripts": {
-    "start": "node frontend/server.js"
+    "start": "node scripts/server.js"
   },
   "repository": {
     "type": "git",

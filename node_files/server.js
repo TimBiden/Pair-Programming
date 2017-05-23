@@ -5,7 +5,7 @@ const WebSocket = require('ws');
 const mongoose = require('mongoose');
 const configFile = require('./config.js');
 const sessionFile = require('./session.js');
-const textareaFile = require('../frontend/textarea.js');
+const textareaFile = require('../scripts/textarea.js');
 
 // Variables
 // Set WS port
