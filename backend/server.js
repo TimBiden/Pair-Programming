@@ -32,7 +32,7 @@ const editorSchema = mongoose.Schema({
 const Editor = mongoose.model('Editor', editorSchema);
 // Delete after configuring session IDs
 const sessionID = sessionFile.sessionID();
-const textareaToDB = 'yada yada freakin\' yada.';
+// const textareaToDB = 'yada yada freakin\' yada.';
 // const textareaToDB = textareaFile.textareaToDB(); // Check this line. Still crash server?
 // End deletion after configuring session IDs
 
@@ -92,6 +92,7 @@ wss.on('connection', (ws) => {
     wss.clients.forEach((client) => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(data);
+        sendTextarea(data);
       }
     });
   });
