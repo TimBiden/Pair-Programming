@@ -17,10 +17,9 @@ Work in progress.
 
 - Set up database to track changes. ⏯
 
-  - Reading the MEAN web dev book. ⏯
-  - Reading & writing entire documents
-  - Split by line in Node
-  - Updated line gets sent to local collection of lines before gets to database.
+  - Read & pushes entire document to the Heroku/MLab database. ✅
+  - Needs to recall entire documents by URL
 
+- Keep session open for specified amount of time.
 - Scope session to unique key from URL.
 - Generate unique URL and store in database.
