@@ -3,20 +3,29 @@
 // Requirements
 const WebSocket = require('ws');
 const mongoose = require('mongoose');
-// const configFile = require('./config.js');
 const sessionFile = require('./session.js');
-// const textareaFile = require('../textarea.js');
+const urlFile = require('./url.js');
+const configFile = require('./config.js');
 
 // Variables
 // Set WS port
+let dbConfig;
 const PORT = process.env.PORT || 5000;
+console.log(`Port = ${PORT}`);
 // Set Web Server Variables
 const messages = ['Enter your code here...'];
+
 // Set DB Config Variables
-// Local DB
-// const dbConfig = process.env.DATABASE_URI
-// Heroku DB
-const dbConfig = process.env.MONGODB_URI;
+if (PORT === 5000) {
+  // For local use only
+  dbConfig = process.env.DATABASE_URI
+} else {
+  dbConfig = process.env.MONGODB_URI;
+}
+
+const currentURL = urlFile.GET;
+console.log(currentURL);
+
 
 // Database connection
 mongoose.connect(dbConfig);
@@ -42,7 +51,6 @@ const editorInstance = new Editor({
   session: sessionID,
   codeBox: textareaToDB,
 });
-console.log(`The sessionID is ${sessionID}.`);
 
 /**
  * Error checking
@@ -92,6 +100,7 @@ wss.on('connection', (ws) => {
     // Capture the data we received.
     messages.push(data);
     sendTextarea(data);
+    console.log(data);
 
     // Broadcast to everyone else.
     wss.clients.forEach((client) => {
