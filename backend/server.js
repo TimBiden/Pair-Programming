@@ -4,7 +4,6 @@
 const WebSocket = require('ws');
 const mongoose = require('mongoose');
 const sessionFile = require('./session.js');
-const urlFile = require('./url.js');
 const configFile = require('./config.js');
 
 // Variables
