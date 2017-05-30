@@ -26,13 +26,14 @@ if (PORT === 5000) {
 // Create HTTP Server
 const server = http.createServer((req, res) => {
   // This doesn't run.
+  console.log(' ');
   console.log(`req = ${req}`);
   console.log(`The URL reqed is ${req.url}.`);
   console.log(`res = ${res}`);
 });
 
-server.listen(PORT, () => {
-  console.log(`The server is listening on port ${PORT}`);
+server.listen(3000, () => {
+  console.log('The server is listening on port 3000.');
 });
 
 // Database connection
