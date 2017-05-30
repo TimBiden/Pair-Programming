@@ -3,6 +3,7 @@
 // Requirements
 const WebSocket = require('ws');
 const mongoose = require('mongoose');
+const http = require('http');
 const sessionFile = require('./session.js');
 const configFile = require('./config.js');
 
@@ -21,6 +22,18 @@ if (PORT === 5000) {
 } else {
   dbConfig = process.env.MONGODB_URI;
 }
+
+// Create HTTP Server
+const server = http.createServer((req, res) => {
+  // This doesn't run.
+  console.log(`req = ${req}`);
+  console.log(`The URL reqed is ${req.url}.`);
+  console.log(`res = ${res}`);
+});
+
+server.listen(PORT, () => {
+  console.log(`The server is listening on port ${PORT}`);
+});
 
 // Database connection
 mongoose.connect(dbConfig);
