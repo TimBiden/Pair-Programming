@@ -1,22 +1,27 @@
 // WS & Web Server & DB Connection code.
 
 // Requirements
-const WebSocket = require('ws');
-const mongoose = require('mongoose');
-const http = require('http');
-const sessionFile = require('./session.js');
 const configFile = require('./config.js');
+const fs = require('fs');
+const http = require('http');
+const mongoose = require('mongoose');
+const sessionFile = require('./session.js');
+const WebSocket = require('ws');
 
 // Variables
 // Set WS port
 let dbConfig;
-const PORT = process.env.PORT || 5000;
-console.log(`Port = ${PORT}`);
+const webSocketPort = process.env.PORT || 5000;
+console.log(`Web Socket Port = ${webSocketPort}`);
+
 // Set Web Server Variables
+const httpPort = 3000;
+console.log(`Web Server Port = ${httpPort}`);
 const messages = ['Enter your code here...'];
 
 // Set DB Config Variables
-if (PORT === 5000) {
+// Local or production check
+if (webSocketPort === 5000) {
   // For local use only
   dbConfig = process.env.DATABASE_URI
 } else {
@@ -24,17 +29,50 @@ if (PORT === 5000) {
 }
 
 // Create HTTP Server
-const server = http.createServer((req, res) => {
-  // This doesn't run.
-  console.log(' ');
-  console.log(`req = ${req}`);
-  console.log(`The URL reqed is ${req.url}.`);
-  console.log(`res = ${res}`);
+const requestHandler = (request, response) => {
+  console.log(request.url);
+
+  // Least staticky option.
+  const matchedSessionId = request.url.match(/\/s\/([A-Za-z0-9]+)/);
+
+  if (matchedSessionId) {
+    const sessionId = matchedSessionId[1];
+
+    console.log(sessionId);
+    console.log('ATTEMPTING TO LOAD SESSION:', sessionId);
+
+    fs.readFile('index.html', (err, data) => {
+      response.write(data);
+      response.end();
+    });
+  } else {
+    // A bit less static option.
+    // if (request.url.substr(0, 3) === '/s/') {
+    //     response.end('Ohaaaaaaay, ' + request.url.substr(3));
+    // }
+
+    // Super static option, good for static URLs.
+    switch (request.url) {
+      case '/':
+        response.write('WELCOME HOME');
+        response.end();
+        break;
+
+      default:
+        response.end('zomg 404');
+    }
+  }
+};
+
+const server = http.createServer(requestHandler);
+
+server.listen(httpPort, (err) => {
+  if (err) {
+    return console.log('ERROR OPERATOR:', err);
+  }
+  console.log(`Server is listening on ${httpPort}`);
 });
 
-server.listen(3000, () => {
-  console.log('The server is listening on port 3000.');
-});
 
 // Database connection
 mongoose.connect(dbConfig);
@@ -96,7 +134,7 @@ function sendTextarea(data) {
 
 // WebSocket connection
 const wss = new WebSocket.Server({
-  port: PORT,
+  port: webSocketPort,
 });
 
 wss.on('connection', (ws) => {
