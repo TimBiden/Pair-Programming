@@ -41,7 +41,8 @@ const requestHandler = (request, response) => {
     console.log(sessionId);
     console.log('ATTEMPTING TO LOAD SESSION:', sessionId);
 
-    fs.readFile('index.html', (err, data) => {
+    fs.readFile('../index.html', (err, data) => {
+      // response.write('Say something witty, you chipper bastard!');
       response.write(data);
       response.end();
     });
@@ -59,7 +60,7 @@ const requestHandler = (request, response) => {
         break;
 
       default:
-        response.end('zomg 404');
+        response.end('Not using first option!');
     }
   }
 };
@@ -73,8 +74,9 @@ server.listen(httpPort, (err) => {
   console.log(`Server is listening on ${httpPort}`);
 });
 
-
+//
 // Database connection
+//
 mongoose.connect(dbConfig);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
