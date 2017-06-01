@@ -46,13 +46,10 @@ const requestHandler = (request, response) => {
       response.write(data);
       response.end();
     });
+  } else if (request.url.substr(0, 10) === '/frontend/' || request.url.substr(0, 7) === '/style/' || request.url.substr(0, 12) === '/favicon.ico') {
+    console.log('This should be bypassed.');
   } else {
-    // A bit less static option.
-    // if (request.url.substr(0, 3) === '/s/') {
-    //     response.end('Ohaaaaaaay, ' + request.url.substr(3));
-    // }
-
-    // Super static option, good for static URLs.
+    console.log(`request.url.substr(0, 10) = ${request.url.substr(0, 10)}`);
     switch (request.url) {
       case '/':
         response.write('WELCOME HOME');
