@@ -5,6 +5,7 @@ const configFile = require('./config.js');
 const fs = require('fs');
 const http = require('http');
 const mongoose = require('mongoose');
+const path = require('path');
 const sessionFile = require('./session.js');
 const WebSocket = require('ws');
 
@@ -28,41 +29,51 @@ if (webSocketPort === 5000) {
   dbConfig = process.env.MONGODB_URI;
 }
 
+//
 // Create HTTP Server
-const requestHandler = (request, response) => {
-  console.log(request.url);
+//
+const handler = (req, res) => {
+  console.log(req.url);
+  let filePath = req.url;
 
-  // Least staticky option.
-  const matchedSessionId = request.url.match(/\/s\/([A-Za-z0-9]+)/);
-
-  if (matchedSessionId) {
-    const sessionId = matchedSessionId[1];
-
-    console.log(sessionId);
-    console.log('ATTEMPTING TO LOAD SESSION:', sessionId);
-
-    fs.readFile('../index.html', (err, data) => {
-      // response.write('Say something witty, you chipper bastard!');
-      response.write(data);
-      response.end();
-    });
-  } else if (request.url.substr(0, 10) === '/frontend/' || request.url.substr(0, 7) === '/style/' || request.url.substr(0, 12) === '/favicon.ico') {
-    console.log('This should be bypassed.');
+  if (filePath === '/') {
+    filePath = './index.html';
   } else {
-    console.log(`request.url.substr(0, 10) = ${request.url.substr(0, 10)}`);
-    switch (request.url) {
-      case '/':
-        response.write('WELCOME HOME');
-        response.end();
-        break;
-
-      default:
-        response.end('Not using first option!');
-    }
+    filePath = './alt.html';
+    // filePath = './client/lib' + req.url;
   }
+
+  const extname = path.extname(filePath);
+
+  const contentTypesByExtention = {
+    html: 'text/html',
+    js: 'text/javascript',
+    css: 'text/css',
+  };
+
+  const contentType = contentTypesByExtention[extname] || 'text/plain';
+
+  path.exists(filePath, (exists) => {
+    if (exists) {
+      fs.readFile(filePath, (error, content) => {
+        if (error) {
+          res.writeHead(500);
+          res.end();
+        } else {
+          res.writeHead(200, {
+            'Content-Type': contentType
+          });
+          res.end(content, 'utf-8');
+        }
+      });
+    } else {
+      res.writeHead(404);
+      res.end();
+    }
+  });
 };
 
-const server = http.createServer(requestHandler);
+const server = http.createServer(handler);
 
 server.listen(httpPort, (err) => {
   if (err) {
@@ -131,7 +142,9 @@ function sendTextarea(data) {
   }, 2000);
 }
 
+//
 // WebSocket connection
+//
 const wss = new WebSocket.Server({
   port: webSocketPort,
 });
