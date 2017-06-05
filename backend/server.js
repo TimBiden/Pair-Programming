@@ -42,6 +42,7 @@ const handler = (req, res) => {
     html: 'text/html',
     js: 'text/javascript',
     css: 'text/css',
+    ico: 'image/icon',
   };
 
   const contentType = contentTypesByExtention[extname] || 'text/plain';
@@ -87,7 +88,7 @@ mongoose.connect(dbConfig);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-  console.log('We\'re connected. I think.');
+  console.log('Database Connected.');
 });
 
 // Define Mongo schema
