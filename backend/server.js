@@ -13,11 +13,11 @@ const WebSocket = require('ws');
 // Set WS port
 let dbConfig;
 const webSocketPort = process.env.PORT || 5000;
-console.log(`Web Socket Port = ${webSocketPort}`);
+console.log(`WebSocket Port = ${webSocketPort}`);
 
 // Set Web Server Variables
 const httpPort = 3000;
-console.log(`Web Server Port = ${httpPort}`);
+// console.log(`Web Server Port = ${httpPort}`);
 const messages = ['Enter your code here...'];
 
 // Set DB Config Variables
@@ -79,12 +79,13 @@ server.listen(httpPort, (err) => {
   if (err) {
     return console.log('ERROR OPERATOR:', err);
   }
-  console.log(`Server is listening on ${httpPort}`);
+  console.log(`Web Server is listening on ${httpPort}`);
 });
 
 //
 // Database connection
 //
+mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
