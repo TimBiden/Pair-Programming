@@ -33,7 +33,6 @@ if (webSocketPort === 5000) {
 // Create HTTP Server
 //
 const handler = (req, res) => {
-  console.log(req.url);
   let filePath = req.url;
 
   if (filePath === '/') {
@@ -44,6 +43,7 @@ const handler = (req, res) => {
   }
 
   const extname = path.extname(filePath);
+  console.log(`extname = ${extname}`);
 
   const contentTypesByExtention = {
     html: 'text/html',
@@ -53,7 +53,7 @@ const handler = (req, res) => {
 
   const contentType = contentTypesByExtention[extname] || 'text/plain';
 
-  path.exists(filePath, (exists) => {
+  fs.exists(filePath, (exists) => {
     if (exists) {
       fs.readFile(filePath, (error, content) => {
         if (error) {
