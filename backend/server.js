@@ -86,6 +86,7 @@ server.listen(httpPort, (err) => {
 // Database connection
 //
 mongoose.Promise = require('bluebird');
+
 mongoose.connect(dbConfig);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
