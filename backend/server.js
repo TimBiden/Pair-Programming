@@ -17,14 +17,14 @@ console.log(`WebSocket Port = ${webSocketPort}`);
 
 // Set Web Server Variables
 const httpPort = 3000;
-// console.log(`Web Server Port = ${httpPort}`);
 const messages = ['Enter your code here...'];
+let filePath = '';
 
 // Set DB Config Variables
 // Local or production check
 if (webSocketPort === 5000) {
   // For local use only
-  dbConfig = process.env.DATABASE_URI
+  dbConfig = process.env.DATABASE_URI;
 } else {
   dbConfig = process.env.MONGODB_URI;
 }
@@ -33,14 +33,7 @@ if (webSocketPort === 5000) {
 // Create HTTP Server
 //
 const handler = (req, res) => {
-  let filePath = req.url;
-
-  if (filePath === '/') {
-    filePath = './index.html';
-  } else {
-    filePath = './alt.html';
-    // filePath = './client/lib' + req.url;
-  }
+  filePath = req.url;
 
   const extname = path.extname(filePath);
   console.log(`extname = ${extname}`);
@@ -81,6 +74,9 @@ server.listen(httpPort, (err) => {
   }
   console.log(`Web Server is listening on ${httpPort}`);
 });
+
+const extension = path.extname(filePath);
+console.log(`extension = "${extension}"`);
 
 //
 // Database connection
