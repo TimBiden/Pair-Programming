@@ -1,29 +1,97 @@
 // WS & Web Server & DB Connection code.
 
 // Requirements
-const WebSocket = require('ws');
+const configFile = require('./config.js');
+const fs = require('fs');
+const http = require('http');
 const mongoose = require('mongoose');
-// const configFile = require('./config.js');
+const path = require('path');
 const sessionFile = require('./session.js');
-// const textareaFile = require('../textarea.js');
+const WebSocket = require('ws');
 
 // Variables
 // Set WS port
-const PORT = process.env.PORT || 5000;
-// Set Web Server Variables
-const messages = ['Enter your code here...'];
-// Set DB Config Variables
-// Local DB
-// const dbConfig = process.env.DATABASE_URI
-// Heroku DB
-const dbConfig = process.env.MONGODB_URI;
+let dbConfig;
+const webSocketPort = process.env.PORT || 5000;
 
+// Set Web Server Variables
+const httpPort = 3000;
+const messages = ['Enter your code here...'];
+let filePath = '';
+
+// Set DB Config Variables
+// Local or production check
+if (webSocketPort === 5000) {
+  // For local use only
+  dbConfig = process.env.DATABASE_URI;
+} else {
+  dbConfig = process.env.MONGODB_URI;
+}
+
+//
+// Create HTTP Server
+//
+const handler = (request, response) => {
+
+  filePath = (`${request.url}`);
+  if (filePath === '/') {
+    filePath = 'index.html';
+  }
+
+  console.log(' ');
+  console.log(`filePath = ${filePath}`);
+
+  const contentTypesByExtention = {
+    '.html': 'text/html',
+    '.js': 'text/javascript',
+    '.css': 'text/css',
+    '.ico': 'image/icon',
+  };
+
+  const extname = path.extname(filePath);
+  const contentType = contentTypesByExtention[extname] || 'text/plain';
+
+  filePath = path.join(__dirname, '..', filePath);
+
+  // fs.exists(filePath, (exists) => {
+  //   if (exists) {
+  fs.readFile(filePath, (error, content) => {
+    if (error) {
+      response.writeHead(500);
+      response.end();
+    } else {
+      response.writeHead(200, {
+        'Content-Type': contentType
+      });
+      response.end(content, 'utf-8');
+    }
+  });
+  // } else {
+  //   response.writeHead(404);
+  //   response.end();
+  //   }
+  // });
+};
+
+const server = http.createServer(handler);
+
+server.listen(httpPort, (err) => {
+  if (err) {
+    return console.log('ERROR OPERATOR:', err);
+  }
+  console.log(`Web Server is listening on ${httpPort}`);
+});
+
+//
 // Database connection
+//
+mongoose.Promise = require('bluebird');
+
 mongoose.connect(dbConfig);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-  console.log('We\'re connected. I think.');
+  console.log('Database Connected.');
 });
 
 // Define Mongo schema
@@ -42,7 +110,6 @@ const editorInstance = new Editor({
   session: sessionID,
   codeBox: textareaToDB,
 });
-console.log(`The sessionID is ${sessionID}.`);
 
 /**
  * Error checking
@@ -77,9 +144,11 @@ function sendTextarea(data) {
   }, 2000);
 }
 
+//
 // WebSocket connection
+//
 const wss = new WebSocket.Server({
-  port: PORT,
+  port: webSocketPort,
 });
 
 wss.on('connection', (ws) => {
@@ -92,6 +161,7 @@ wss.on('connection', (ws) => {
     // Capture the data we received.
     messages.push(data);
     sendTextarea(data);
+    console.log(data);
 
     // Broadcast to everyone else.
     wss.clients.forEach((client) => {
