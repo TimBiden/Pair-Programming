@@ -33,38 +33,47 @@ if (webSocketPort === 5000) {
 // Create HTTP Server
 //
 const handler = (request, response) => {
-  filePath = request.url;
+  console.log(`request = ${request.url}`);
+
+  filePath = (`${request.url}`);
+  if (filePath === '/') {
+    filePath = 'index.html';
+  }
+  console.log(`filePath = ${filePath}`);
 
   const extname = path.extname(filePath);
   console.log(`extname = ${extname}`);
 
   const contentTypesByExtention = {
-    html: 'text/html',
-    js: 'text/javascript',
-    css: 'text/css',
-    ico: 'image/icon',
+    '.html': 'text/html',
+    '.js': 'text/javascript',
+    '.css': 'text/css',
+    '.ico': 'image/icon',
   };
 
   const contentType = contentTypesByExtention[extname] || 'text/plain';
 
-  fs.exists(filePath, (exists) => {
-    if (exists) {
-      fs.readFile(filePath, (error, content) => {
-        if (error) {
-          response.writeHead(500);
-          response.end();
-        } else {
-          response.writeHead(200, {
-            'Content-Type': contentType
-          });
-          response.end(content, 'utf-8');
-        }
-      });
-    } else {
-      response.writeHead(404);
+  filePath = path.join(__dirname, '..', filePath);
+
+  // fs.exists(filePath, (exists) => {
+  //   if (exists) {
+  fs.readFile(filePath, (error, content) => {
+    if (error) {
+      console.log(`error = ${error}`);
+      response.writeHead(500);
       response.end();
+    } else {
+      response.writeHead(200, {
+        'Content-Type': contentType
+      });
+      response.end(content, 'utf-8');
     }
   });
+  // } else {
+  //   response.writeHead(404);
+  //   response.end();
+  //   }
+  // });
 };
 
 const server = http.createServer(handler);
