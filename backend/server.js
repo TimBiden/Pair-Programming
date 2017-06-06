@@ -32,8 +32,8 @@ if (webSocketPort === 5000) {
 //
 // Create HTTP Server
 //
-const handler = (req, res) => {
-  filePath = req.url;
+const handler = (request, response) => {
+  filePath = request.url;
 
   const extname = path.extname(filePath);
   console.log(`extname = ${extname}`);
@@ -51,18 +51,18 @@ const handler = (req, res) => {
     if (exists) {
       fs.readFile(filePath, (error, content) => {
         if (error) {
-          res.writeHead(500);
-          res.end();
+          response.writeHead(500);
+          response.end();
         } else {
-          res.writeHead(200, {
+          response.writeHead(200, {
             'Content-Type': contentType
           });
-          res.end(content, 'utf-8');
+          response.end(content, 'utf-8');
         }
       });
     } else {
-      res.writeHead(404);
-      res.end();
+      response.writeHead(404);
+      response.end();
     }
   });
 };
