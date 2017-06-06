@@ -13,7 +13,6 @@ const WebSocket = require('ws');
 // Set WS port
 let dbConfig;
 const webSocketPort = process.env.PORT || 5000;
-console.log(`WebSocket Port = ${webSocketPort}`);
 
 // Set Web Server Variables
 const httpPort = 3000;
@@ -33,16 +32,14 @@ if (webSocketPort === 5000) {
 // Create HTTP Server
 //
 const handler = (request, response) => {
-  console.log(`request = ${request.url}`);
 
   filePath = (`${request.url}`);
   if (filePath === '/') {
     filePath = 'index.html';
   }
-  console.log(`filePath = ${filePath}`);
 
-  const extname = path.extname(filePath);
-  console.log(`extname = ${extname}`);
+  console.log(' ');
+  console.log(`filePath = ${filePath}`);
 
   const contentTypesByExtention = {
     '.html': 'text/html',
@@ -51,6 +48,7 @@ const handler = (request, response) => {
     '.ico': 'image/icon',
   };
 
+  const extname = path.extname(filePath);
   const contentType = contentTypesByExtention[extname] || 'text/plain';
 
   filePath = path.join(__dirname, '..', filePath);
@@ -59,7 +57,6 @@ const handler = (request, response) => {
   //   if (exists) {
   fs.readFile(filePath, (error, content) => {
     if (error) {
-      console.log(`error = ${error}`);
       response.writeHead(500);
       response.end();
     } else {
@@ -84,9 +81,6 @@ server.listen(httpPort, (err) => {
   }
   console.log(`Web Server is listening on ${httpPort}`);
 });
-
-const extension = path.extname(filePath);
-console.log(`extension = "${extension}"`);
 
 //
 // Database connection
