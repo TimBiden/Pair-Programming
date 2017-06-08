@@ -53,6 +53,8 @@ const handler = (request, response) => {
 
   filePath = path.join(__dirname, '..', filePath);
 
+  // fs.exists(filePath, (exists) => {
+  //   if (exists) {
   fs.readFile(filePath, (error, content) => {
     if (error) {
       response.writeHead(500);
@@ -64,6 +66,11 @@ const handler = (request, response) => {
       response.end(content, 'utf-8');
     }
   });
+  // } else {
+  //   response.writeHead(404);
+  //   response.end();
+  //   }
+  // });
 };
 
 const server = http.createServer(handler);
