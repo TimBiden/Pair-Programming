@@ -15,7 +15,7 @@ let dbConfig;
 const webSocketPort = process.env.PORT || 5000;
 
 // Set Web Server Variables
-const httpPort = 3000;
+const httpPort = process.env.PORT || 5000;
 const messages = ['Enter your code here...'];
 let filePath = '';
 
