@@ -12,10 +12,10 @@ const WebSocket = require('ws');
 // Variables
 // Set WS port
 let dbConfig;
-const webSocketPort = process.env.PORT || 5000;
+const webSocketPort = process.env.WSPORT;
 
 // Set Web Server Variables
-const httpPort = process.env.WSPORT || 5000;
+const httpPort = process.env.PORT;
 const messages = ['Enter your code here...'];
 let filePath = '';
 
