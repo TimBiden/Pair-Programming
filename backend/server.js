@@ -11,8 +11,10 @@ const WebSocket = require('ws');
 
 // Variables
 // Set WS port
-let dbConfig = process.env.MONGODB_URI;
 const webSocketPort = process.env.WSPORT;
+
+// Database address
+const dbConfig = process.env.MONGODB_URI;
 
 // Set Web Server Variables
 const httpPort = process.env.PORT;
@@ -139,7 +141,7 @@ function sendTextarea(data) {
 // WebSocket connection
 //
 const wss = new WebSocket.Server({
-  port: webSocketPort,
+  port: 8080,
 });
 
 wss.on('connection', (ws) => {
