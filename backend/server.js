@@ -11,8 +11,8 @@ const WebSocket = require('ws');
 
 // Variables
 // Set WS port
-// const webSocketPort = process.env.WSPORT;
-const webSocketPort = 8000;
+const webSocketPort = process.env.WSPORT;
+// const webSocketPort = 8000;
 
 // Database address
 const dbConfig = process.env.MONGODB_URI;
