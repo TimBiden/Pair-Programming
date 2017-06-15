@@ -11,22 +11,13 @@ const WebSocket = require('ws');
 
 // Variables
 // Set WS port
-let dbConfig;
+let dbConfig = process.env.MONGODB_URI;
 const webSocketPort = process.env.WSPORT;
 
 // Set Web Server Variables
 const httpPort = process.env.PORT;
 const messages = ['Enter your code here...'];
 let filePath = '';
-
-// Set DB Config Variables
-// Local or production check
-if (webSocketPort === 5000) {
-  // For local use only
-  dbConfig = process.env.DATABASE_URI;
-} else {
-  dbConfig = process.env.MONGODB_URI;
-}
 
 //
 // Create HTTP Server
