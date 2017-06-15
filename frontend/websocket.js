@@ -1,16 +1,20 @@
 // Get references to elements on page.
 const messageField = document.getElementById('mainTextArea');
 
+//
 // Create new WebSocket on Heroku
-
+//
 // const server = 'ws://sleepy-ridge-88571.herokuapp.com';
-const server = 'wss://sleepy-ridge-88571.herokuapp.com';
+// const server = 'wss://sleepy-ridge-88571.herokuapp.com';
 // const server = 'ws://sleepy-ridge-88571.herokuapp.com:8080';
 // const server = 'wss://sleepy-ridge-88571.herokuapp.com:8080';
 
-const socket = new WebSocket(server);
+//
 // Local config file
-// const socket = new WebSocket('ws://localhost:8080');
+//
+const server = 'ws://localhost:8080';
+
+const socket = new WebSocket(server);
 
 /**
  * Retrieve data from textarea
