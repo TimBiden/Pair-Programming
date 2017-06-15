@@ -17,8 +17,7 @@ const webSocketPort = process.env.WSPORT;
 const dbConfig = process.env.MONGODB_URI;
 
 // Set Web Server Variables
-// const httpPort = process.env.PORT;
-const httpPort = 8180;
+const httpPort = process.env.PORT;
 const messages = ['Enter your code here...'];
 let filePath = '';
 
