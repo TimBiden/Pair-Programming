@@ -9,8 +9,8 @@ const messageField = document.getElementById('mainTextArea');
 // const server = 'wss://sleepy-ridge-88571.herokuapp.com:8080';
 // const server = location.origin.replace(/^http/, 'ws');
 // const server = location.origin.replace(/^http/, 'wss');
-const server = location.origin.replace(/^https/, 'ws');
-// const server = location.origin.replace(/^https/, 'wss');
+// const server = location.origin.replace(/^https/, 'ws');
+const server = location.origin.replace(/^https/, 'wss');
 
 const socket = new WebSocket(server);
 // Local config file
