@@ -29,6 +29,8 @@ const handler = (request, response) => {
   filePath = (`${request.url}`);
   if (filePath === '/') {
     filePath = 'index.html';
+  } else if (filePath === '/ws-port') {
+    filePath = '/frontend/ws-port.js';
   }
 
   console.log(' ');
