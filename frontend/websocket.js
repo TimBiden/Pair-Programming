@@ -3,8 +3,8 @@ const messageField = document.getElementById('mainTextArea');
 
 // Create new WebSocket on Heroku
 
-const server = 'ws://sleepy-ridge-88571.herokuapp.com';
-// const server = 'wss://sleepy-ridge-88571.herokuapp.com';
+// const server = 'ws://sleepy-ridge-88571.herokuapp.com';
+const server = 'wss://sleepy-ridge-88571.herokuapp.com';
 // const server = 'ws://sleepy-ridge-88571.herokuapp.com:8080';
 // const server = 'wss://sleepy-ridge-88571.herokuapp.com:8080';
 
