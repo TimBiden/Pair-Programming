@@ -4,6 +4,7 @@ fetch('/ws-port').then((response) => {
     const herokuWsPort = data.wsPort;
     console.log(`herokuWsPort = ${herokuWsPort}.`);
   });
+  connect(herokuWsPort);
 });
 
 /**
@@ -11,7 +12,7 @@ fetch('/ws-port').then((response) => {
  * @param {number} response Current ws port number
  * @returns {void}
  */
-function connect(response) {
+function connect(herokuWsPort) {
   // Get references to elements on page.
   const messageField = document.getElementById('mainTextArea');
 
