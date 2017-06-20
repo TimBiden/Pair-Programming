@@ -137,7 +137,7 @@ function sendTextarea(data) {
 // WebSocket connection
 //
 const wss = new WebSocket.Server({
-  port: 8080,
+  port: webSocketPort,
 });
 
 wss.on('connection', (ws) => {
