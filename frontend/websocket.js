@@ -1,8 +1,8 @@
 fetch('/ws-port').then((response) => {
   response.json().then((data) => {
     console.log(data);
-    const tempTest = data.wsPort;
-    console.log(`tempTest = ${tempTest}.`);
+    const herokuWsPort = data.wsPort;
+    console.log(`herokuWsPort = ${herokuWsPort}.`);
   });
 });
 
@@ -18,7 +18,7 @@ function connect(response) {
   //
   // Create new WebSocket on Heroku
   //
-  const server = `ws://sleepy-ridge-88571.herokuapp.com:${response}`;
+  const server = `ws://sleepy-ridge-88571.herokuapp.com:${herokuWsPort}`;
   // const server = 'ws://localhost:8080';
 
   const socket = new WebSocket(server);
