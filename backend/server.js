@@ -19,6 +19,7 @@ const dbConfig = process.env.MONGODB_URI;
 
 // Set Web Server Variables
 const httpPort = process.env.PORT;
+console.log(`httpPort = ${httpPort}`);
 const messages = ['Enter your code here...'];
 let filePath = '';
 
