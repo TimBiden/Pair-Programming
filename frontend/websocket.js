@@ -1,7 +1,8 @@
 fetch('/ws-port').then((response) => {
-  console.log(`Response is: ${response.status}`);
   response.json().then((data) => {
     console.log(data);
+    const tempTest = data.wsPort;
+    console.log(`tempTest = ${tempTest}.`);
   });
 });
 
