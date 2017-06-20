@@ -1,5 +1,5 @@
 fetch('/ws-port').then((response) => {
-  console.log(`Response is: ${response}`);
+  console.log(`Response is: ${response.status}`);
   // connect(response);
 });
 
