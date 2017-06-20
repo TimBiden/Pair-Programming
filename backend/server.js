@@ -31,7 +31,13 @@ const handler = (request, response) => {
   if (filePath === '/') {
     filePath = 'index.html';
   } else if (filePath === '/ws-port') {
-    filePath = '/frontend/ws-port.js';
+    // filePath = '/frontend/ws-port.js';
+    let data = {
+      wsPort: process.ENV.PORT
+    };
+    response.write(JSON.stringify(data));
+    response.end();
+    return;
   }
 
   console.log(' ');
