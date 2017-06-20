@@ -2,6 +2,7 @@
 
 // Requirements
 const configFile = require('./config.js');
+const configFile = require('../frontend/config.js');
 const fs = require('fs');
 const http = require('http');
 const mongoose = require('mongoose');
@@ -11,22 +12,15 @@ const WebSocket = require('ws');
 
 // Variables
 // Set WS port
-let dbConfig;
-const webSocketPort = process.env.PORT || 5000;
+const webSocketPort = process.env.WSPORT;
+
+// Database address
+const dbConfig = process.env.MONGODB_URI;
 
 // Set Web Server Variables
-const httpPort = 3000;
+const httpPort = process.env.PORT;
 const messages = ['Enter your code here...'];
 let filePath = '';
-
-// Set DB Config Variables
-// Local or production check
-if (webSocketPort === 5000) {
-  // For local use only
-  dbConfig = process.env.DATABASE_URI;
-} else {
-  dbConfig = process.env.MONGODB_URI;
-}
 
 //
 // Create HTTP Server
@@ -36,6 +30,13 @@ const handler = (request, response) => {
   filePath = (`${request.url}`);
   if (filePath === '/') {
     filePath = 'index.html';
+  } else if (filePath === '/ws-port') {
+    const data = {
+      wsPort: process.env.PORT
+    };
+    response.write(JSON.stringify(data));
+    response.end();
+    return;
   }
 
   console.log(' ');
@@ -53,24 +54,17 @@ const handler = (request, response) => {
 
   filePath = path.join(__dirname, '..', filePath);
 
-  // fs.exists(filePath, (exists) => {
-  //   if (exists) {
   fs.readFile(filePath, (error, content) => {
     if (error) {
       response.writeHead(500);
       response.end();
     } else {
       response.writeHead(200, {
-        'Content-Type': contentType
+        'Content-Type': contentType,
       });
       response.end(content, 'utf-8');
     }
   });
-  // } else {
-  //   response.writeHead(404);
-  //   response.end();
-  //   }
-  // });
 };
 
 const server = http.createServer(handler);
@@ -137,7 +131,6 @@ let timerSend;
 function sendTextarea(data) {
   clearTimeout(timerSend);
   timerSend = setTimeout(() => {
-    // textareaToDB(data);
     console.log(`sending data to db ${data}`);
     editorInstance.codeBox = data;
     editorInstance.save(onEditorSave);
@@ -149,6 +142,7 @@ function sendTextarea(data) {
 //
 const wss = new WebSocket.Server({
   port: webSocketPort,
+  // server: server,
 });
 
 wss.on('connection', (ws) => {
