@@ -2,6 +2,7 @@
 
 // Requirements
 const configFile = require('./config.js');
+const configFile = require('../frontend/config.js');
 const fs = require('fs');
 const http = require('http');
 const mongoose = require('mongoose');
@@ -12,7 +13,6 @@ const WebSocket = require('ws');
 // Variables
 // Set WS port
 const webSocketPort = process.env.WSPORT;
-// const webSocketPort = 8000;
 
 // Database address
 const dbConfig = process.env.MONGODB_URI;
@@ -31,8 +31,7 @@ const handler = (request, response) => {
   if (filePath === '/') {
     filePath = 'index.html';
   } else if (filePath === '/ws-port') {
-    // filePath = '/frontend/ws-port.js';
-    let data = {
+    const data = {
       wsPort: process.env.PORT
     };
     response.write(JSON.stringify(data));
@@ -61,7 +60,7 @@ const handler = (request, response) => {
       response.end();
     } else {
       response.writeHead(200, {
-        'Content-Type': contentType
+        'Content-Type': contentType,
       });
       response.end(content, 'utf-8');
     }
@@ -132,7 +131,6 @@ let timerSend;
 function sendTextarea(data) {
   clearTimeout(timerSend);
   timerSend = setTimeout(() => {
-    // textareaToDB(data);
     console.log(`sending data to db ${data}`);
     editorInstance.codeBox = data;
     editorInstance.save(onEditorSave);
