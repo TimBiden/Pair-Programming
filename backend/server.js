@@ -33,7 +33,7 @@ const handler = (request, response) => {
   } else if (filePath === '/ws-port') {
     // filePath = '/frontend/ws-port.js';
     let data = {
-      wsPort: process.ENV.PORT
+      wsPort: process.env.PORT
     };
     response.write(JSON.stringify(data));
     response.end();
