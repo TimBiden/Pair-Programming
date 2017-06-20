@@ -3,8 +3,8 @@ fetch('/ws-port').then((response) => {
     console.log(data);
     const herokuWsPort = data.wsPort;
     console.log(`herokuWsPort = ${herokuWsPort}.`);
+    connect(herokuWsPort);
   });
-  connect(herokuWsPort);
 });
 
 /**
