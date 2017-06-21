@@ -11,7 +11,8 @@ const messageField = document.getElementById('mainTextArea');
 //
 // const server = `wss://sleepy-ridge-88571.herokuapp.com`;
 // const server = `ws://sleepy-ridge-88571.herokuapp.com:${herokuWsPort}`;
-const server = 'ws://138.68.30.206:80';
+// const server = 'ws://138.68.30.206';
+const server = window.location.origin.replace(window.location.protocol, 'ws:');
 
 const socket = new WebSocket(server);
 
