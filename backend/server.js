@@ -11,14 +11,16 @@ const WebSocket = require('ws');
 
 // Variables
 // Set WS port
-const webSocketPort = process.env.WSPORT;
-// const webSocketPort = 8000;
+// const webSocketPort = process.env.WSPORT;
+const webSocketPort = 5000;
 
 // Database address
-const dbConfig = process.env.MONGODB_URI;
+// const dbConfig = process.env.MONGODB_URI;
+const dbConfig = 'mongodb://localhost/test';
 
 // Set Web Server Variables
-const httpPort = process.env.PORT;
+// const httpPort = process.env.PORT;
+const httpPort = 8080;
 console.log(`httpPort = ${httpPort}`);
 const messages = ['Enter your code here...'];
 let filePath = '';
@@ -144,8 +146,8 @@ function sendTextarea(data) {
 // WebSocket connection
 //
 const wss = new WebSocket.Server({
-  // port: webSocketPort,
-  server: server,
+  port: webSocketPort,
+  // server: server,
 });
 
 wss.on('connection', (ws) => {
