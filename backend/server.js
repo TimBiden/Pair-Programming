@@ -20,7 +20,7 @@ const dbConfig = 'mongodb://localhost/test';
 
 // Set Web Server Variables
 // const httpPort = process.env.PORT;
-const httpPort = 8080;
+const httpPort = 80;
 console.log(`httpPort = ${httpPort}`);
 const messages = ['Enter your code here...'];
 let filePath = '';
