@@ -1,10 +1,19 @@
+/**
+ * Connect via websocket
+ * @param {number} response Current ws port number
+ * @returns {void}
+ */
 // Get references to elements on page.
 const messageField = document.getElementById('mainTextArea');
 
+//
 // Create new WebSocket on Heroku
-const socket = new WebSocket('ws://sleepy-ridge-88571.herokuapp.com');
-// Local config file
-// const socket = new WebSocket('ws://localhost:5000');
+//
+// const server = `wss://sleepy-ridge-88571.herokuapp.com`;
+// const server = `ws://sleepy-ridge-88571.herokuapp.com:${herokuWsPort}`;
+const server = 'ws://localhost:5000';
+
+const socket = new WebSocket(server);
 
 /**
  * Retrieve data from textarea

@@ -11,22 +11,19 @@ const WebSocket = require('ws');
 
 // Variables
 // Set WS port
-let dbConfig;
-const webSocketPort = process.env.PORT || 5000;
+// const webSocketPort = process.env.WSPORT;
+const webSocketPort = 5000;
+
+// Database address
+// const dbConfig = process.env.MONGODB_URI;
+const dbConfig = 'mongodb://localhost/test';
 
 // Set Web Server Variables
-const httpPort = 3000;
+// const httpPort = process.env.PORT;
+const httpPort = 8080;
+console.log(`httpPort = ${httpPort}`);
 const messages = ['Enter your code here...'];
 let filePath = '';
-
-// Set DB Config Variables
-// Local or production check
-if (webSocketPort === 5000) {
-  // For local use only
-  dbConfig = process.env.DATABASE_URI;
-} else {
-  dbConfig = process.env.MONGODB_URI;
-}
 
 //
 // Create HTTP Server
@@ -36,6 +33,14 @@ const handler = (request, response) => {
   filePath = (`${request.url}`);
   if (filePath === '/') {
     filePath = 'index.html';
+  } else if (filePath === '/ws-port') {
+    // filePath = '/frontend/ws-port.js';
+    let data = {
+      wsPort: process.env.PORT
+    };
+    response.write(JSON.stringify(data));
+    response.end();
+    return;
   }
 
   console.log(' ');
@@ -53,8 +58,6 @@ const handler = (request, response) => {
 
   filePath = path.join(__dirname, '..', filePath);
 
-  // fs.exists(filePath, (exists) => {
-  //   if (exists) {
   fs.readFile(filePath, (error, content) => {
     if (error) {
       response.writeHead(500);
@@ -66,11 +69,6 @@ const handler = (request, response) => {
       response.end(content, 'utf-8');
     }
   });
-  // } else {
-  //   response.writeHead(404);
-  //   response.end();
-  //   }
-  // });
 };
 
 const server = http.createServer(handler);
@@ -149,6 +147,7 @@ function sendTextarea(data) {
 //
 const wss = new WebSocket.Server({
   port: webSocketPort,
+  // server: server,
 });
 
 wss.on('connection', (ws) => {
