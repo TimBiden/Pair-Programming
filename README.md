@@ -17,9 +17,15 @@ Work in progress.
 
 - Set up database to track changes. ⏯
 
-  - Read & pushes entire document to the Heroku/MLab database. ✅
+  - Read & pushes entire document to the Digital Ocean/MongoDB database. ✅
   - Needs to recall entire documents by URL
 
 - Keep session open for specified amount of time.
 - Scope session to unique key from URL.
 - Generate unique URL and store in database.
+
+## Beyond MVP:
+- Make it attractive
+- Add shared text highlighting
+- Add voice communications
+- Add custom session URLs
