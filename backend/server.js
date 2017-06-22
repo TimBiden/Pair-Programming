@@ -6,6 +6,7 @@ const http = require('http');
 const mongoose = require('mongoose');
 const path = require('path');
 const sessionFile = require('./session.js');
+const url = require('url');
 const WebSocket = require('ws');
 
 // Variables
@@ -31,7 +32,6 @@ const handler = (request, response) => {
 
   console.log(' ');
   console.log(`filePath = ${filePath}`);
-  console.log(`response = ${response.statusCode}`);
 
   if (filePath === '/') {
     filePath = 'index.html';
@@ -51,12 +51,16 @@ const handler = (request, response) => {
 
   fs.readFile(filePath, (error, content) => {
     if (error) {
-      response.writeHead(500);
-      response.end();
+      response.writeHead(404);
+      console.log(`The error is ${error}`);
+      console.log(`The file path is ${request.url}.`);
+      console.log(`response = ${response.statusCode}`);
+      response.end(content, 'utf-8');
     } else {
       response.writeHead(200, {
         'Content-Type': contentType
       });
+      console.log(`response = ${response.statusCode}`);
       response.end(content, 'utf-8');
     }
   });
