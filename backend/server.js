@@ -16,8 +16,10 @@ const webSocketPort = 5000;
 const dbConfig = 'mongodb://localhost/test';
 
 // Set Web Server Variables
-const httpPort = 80;
-console.log(`httpPort = ${httpPort}`);
+// Choose localServer or digitalOcean
+const digitalOcean = 80;
+const localServer = 5000;
+const httpPort = localServer;
 const messages = ['Enter your code here...'];
 let filePath = '';
 
@@ -25,22 +27,15 @@ let filePath = '';
 // Create HTTP Server
 //
 const handler = (request, response) => {
-
   filePath = (`${request.url}`);
-  if (filePath === '/') {
-    filePath = 'index.html';
-  } else if (filePath === '/ws-port') {
-    // filePath = '/frontend/ws-port.js';
-    let data = {
-      wsPort: process.env.PORT
-    };
-    response.write(JSON.stringify(data));
-    response.end();
-    return;
-  }
 
   console.log(' ');
   console.log(`filePath = ${filePath}`);
+  console.log(`response = ${response.statusCode}`);
+
+  if (filePath === '/') {
+    filePath = 'index.html';
+  }
 
   const contentTypesByExtention = {
     '.html': 'text/html',
