@@ -53,7 +53,9 @@ const handler = (request, response) => {
     if (error) {
       response.writeHead(404);
       console.log(`The error is ${error}`);
-      console.log(`The file path is ${request.url}.`);
+      let dataString = request.url;
+      dataString = dataString.substr(1);
+      console.log(`The file path is ${dataString}`);
       console.log(`response = ${response.statusCode}`);
       response.end(content, 'utf-8');
     } else {
