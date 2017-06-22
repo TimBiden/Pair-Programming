@@ -32,8 +32,8 @@ function reBlock() {
  * @returns {void}
  */
 function blockMessage() {
-  const warnText = 'Someone else is currently coding.<br>Please extinguish your hyperdrive and wait your turn.';
-  const warnBlock = warnText.fontcolor('red');
+  const warnText = 'Someone else is currently coding.<br> <br>Please extinguish your hyperdrive and wait your turn.';
+  const warnBlock = warnText.fontcolor('red').bold();
 
   document.getElementById('CodingMessage').innerHTML = warnBlock;
 }
