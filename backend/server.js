@@ -1,7 +1,6 @@
 // WS & Web Server & DB Connection code.
 
 // Requirements
-const configFile = require('./config.js');
 const fs = require('fs');
 const http = require('http');
 const mongoose = require('mongoose');
