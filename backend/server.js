@@ -13,8 +13,9 @@ const WebSocket = require('ws');
 // Set WS port
 const webSocketPort = 5000;
 
-// Database address
+// Database Variables
 const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
+let sessionIdString;
 
 // Set Web Server Variables
 // Choose localServer or digitalOcean
@@ -31,7 +32,6 @@ const handler = (request, response) => {
   filePath = (`${request.url}`);
 
   console.log(' ');
-  console.log(`filePath = ${filePath}`);
 
   if (filePath === '/') {
     filePath = 'index.html';
@@ -51,11 +51,21 @@ const handler = (request, response) => {
 
   fs.readFile(filePath, (error, content) => {
     if (error) {
-      response.writeHead(404);
-      console.log(`The error is ${error}`);
-      let dataString = request.url;
-      dataString = dataString.substr(1);
-      console.log(`The file path is ${dataString}`);
+      // response.writeHead(404);
+      // console.log(`The error is ${error}`);
+      // sessionIdString = request.url;
+      sessionIdString = request.url.substr(1);
+      console.log(`The requested Session ID is ${sessionIdString}`);
+
+      // Get specific session...
+      Editor.find({
+        session: sessionIdString,
+      }, (err, session) => {
+        if (err) throw err;
+
+        console.log(session);
+      });
+
       console.log(`response = ${response.statusCode}`);
       response.end(content, 'utf-8');
     } else {
