@@ -9,34 +9,39 @@ const sessionFile = require('./session.js');
 const url = require('url');
 const WebSocket = require('ws');
 
+//
 // Variables
-// Set WS port
+//
+// Websocket Variables
 const webSocketPort = 5000;
 
 // Database Variables
 const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
 let sessionIdString;
 
-// Set Web Server Variables
+// Web Server Variables
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
 const httpPort = localServer;
+// Standard Web Server Variables
 const messages = ['Enter your code here...'];
 let filePath = '';
 
 //
-// Create HTTP Server
+// Configure HTTP Server
 //
-const handler = (request, response) => {
+const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
 
   console.log(' ');
 
+  // load index.mthl when no session ID attached
   if (filePath === '/') {
     filePath = 'index.html';
   }
 
+  // Types of files to pass
   const contentTypesByExtention = {
     '.html': 'text/html',
     '.js': 'text/javascript',
@@ -44,11 +49,13 @@ const handler = (request, response) => {
     '.ico': 'image/icon',
   };
 
+  // Pass the files correctly
   const extname = path.extname(filePath);
   const contentType = contentTypesByExtention[extname] || 'text/plain';
 
   filePath = path.join(__dirname, '..', filePath);
 
+  // Start checking URL for session IDs or valid pages
   fs.readFile(filePath, (error, content) => {
     if (error) {
       // response.writeHead(404);
@@ -57,18 +64,21 @@ const handler = (request, response) => {
       sessionIdString = request.url.substr(1);
       console.log(`The requested Session ID is ${sessionIdString}`);
 
-      // Get specific session...
+      // Query DB by session ID
       Editor.find({
         session: sessionIdString,
       }, (err, session) => {
         if (err) throw err;
 
+        // Log output to server console
         console.log(session);
       });
 
-      console.log(`response = ${response.statusCode}`);
-      response.end(content, 'utf-8');
+      // http responses
+      // console.log(`response = ${response.statusCode}`);
+      // response.end(content, 'utf-8');
     } else {
+      // If the file exists, load that file
       response.writeHead(200, {
         'Content-Type': contentType
       });
@@ -78,8 +88,11 @@ const handler = (request, response) => {
   });
 };
 
-const server = http.createServer(handler);
+// Create http server
+// Run file checks created in server config
+const server = http.createServer(httpServerConfig);
 
+// Start Server
 server.listen(httpPort, (err) => {
   if (err) {
     return console.log('ERROR OPERATOR:', err);
