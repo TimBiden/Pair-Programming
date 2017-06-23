@@ -29,3 +29,4 @@ Work in progress.
 - Add shared text highlighting
 - Add voice communications
 - Add custom session URLs
+- Add language specific highlighting (prismjs.com)
