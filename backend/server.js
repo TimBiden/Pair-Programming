@@ -14,7 +14,7 @@ const WebSocket = require('ws');
 const webSocketPort = 5000;
 
 // Database address
-const dbConfig = 'mongodb://localhost/test';
+const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
 
 // Set Web Server Variables
 // Choose localServer or digitalOcean
@@ -93,6 +93,8 @@ db.once('open', () => {
 const editorSchema = mongoose.Schema({
   session: String,
   codeBox: String,
+  created_at: Date,
+  updated_at: Date,
 });
 
 const Editor = mongoose.model('Editor', editorSchema);
@@ -125,7 +127,7 @@ let timerSend;
 
 /**
  * Check time since other user updated document.
- * If > 30 seconds, update database with current textarea.
+ * If > 2 seconds, update database with current textarea.
  * @param {string} data Complete text in textarea.
  * @returns {void}
  */
