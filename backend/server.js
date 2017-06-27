@@ -45,6 +45,7 @@ const httpServerConfig = (request, response) => {
     '.js': 'text/javascript',
     '.css': 'text/css',
     '.ico': 'image/icon',
+    '.txt': 'text/plain',
   };
 
   // Pass the files correctly
@@ -158,7 +159,7 @@ function sendTextarea(data) {
   timerSend = setTimeout(() => {
     // textareaToDB(data);
     console.log(' ');
-    console.log(`sending data to db "${data}".`);
+    console.log(`sending data to db '${data}'.`);
     console.log(' ');
     editorInstance.codeBox = data;
     editorInstance.save(onEditorSave);
