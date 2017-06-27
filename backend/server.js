@@ -34,8 +34,6 @@ let filePath = '';
 const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
 
-  console.log(' ');
-
   // load index.mthl when no session ID attached
   if (filePath === '/') {
     filePath = 'index.html';
@@ -82,7 +80,7 @@ const httpServerConfig = (request, response) => {
       response.writeHead(200, {
         'Content-Type': contentType
       });
-      console.log(`response = ${response.statusCode}`);
+      // console.log(`response = ${response.statusCode}`);
       response.end(content, 'utf-8');
     }
   });
@@ -158,7 +156,9 @@ function sendTextarea(data) {
   clearTimeout(timerSend);
   timerSend = setTimeout(() => {
     // textareaToDB(data);
-    console.log(`sending data to db ${data}`);
+    console.log(' ');
+    console.log(`sending data to db "${data}".`);
+    console.log(' ');
     editorInstance.codeBox = data;
     editorInstance.save(onEditorSave);
   }, 2000);
