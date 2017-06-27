@@ -63,13 +63,14 @@ const httpServerConfig = (request, response) => {
       console.log(`The requested Session ID is ${sessionIdString}`);
 
       // Query DB by session ID
-      Editor.find({
+      Editor.findOne({
         session: sessionIdString,
-      }, (err, session) => {
+      }, (err, sessionData) => {
         if (err) throw err;
 
-        // Log output to server console
-        console.log(session);
+        console.log(' ');
+        console.log(`Session codeBox = ${sessionData.codeBox}`);
+        console.log(' ');
       });
 
       // http responses
