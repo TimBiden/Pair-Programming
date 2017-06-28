@@ -60,14 +60,6 @@ const httpServerConfig = (request, response) => {
         filePath = 'index.html';
         console.log(' ');
         console.log('step 1. filePath = index.html');
-
-        // // Send data to WebSocket
-        // wss.on('connection', (ws) => {
-        //   ws.send({
-        //     message: 'We can bind to `connection` multiple times and send moar data.',
-        //     textToEditor,
-        //   });
-        // });
       }
       console.log(' ');
       console.log('step 2. No session data.');
