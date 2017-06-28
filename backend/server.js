@@ -6,7 +6,7 @@ const http = require('http');
 const mongoose = require('mongoose');
 const path = require('path');
 const sessionFile = require('./session.js');
-const url = require('url');
+// const url = require('url');
 const WebSocket = require('ws');
 
 //
@@ -33,11 +33,51 @@ let filePath = '';
 //
 const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
+  let textToEditor;
 
   // load index.mthl when no session ID attached
   if (filePath === '/') {
     filePath = 'index.html';
+  } else {
+    sessionIdString = request.url.substr(1);
+    console.log(`The requested Session ID is ${sessionIdString}`);
+
+    // Query DB by session ID
+    Editor.findOne({
+      session: sessionIdString,
+    }, (err, sessionData) => {
+      if (err) throw err;
+
+      // If there's session data, get the existing code from the DB.
+      if (sessionData) {
+        console.log(' ');
+        // console.log(`Session codeBox = ${sessionData.codeBox}`);
+        textToEditor = sessionData.codeBox;
+        console.log(`textToEditor = ${textToEditor}`);
+        console.log(' ');
+
+        // Load index.html. Not working.
+        filePath = 'index.html';
+        console.log(' ');
+        console.log('step 1. filePath = index.html');
+
+        // // Send data to WebSocket
+        // wss.on('connection', (ws) => {
+        //   ws.send({
+        //     message: 'We can bind to `connection` multiple times and send moar data.',
+        //     textToEditor,
+        //   });
+        // });
+      }
+      console.log(' ');
+      console.log('step 2. No session data.');
+    });
+    console.log(' ');
+    console.log('step 3. Autorun function.');
   }
+  console.log(' ');
+  console.log('step 4. filePath !== /');
+  console.log(`filePath = ${filePath}`);
 
   // Types of files to pass
   const contentTypesByExtention = {
@@ -58,21 +98,8 @@ const httpServerConfig = (request, response) => {
   fs.readFile(filePath, (error, content) => {
     if (error) {
       // response.writeHead(404);
-      // console.log(`The error is ${error}`);
+      console.log(`The error is ${error}`);
       // sessionIdString = request.url;
-      sessionIdString = request.url.substr(1);
-      console.log(`The requested Session ID is ${sessionIdString}`);
-
-      // Query DB by session ID
-      Editor.findOne({
-        session: sessionIdString,
-      }, (err, sessionData) => {
-        if (err) throw err;
-
-        console.log(' ');
-        console.log(`Session codeBox = ${sessionData.codeBox}`);
-        console.log(' ');
-      });
 
       // http responses
       // console.log(`response = ${response.statusCode}`);
@@ -80,7 +107,7 @@ const httpServerConfig = (request, response) => {
     } else {
       // If the file exists, load that file
       response.writeHead(200, {
-        'Content-Type': contentType
+        'Content-Type': contentType,
       });
       // console.log(`response = ${response.statusCode}`);
       response.end(content, 'utf-8');
@@ -142,6 +169,7 @@ function onEditorSave(error, model) {
     return console.error(error);
   }
   console.log(model);
+  return model;
 }
 
 editorInstance.save(onEditorSave);
