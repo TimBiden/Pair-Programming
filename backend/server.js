@@ -33,6 +33,7 @@ let filePath = '';
 //
 const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
+  sessionIdString = request.url.substr(1);
   let textToEditor;
 
   function checkURL() {
@@ -40,11 +41,6 @@ const httpServerConfig = (request, response) => {
     if (filePath === '/') {
       filePath = 'index.html';
       console.log('Loading index.html');
-      console.log(' ');
-    } else {
-      sessionIdString = request.url.substr(1);
-      console.log('check database for session ID');
-      console.log(`The requested Session ID is ${sessionIdString}`);
       console.log(' ');
     }
   }
@@ -96,7 +92,7 @@ const httpServerConfig = (request, response) => {
   }
 
   checkURL();
-  if (sessionID != 'style/style.css' && sessionID != 'frontend/textarea.js' && sessionID != 'frontend/textsave.js' && sessionID != 'frontend/timing.js' && sessionID != 'frontend/websocket.js') {
+  if (sessionIdString !== 'style/style.css' && sessionIdString !== 'frontend/textarea.js' && sessionIdString !== 'frontend/textsave.js' && sessionIdString !== 'frontend/timing.js' && sessionIdString !== 'frontend/websocket.js' && sessionIdString !== 'robots.txt' && sessionIdString !== 'favicon.ico') {
     queryDB();
   }
 
