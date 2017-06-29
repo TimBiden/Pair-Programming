@@ -39,11 +39,13 @@ const httpServerConfig = (request, response) => {
     // load index.mthl when no session ID attached
     if (filePath === '/') {
       filePath = 'index.html';
-      console.log('loading index.html');
+      console.log('Loading index.html');
+      console.log(' ');
     } else {
-      console.log('check database for session ID');
       sessionIdString = request.url.substr(1);
+      console.log('check database for session ID');
       console.log(`The requested Session ID is ${sessionIdString}`);
+      console.log(' ');
     }
   }
 
@@ -54,23 +56,19 @@ const httpServerConfig = (request, response) => {
     }, (err, sessionData) => {
       if (err) throw err;
       textToEditor = sessionData;
-      console.log(textToEditor);
+      console.log('No error querying DB.');
+      console.log(' ');
     });
   }
 
   function checkForSessionData() {
     // If there's session data, get the existing code from the DB.
     if (textToEditor) {
-      console.log('There is session data.');
       // console.log(`Session codeBox = ${sessionData.codeBox}`);
       textToEditor = textToEditor.codeBox;
+      console.log('There is session data.');
       console.log(`textToEditor = ${textToEditor}`);
       console.log(' ');
-
-      // Load index.html. Not working.
-      // filePath = 'index.html';
-      console.log(' ');
-      console.log('Get data from DB');
       filePath = '/';
       checkURL();
     }
@@ -80,13 +78,12 @@ const httpServerConfig = (request, response) => {
     // Start checking URL for session IDs or valid pages
     fs.readFile(filePath, (error, content) => {
       if (error) {
-        // response.writeHead(404);
         console.log(`The error is ${error}`);
-        // sessionIdString = request.url;
 
         // http responses
         // console.log(`response = ${response.statusCode}`);
-        // response.end(content, 'utf-8');
+        response.writeHead(404);
+        response.end(content, 'utf-8');
       } else {
         // If the file exists, load that file
         response.writeHead(200, {
@@ -99,8 +96,13 @@ const httpServerConfig = (request, response) => {
   }
 
   checkURL();
-  queryDB();
-  checkForSessionData();
+  if (sessionID != 'style/style.css' && sessionID != 'frontend/textarea.js' && sessionID != 'frontend/textsave.js' && sessionID != 'frontend/timing.js' && sessionID != 'frontend/websocket.js') {
+    queryDB();
+  }
+
+  if (textToEditor) {
+    checkForSessionData();
+  }
 
   // Types of files to pass
   const contentTypesByExtention = {
@@ -220,7 +222,7 @@ wss.on('connection', (ws) => {
 
     // Broadcast to everyone else.
     wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
+      if (client != ws && client.readyState === WebSocket.OPEN) {
         client.send(data);
         sendTextarea(data);
       }
