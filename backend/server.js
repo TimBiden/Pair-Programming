@@ -35,41 +35,72 @@ const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
   let textToEditor;
 
-  // load index.mthl when no session ID attached
-  if (filePath === '/') {
-    filePath = 'index.html';
-  } else {
-    sessionIdString = request.url.substr(1);
-    console.log(`The requested Session ID is ${sessionIdString}`);
+  function checkURL() {
+    // load index.mthl when no session ID attached
+    if (filePath === '/') {
+      filePath = 'index.html';
+      console.log('loading index.html');
+    } else {
+      console.log('check database for session ID');
+      sessionIdString = request.url.substr(1);
+      console.log(`The requested Session ID is ${sessionIdString}`);
+    }
+  }
 
+  function queryDB() {
     // Query DB by session ID
     Editor.findOne({
       session: sessionIdString,
     }, (err, sessionData) => {
       if (err) throw err;
-
-      // If there's session data, get the existing code from the DB.
-      if (sessionData) {
-        console.log(' ');
-        // console.log(`Session codeBox = ${sessionData.codeBox}`);
-        textToEditor = sessionData.codeBox;
-        console.log(`textToEditor = ${textToEditor}`);
-        console.log(' ');
-
-        // Load index.html. Not working.
-        filePath = 'index.html';
-        console.log(' ');
-        console.log('step 1. filePath = index.html');
-      }
-      console.log(' ');
-      console.log('step 2. No session data.');
+      textToEditor = sessionData;
+      console.log(textToEditor);
     });
-    console.log(' ');
-    console.log('step 3. Autorun function.');
   }
-  console.log(' ');
-  console.log('step 4. filePath !== /');
-  console.log(`filePath = ${filePath}`);
+
+  function checkForSessionData() {
+    // If there's session data, get the existing code from the DB.
+    if (textToEditor) {
+      console.log('There is session data.');
+      // console.log(`Session codeBox = ${sessionData.codeBox}`);
+      textToEditor = textToEditor.codeBox;
+      console.log(`textToEditor = ${textToEditor}`);
+      console.log(' ');
+
+      // Load index.html. Not working.
+      // filePath = 'index.html';
+      console.log(' ');
+      console.log('Get data from DB');
+      filePath = '/';
+      checkURL();
+    }
+  }
+
+  function pageRender() {
+    // Start checking URL for session IDs or valid pages
+    fs.readFile(filePath, (error, content) => {
+      if (error) {
+        // response.writeHead(404);
+        console.log(`The error is ${error}`);
+        // sessionIdString = request.url;
+
+        // http responses
+        // console.log(`response = ${response.statusCode}`);
+        // response.end(content, 'utf-8');
+      } else {
+        // If the file exists, load that file
+        response.writeHead(200, {
+          'Content-Type': contentType,
+        });
+        // console.log(`response = ${response.statusCode}`);
+        response.end(content, 'utf-8');
+      }
+    });
+  }
+
+  checkURL();
+  queryDB();
+  checkForSessionData();
 
   // Types of files to pass
   const contentTypesByExtention = {
@@ -86,25 +117,7 @@ const httpServerConfig = (request, response) => {
 
   filePath = path.join(__dirname, '..', filePath);
 
-  // Start checking URL for session IDs or valid pages
-  fs.readFile(filePath, (error, content) => {
-    if (error) {
-      // response.writeHead(404);
-      console.log(`The error is ${error}`);
-      // sessionIdString = request.url;
-
-      // http responses
-      // console.log(`response = ${response.statusCode}`);
-      // response.end(content, 'utf-8');
-    } else {
-      // If the file exists, load that file
-      response.writeHead(200, {
-        'Content-Type': contentType,
-      });
-      // console.log(`response = ${response.statusCode}`);
-      response.end(content, 'utf-8');
-    }
-  });
+  pageRender();
 };
 
 // Create http server
