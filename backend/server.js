@@ -27,12 +27,14 @@ const httpPort = localServer;
 // Standard Web Server Variables
 const messages = ['Enter your code here...'];
 let filePath = '';
+console.log(`origation: filePath = ${filePath}.`);
 
 //
 // Configure HTTP Server
 //
 const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
+  console.log(`setting to request.url: filePath = ${filePath}.`);
   sessionIdString = request.url.substr(1);
   let textToEditor;
 
@@ -40,6 +42,7 @@ const httpServerConfig = (request, response) => {
     // load index.mthl when no session ID attached
     if (filePath === '/') {
       filePath = 'index.html';
+      console.log(`checkURL: filePath = ${filePath}.`);
       console.log('Loading index.html');
       console.log(' ');
     }
@@ -54,6 +57,8 @@ const httpServerConfig = (request, response) => {
       textToEditor = sessionData;
       console.log('No error querying DB.');
       console.log(' ');
+
+      checkForSessionData();
     });
   }
 
@@ -66,6 +71,7 @@ const httpServerConfig = (request, response) => {
       console.log(`textToEditor = ${textToEditor}`);
       console.log(' ');
       filePath = '/';
+      console.log(`checkForSessionData: filePath = ${filePath}.`);
       checkURL();
     }
   }
@@ -73,6 +79,7 @@ const httpServerConfig = (request, response) => {
   function pageRender() {
     // Start checking URL for session IDs or valid pages
     fs.readFile(filePath, (error, content) => {
+    console.log(`pageRender: filePath = ${filePath}.`);
       if (error) {
         console.log(`The error is ${error}`);
 
@@ -96,10 +103,6 @@ const httpServerConfig = (request, response) => {
     queryDB();
   }
 
-  if (textToEditor) {
-    checkForSessionData();
-  }
-
   // Types of files to pass
   const contentTypesByExtention = {
     '.html': 'text/html',
@@ -114,7 +117,7 @@ const httpServerConfig = (request, response) => {
   const contentType = contentTypesByExtention[extname] || 'text/plain';
 
   filePath = path.join(__dirname, '..', filePath);
-
+console.log(`About to render. filePath = ${filePath}`);
   pageRender();
 };
 
