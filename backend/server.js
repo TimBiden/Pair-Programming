@@ -38,16 +38,21 @@ const httpServerConfig = (request, response) => {
   sessionIdString = request.url.substr(1);
 
   function checkURL() {
+    console.log('checkURL');
     // load index.mthl when no session ID attached
     if (filePath === '/') {
       filePath = 'index.html';
       console.log(`checkURL: filePath = ${filePath}.`);
       console.log('Loading index.html');
       console.log(' ');
+    } else if (sessionIdString !== 'style/style.css' && sessionIdString !== 'frontend/textarea.js' && sessionIdString !== 'frontend/textsave.js' && sessionIdString !== 'frontend/timing.js' && sessionIdString !== 'frontend/websocket.js' && sessionIdString !== 'robots.txt' && sessionIdString !== 'favicon.ico') {
+      filePath = 'index.html';
+      queryDB();
     }
   }
 
-  const queryDB = function queryDB() {
+  function queryDB() {
+    console.log('queryDB');
     // Query DB by session ID
     Editor.findOne({
       session: sessionIdString,
@@ -56,14 +61,16 @@ const httpServerConfig = (request, response) => {
       console.log('No error querying DB.');
       console.log(' ');
 
-      return sessionData;
+      checkForSessionData(sessionData);
     });
   }
 
-  function checkForSessionData() {
+  function checkForSessionData(queryDB) {
+    console.log('checkForSessionData');
     // If there's session data, get the existing code from the DB.
     if (queryDB) {
-      // console.log(`Session codeBox = ${sessionData.codeBox}`);
+      console.log(' ');
+      console.log(`Session codeBox = ${queryDB.codeBox}`);
       const textToEditor = queryDB.codeBox;
       console.log('There is session data.');
       console.log(`textToEditor = ${textToEditor}`);
@@ -75,6 +82,7 @@ const httpServerConfig = (request, response) => {
   }
 
   function pageRender() {
+    console.log('pageRender');
     // Start checking URL for session IDs or valid pages
     fs.readFile(filePath, (error, content) => {
     console.log(`pageRender: filePath = ${filePath}.`);
@@ -97,9 +105,7 @@ const httpServerConfig = (request, response) => {
   }
 
   checkURL();
-  if (sessionIdString !== 'style/style.css' && sessionIdString !== 'frontend/textarea.js' && sessionIdString !== 'frontend/textsave.js' && sessionIdString !== 'frontend/timing.js' && sessionIdString !== 'frontend/websocket.js' && sessionIdString !== 'robots.txt' && sessionIdString !== 'favicon.ico') {
-    queryDB();
-  }
+  console.log('After calling checkURL');
 
   // Types of files to pass
   const contentTypesByExtention = {
@@ -115,7 +121,7 @@ const httpServerConfig = (request, response) => {
   const contentType = contentTypesByExtention[extname] || 'text/plain';
 
   filePath = path.join(__dirname, '..', filePath);
-console.log(`About to render. filePath = ${filePath}`);
+  console.log(`About to render. filePath = ${filePath}`);
   pageRender();
 };
 
