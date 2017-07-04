@@ -36,7 +36,6 @@ const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
   console.log(`setting to request.url: filePath = ${filePath}.`);
   sessionIdString = request.url.substr(1);
-  let textToEditor;
 
   function checkURL() {
     // load index.mthl when no session ID attached
@@ -48,25 +47,24 @@ const httpServerConfig = (request, response) => {
     }
   }
 
-  function queryDB() {
+  const queryDB = function queryDB() {
     // Query DB by session ID
     Editor.findOne({
       session: sessionIdString,
     }, (err, sessionData) => {
       if (err) throw err;
-      textToEditor = sessionData;
       console.log('No error querying DB.');
       console.log(' ');
 
-      checkForSessionData();
+      return sessionData;
     });
   }
 
   function checkForSessionData() {
     // If there's session data, get the existing code from the DB.
-    if (textToEditor) {
+    if (queryDB) {
       // console.log(`Session codeBox = ${sessionData.codeBox}`);
-      textToEditor = textToEditor.codeBox;
+      const textToEditor = queryDB.codeBox;
       console.log('There is session data.');
       console.log(`textToEditor = ${textToEditor}`);
       console.log(' ');
