@@ -65,13 +65,13 @@ const httpServerConfig = (request, response) => {
     });
   }
 
-  function checkForSessionData(queryDB) {
+  const checkForSessionData = function checkForSessionData(dbResults) {
     console.log('checkForSessionData');
     // If there's session data, get the existing code from the DB.
     if (queryDB) {
       console.log(' ');
-      console.log(`Session codeBox = ${queryDB.codeBox}`);
-      const textToEditor = queryDB.codeBox;
+      console.log(`Session codeBox = ${dbResults.codeBox}`);
+      const textToEditor = dbResults.codeBox;
       console.log('There is session data.');
       console.log(`textToEditor = ${textToEditor}`);
       console.log(' ');
@@ -79,6 +79,7 @@ const httpServerConfig = (request, response) => {
       console.log(`checkForSessionData: filePath = ${filePath}.`);
       checkURL();
     }
+    return dbResults.codeBox;
   }
 
   function pageRender() {
