@@ -14,6 +14,7 @@ const WebSocket = require('ws');
 //
 // Websocket Variables
 const webSocketPort = 5000;
+let textBackToEditor;
 
 // Database Variables
 const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
@@ -84,7 +85,7 @@ const httpServerConfig = (request, response) => {
       // console.log(`checkForSessionData: filePath = ${filePath}.`);
       checkURL();
     }
-    return dbResults.codeBox;
+    textBackToEditor = dbResults.codeBox;
   }
 
   function pageRender() {
@@ -220,22 +221,13 @@ const wss = new WebSocket.Server({
 wss.on('connection', (ws) => {
   // Send the existing message history to all new connections that join.
 
-  /**
-   * Send session data to editor
-   * @returns {void}
-   */
-  function fromDbToEditor() {
-    // console.log('running fromDbToEditor');
-    wss.on('connection', (ws) => {
-      ws.send({
-        message: 'We can bind to `connection` multiple times and send moar data.',
-        checkForSessionData,
-      });
-    });
-  }
-
-  for (const message of messages) {
-    ws.send(message);
+  if (textBackToEditor) {
+    ws.send(textBackToEditor)
+    textBackToEditor = [''];
+  } else {
+    for (const message of messages) {
+      ws.send(message);
+    }
   }
 
   ws.on('message', (data) => {
