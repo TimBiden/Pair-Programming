@@ -26,7 +26,7 @@ const digitalOcean = 80;
 const localServer = 5000;
 const httpPort = localServer;
 // Standard Web Server Variables
-const messages = ['Enter your code here...'];
+let messages = ['Enter your code here...'];
 let filePath = '';
 // console.log(`origation: filePath = ${filePath}.`);
 
@@ -223,7 +223,7 @@ wss.on('connection', (ws) => {
 
   if (textBackToEditor) {
     ws.send(textBackToEditor)
-    textBackToEditor = [''];
+    messages = ['Enter your code here...'];
   } else {
     for (const message of messages) {
       ws.send(message);
