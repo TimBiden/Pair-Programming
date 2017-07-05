@@ -129,7 +129,6 @@ const httpServerConfig = (request, response) => {
   filePath = path.join(__dirname, '..', filePath);
   // console.log(`About to render. filePath = ${filePath}`);
   pageRender();
-  // console.log('Render Complete.');
 };
 
 // Create http server
@@ -220,11 +219,6 @@ const wss = new WebSocket.Server({
 
 wss.on('connection', (ws) => {
   // Send the existing message history to all new connections that join.
-  if (true) {
-
-  }
-
-
 
   /**
    * Send session data to editor
