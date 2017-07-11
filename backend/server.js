@@ -127,8 +127,7 @@ mongoose.Promise = require('bluebird');
 mongoose.connect(dbConfig);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-});
+db.once('open', () => {});
 
 // Define Mongo schema
 const editorSchema = mongoose.Schema({
@@ -175,8 +174,22 @@ let timerSend;
 function sendTextarea(data) {
   clearTimeout(timerSend);
   timerSend = setTimeout(() => {
-    editorInstance.codeBox = data;
-    editorInstance.save(onEditorSave);
+    // editorInstance.codeBox = data;
+    // editorInstance.save(onEditorSave);
+    editorInstance.update({
+      session: {
+        $eq: sessionIdString,
+      },
+    }, {
+      $set: {
+        codeBox: data,
+      },
+    }, (err, result) => {
+      console.log(`${sessionIdString} Updated Successfully.`);
+      console.log(result);
+      console.log(' ');
+      console.log(data);
+    });
   }, 2000);
 }
 
