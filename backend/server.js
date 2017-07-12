@@ -32,15 +32,24 @@ let filePath = '';
 //
 // Configure HTTP Server
 //
+let sum = 0;
 const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
-  sessionIdString = request.url.substr(1);
+  const filePathString = request.url.substr(1);
+
+  if (sum === 0) {
+    sessionIdString = request.url.substr(1);
+  }
+  sum += 1;
+
+  console.log(`sum = ${sum}`);
+  console.log(`sessionIdString =  ${sessionIdString}`);
 
   function checkURL() {
     // load index.mthl when no session ID attached
     if (filePath === '/') {
       filePath = 'index.html';
-    } else if (sessionIdString !== 'style/style.css' && sessionIdString !== 'frontend/textarea.js' && sessionIdString !== 'frontend/textsave.js' && sessionIdString !== 'frontend/timing.js' && sessionIdString !== 'frontend/websocket.js' && sessionIdString !== 'robots.txt' && sessionIdString !== 'favicon.ico') {
+    } else if (filePathString !== 'style/style.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
       filePath = 'index.html';
       queryDB();
     }
