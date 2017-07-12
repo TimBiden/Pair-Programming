@@ -189,7 +189,7 @@ function sendTextarea(data) {
   timerSend = setTimeout(() => {
     // editorInstance.codeBox = data;
     // editorInstance.save(onEditorSave);
-    editorInstance.update({
+    Editor.update({
       session: {
         $eq: sessionIdString,
       },
