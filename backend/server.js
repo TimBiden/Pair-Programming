@@ -53,6 +53,7 @@ const httpServerConfig = (request, response) => {
   function checkURL() {
     // load index.mthl when no session ID attached
     if (filePath === '/') {
+      newSession();
       filePath = 'index.html';
     } else if (filePathString !== 'style/style.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
       filePath = 'index.html';
@@ -147,8 +148,14 @@ db.once('open', () => {});
 const editorSchema = mongoose.Schema({
   session: String,
   codeBox: String,
-  created_at: { type : Date, default: Date.now },
-  updated_at: { type : Date, default: Date.now },
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 const Editor = mongoose.model('Editor', editorSchema);
@@ -156,10 +163,20 @@ const Editor = mongoose.model('Editor', editorSchema);
 const textareaToDB = 'Test string data. Nothing more, nothing less.';
 // End deletion after configuring session IDs
 
-const editorInstance = new Editor({
-  session: sessionID,
-  codeBox: textareaToDB,
-});
+function newSession() {
+  const editorInstance = new Editor({
+    session: sessionID,
+    codeBox: textareaToDB,
+  });
+
+  editorInstance.save((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Session saved successfully');
+    }
+  });
+}
 
 /**
  * Error checking
@@ -174,7 +191,7 @@ function onEditorSave(error, model) {
   return model;
 }
 
-editorInstance.save(onEditorSave);
+// editorInstance.save(onEditorSave);
 
 let timerSend;
 
