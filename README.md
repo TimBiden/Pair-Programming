@@ -15,10 +15,10 @@ Work in progress.
   - While unallowed to update, text highlighting prevented. ✅
   - User shown appropriate message when they can and can't edit code. ✅
 
-- Set up database to track changes. ⏯
+- Set up database to track changes. ✅
 
   - Read & pushes entire document to the Digital Ocean/MongoDB database. ✅
-  - Needs to recall entire documents by URL
+  - Needs to recall entire documents by URL. ✅
 
 - Keep session open for specified amount of time.
 - Scope session to unique key from URL.
