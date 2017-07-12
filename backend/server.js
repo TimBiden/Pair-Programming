@@ -19,6 +19,7 @@ let textBackToEditor;
 // Database Variables
 const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
 let sessionIdString;
+let sessionID;
 
 // Web Server Variables
 // Choose localServer or digitalOcean
@@ -41,6 +42,10 @@ const httpServerConfig = (request, response) => {
     sessionIdString = request.url.substr(1);
   }
   sum += 1;
+  if (sessionIdString === '') {
+    sessionID = sessionFile.sessionID();
+    sessionIdString = sessionID
+  }
 
   console.log(`sum = ${sum}`);
   console.log(`sessionIdString =  ${sessionIdString}`);
@@ -148,7 +153,6 @@ const editorSchema = mongoose.Schema({
 
 const Editor = mongoose.model('Editor', editorSchema);
 // Delete after configuring session IDs
-const sessionID = sessionFile.sessionID();
 const textareaToDB = 'Test string data. Nothing more, nothing less.';
 // End deletion after configuring session IDs
 
