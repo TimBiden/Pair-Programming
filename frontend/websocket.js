@@ -34,6 +34,7 @@ window.onload = () => {
   // Receive messages
   socket.onmessage = (event) => {
     const message = event.data;
+    console.log(message);
 
     // Print message value to all textarea boxes in session
     document.getElementById('mainTextArea').value = message;

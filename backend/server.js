@@ -233,6 +233,14 @@ const wss = new WebSocket.Server({
 wss.on('connection', (ws) => {
   // Send the existing message history to all new connections that join.
 
+  if (sessionIdString) {
+    console.log(`Sending sessionIdString, ${sessionIdString}`);
+    ws.on('open', () => {
+      const sessionIDArray = [sessionIdString];
+      ws.send(sessionIDArray);
+    });
+  }
+
   if (textBackToEditor) {
     ws.send(textBackToEditor);
     messages = ['Enter your code here...'];
