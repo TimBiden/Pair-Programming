@@ -234,7 +234,7 @@ wss.on('connection', (ws) => {
   // Send the existing message history to all new connections that join.
 
   if (textBackToEditor) {
-    ws.send(textBackToEditor)
+    ws.send(textBackToEditor);
     messages = ['Enter your code here...'];
   } else {
     for (const message of messages) {
@@ -249,7 +249,7 @@ wss.on('connection', (ws) => {
 
     // Broadcast to everyone else.
     wss.clients.forEach((client) => {
-      if (client != ws && client.readyState === WebSocket.OPEN) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(data);
         sendTextarea(data);
       }
