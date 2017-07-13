@@ -23,7 +23,7 @@ Work in progress.
 - Scope session to unique key from URL. ✅
 - Generate unique URL and store in database. ✅
 
-- Redirect index visitors to their specific URL
+- Redirect root directory visitors to their specific URL. ⏯
 - Keep session open for specified amount of time.
 
 ## Beyond MVP:
