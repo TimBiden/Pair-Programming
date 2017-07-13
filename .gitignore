@@ -3,5 +3,4 @@ IgnoreMe
 node_modules
 
 ###Ignore these files###
-logs.md
-notes.md
+Digital-Ocean-Commands.md

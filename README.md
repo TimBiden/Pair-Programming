@@ -20,9 +20,11 @@ Work in progress.
   - Read & pushes entire document to the Digital Ocean/MongoDB database. ✅
   - Needs to recall entire documents by URL. ✅
 
+- Scope session to unique key from URL. ✅
+- Generate unique URL and store in database. ✅
+
+- Redirect index visitors to their specific URL
 - Keep session open for specified amount of time.
-- Scope session to unique key from URL.
-- Generate unique URL and store in database.
 
 ## Beyond MVP:
 - Make it attractive
