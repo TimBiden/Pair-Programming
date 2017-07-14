@@ -25,7 +25,7 @@ let sessionID;
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
-const httpPort = localServer;
+const httpPort = digitalOcean;
 // Standard Web Server Variables
 let messages = ['Enter your code here...'];
 let filePath = '';
