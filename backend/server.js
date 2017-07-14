@@ -159,9 +159,7 @@ const editorSchema = mongoose.Schema({
 });
 
 const Editor = mongoose.model('Editor', editorSchema);
-// Delete after configuring session IDs
-const textareaToDB = 'Test string data. Nothing more, nothing less.';
-// End deletion after configuring session IDs
+const textareaToDB = 'Enter your code here...';
 
 function newSession() {
   const editorInstance = new Editor({
@@ -234,16 +232,15 @@ wss.on('connection', (ws) => {
   // Send the existing message history to all new connections that join.
 
   if (sessionIdString) {
-    console.log(`Sending sessionIdString, ${sessionIdString}`);
-    ws.on('open', () => {
-      const sessionIDArray = [sessionIdString];
-      ws.send(sessionIDArray);
-    });
+    console.log('there are multiple messages');
+    messages = ['Enter your code here...', sessionIdString];
+  } else {
+    messages = ['Enter your code here...'];
   }
 
   if (textBackToEditor) {
     ws.send(textBackToEditor);
-    messages = ['Enter your code here...'];
+    // messages = ['Enter your code here...'];
   } else {
     for (const message of messages) {
       ws.send(message);

@@ -52,8 +52,3 @@ function checkTime() {
     unBlockMessage();
   }, 1500);
 }
-
-const renameBrowser = function renameBrowser(feSessionID) {
-  console.log(`feSessionID = ${feSessionID}`);
-  history.pushState(null, null, feSessionID);
-};
