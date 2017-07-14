@@ -224,9 +224,12 @@ function sendTextarea(data) {
 //
 // WebSocket connection
 //
-const wss = new WebSocket.Server({
-  server: server,
-});
+if (httpPort === localServer) {
+  const webSocketServer = `http://localhost:5000/${sessionIdString}`;
+} else {
+  const webSocketServer = `http://pairprogrammingapp.com/${sessionIdString}`;
+}
+const wss = new WebSocket(webSocketServer);
 
 wss.on('connection', (ws) => {
   // Send the existing message history to all new connections that join.
