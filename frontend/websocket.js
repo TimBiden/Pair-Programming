@@ -1,3 +1,6 @@
+// global Variables
+let feSessionID;
+
 /**
  * Connect via websocket
  * @param {number} response Current ws port number
@@ -32,11 +35,21 @@ function sendData() {
  */
 window.onload = () => {
   // Receive messages
+  messages = [];
   socket.onmessage = (event) => {
     const message = event.data;
+    console.log(`message = ${message}`);
+    messages.push(message);
+    console.log(`Messages = ${messages}`);
+
+    if (messages[1]) {
+      feSessionID = messages[1];
+      console.log(`feSessionID = ${feSessionID}`);
+      urlChange();
+    }
 
     // Print message value to all textarea boxes in session
-    document.getElementById('mainTextArea').value = message;
+    document.getElementById('mainTextArea').value = messages[0];
     resizeTextBox();
     getLines();
     checkTime();
@@ -51,3 +64,8 @@ window.onload = () => {
   // Run numbering function
   getLines();
 };
+
+function urlChange() {
+  console.log(`timing - feSessionID = ${feSessionID}`);
+  history.pushState(null, null, feSessionID);
+}

@@ -25,7 +25,7 @@ let sessionID;
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
-const httpPort = digitalOcean;
+const httpPort = localServer;
 // Standard Web Server Variables
 let messages = ['Enter your code here...'];
 let filePath = '';
@@ -159,9 +159,7 @@ const editorSchema = mongoose.Schema({
 });
 
 const Editor = mongoose.model('Editor', editorSchema);
-// Delete after configuring session IDs
-const textareaToDB = 'Test string data. Nothing more, nothing less.';
-// End deletion after configuring session IDs
+const textareaToDB = 'Enter your code here...';
 
 function newSession() {
   const editorInstance = new Editor({
@@ -233,9 +231,16 @@ const wss = new WebSocket.Server({
 wss.on('connection', (ws) => {
   // Send the existing message history to all new connections that join.
 
-  if (textBackToEditor) {
-    ws.send(textBackToEditor)
+  if (sessionIdString) {
+    console.log('there are multiple messages');
+    messages = ['Enter your code here...', sessionIdString];
+  } else {
     messages = ['Enter your code here...'];
+  }
+
+  if (textBackToEditor) {
+    ws.send(textBackToEditor);
+    // messages = ['Enter your code here...'];
   } else {
     for (const message of messages) {
       ws.send(message);
@@ -249,7 +254,7 @@ wss.on('connection', (ws) => {
 
     // Broadcast to everyone else.
     wss.clients.forEach((client) => {
-      if (client != ws && client.readyState === WebSocket.OPEN) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(data);
         sendTextarea(data);
       }
