@@ -220,6 +220,34 @@ function sendTextarea(data) {
     });
   }, 2000);
 }
+let connectionTimer;
+
+/**
+ * Check if connection dropped. If > 1 seconds,
+ * update database with current textarea and
+ * close WebSocket connection.
+ * @param {void}
+ * @returns {void}
+ */
+function closeConnection() {
+  clearTimeout(connectionTimer);
+  connectionTimer = setTimeout(() => {
+    wss.clients.forEach((ws) => {
+      if (ws.isAlive === true) {
+        console.log('Not Terminated.');
+      } else {
+        ws.terminate();
+      }
+
+      ws.isAlive = false;
+      ws.ping('', false, true);
+    });
+  });
+}
+
+setInterval(() => {
+  closeConnection()
+}, 1000);
 
 //
 // WebSocket connection
@@ -228,7 +256,14 @@ const wss = new WebSocket.Server({
   server: server,
 });
 
+function heartbeat() {
+  this.isAlive = true;
+}
+
 wss.on('connection', (ws) => {
+  ws.isAlive = true;
+  ws.on('pong', heartbeat);
+
   // Send the existing message history to all new connections that join.
 
   if (sessionIdString) {
