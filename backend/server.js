@@ -233,12 +233,6 @@ function closeConnection() {
   clearTimeout(connectionTimer);
   connectionTimer = setTimeout(() => {
     wss.clients.forEach((ws) => {
-      if (ws.isAlive === true) {
-        console.log('Not Terminated.');
-      } else {
-        ws.terminate();
-      }
-
       ws.isAlive = false;
       ws.ping('', false, true);
     });
