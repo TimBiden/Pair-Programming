@@ -47,9 +47,6 @@ const httpServerConfig = (request, response) => {
     sessionIdString = sessionID
   }
 
-  console.log(`sum = ${sum}`);
-  console.log(`sessionIdString =  ${sessionIdString}`);
-
   function checkURL() {
     // load index.mthl when no session ID attached
     if (filePath === '/') {
@@ -246,10 +243,17 @@ setInterval(() => {
 //
 // WebSocket connection
 //
+
+// WS Constants & Variables
 const wss = new WebSocket.Server({
   server: server,
 });
 
+let clients = {};
+
+let clientPool[sessionIdString] = clientPool[sessionIdString] || [];
+
+// WS Functions
 function heartbeat() {
   this.isAlive = true;
 }
@@ -257,6 +261,8 @@ function heartbeat() {
 wss.on('connection', (ws) => {
   ws.isAlive = true;
   ws.on('pong', heartbeat);
+
+  clientPool[sessionIdString].push(ws);
 
   // Send the existing message history to all new connections that join.
 
@@ -278,7 +284,11 @@ wss.on('connection', (ws) => {
 
   ws.on('message', (data) => {
     // Capture the data we received.
-    messages.push(data);
+    // messages.push(data);
+    for (let wsc of clientPool[sessionId]) {
+      wsc.send(data);
+    }
+
     sendTextarea(data);
 
     // Broadcast to everyone else.
