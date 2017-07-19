@@ -248,10 +248,7 @@ setInterval(() => {
 const wss = new WebSocket.Server({
   server: server,
 });
-
-let clients = {};
-
-let clientPool[sessionIdString] = clientPool[sessionIdString] || [];
+let clientPool = [];
 
 // WS Functions
 function heartbeat() {
@@ -261,6 +258,8 @@ function heartbeat() {
 wss.on('connection', (ws) => {
   ws.isAlive = true;
   ws.on('pong', heartbeat);
+
+  clientPool[sessionIdString] = clientPool[sessionIdString] || [];
 
   clientPool[sessionIdString].push(ws);
 
