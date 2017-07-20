@@ -18,8 +18,8 @@ let textBackToEditor;
 
 // Database Variables
 const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
+let sessionIdString;
 let sessionID;
-let fileNameId;
 
 // Web Server Variables
 // Choose localServer or digitalOcean
@@ -39,15 +39,15 @@ const httpServerConfig = (request, response) => {
   const filePathString = request.url.substr(1);
 
   if (sum === 0) {
-    sessionID = request.url.substr(1);
+    sessionIdString = request.url.substr(1);
   }
   sum += 1;
-  if (sessionID === '') {
-    fileNameId = sessionFile.fileNameId();
-    sessionID = fileNameId
+  if (sessionIdString === '') {
+    sessionID = sessionFile.sessionID();
+    sessionIdString = sessionID
   }
 
-  clientPool[sessionID] = clientPool[sessionID] || [];
+  clientPool[sessionIdString] = clientPool[sessionIdString] || [];
 
   function checkURL() {
     // load index.mthl when no session ID attached
@@ -63,7 +63,7 @@ const httpServerConfig = (request, response) => {
   function queryDB() {
     // Query DB by session ID
     Editor.findOne({
-      session: sessionID,
+      session: sessionIdString,
     }, (err, sessionData) => {
       if (err) throw err;
 
@@ -162,7 +162,7 @@ const textareaToDB = 'Enter your code here...';
 
 function newSession() {
   const editorInstance = new Editor({
-    session: fileNameId,
+    session: sessionID,
     codeBox: textareaToDB,
   });
 
@@ -205,14 +205,14 @@ function sendTextarea(data) {
     // editorInstance.save(onEditorSave);
     Editor.update({
       session: {
-        $eq: sessionID,
+        $eq: sessionIdString,
       },
     }, {
       $set: {
         codeBox: data,
       },
     }, (err, result) => {
-      console.log(`${sessionID} Updated Successfully.`);
+      console.log(`${sessionIdString} Updated Successfully.`);
       console.log(result);
       console.log(' ');
       console.log(data);
@@ -261,14 +261,14 @@ wss.on('connection', (ws) => {
   ws.isAlive = true;
   ws.on('pong', heartbeat);
 
-  clientPool[sessionID].push(ws);
-  console.log(clientPool[sessionID]);
+  clientPool[sessionIdString].push(ws);
+  console.log(clientPool[sessionIdString]);
 
   // Send the existing message history to all new connections that join.
 
-  if (sessionID) {
+  if (sessionIdString) {
     console.log('there are multiple messages');
-    messages = ['Enter your code here...', sessionID];
+    messages = ['Enter your code here...', sessionIdString];
   } else {
     messages = ['Enter your code here...'];
   }
@@ -285,7 +285,7 @@ wss.on('connection', (ws) => {
   ws.on('message', (data) => {
     // Capture the data we received.
     // messages.push(data);
-    for (let wsc of clientPool[sessionID]) {
+    for (let wsc of clientPool[sessionIdString]) {
       wsc.send(data);
     }
 
