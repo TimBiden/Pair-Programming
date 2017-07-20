@@ -47,6 +47,8 @@ const httpServerConfig = (request, response) => {
     sessionIdString = sessionID
   }
 
+  clientPool[sessionIdString] = clientPool[sessionIdString] || [];
+
   function checkURL() {
     // load index.mthl when no session ID attached
     if (filePath === '/') {
@@ -259,11 +261,8 @@ wss.on('connection', (ws) => {
   ws.isAlive = true;
   ws.on('pong', heartbeat);
 
-  clientPool[sessionIdString] = clientPool[sessionIdString] || [];
   clientPool[sessionIdString].push(ws);
-
-  const dumBass = clientPool[sessionIdString];
-  console.log(`clientPool for this session = ${dumBass}`);
+  console.log(clientPool[sessionIdString]);
 
   // Send the existing message history to all new connections that join.
 
