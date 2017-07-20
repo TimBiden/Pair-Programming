@@ -260,11 +260,10 @@ wss.on('connection', (ws) => {
   ws.on('pong', heartbeat);
 
   clientPool[sessionIdString] = clientPool[sessionIdString] || [];
-  // clientPool.sessionIdString = sessionIdString || [];
-
-  console.log(`clientPool for this session = ${clientPool.sessionIdString}`);
-
   clientPool[sessionIdString].push(ws);
+
+  const dumBass = clientPool[sessionIdString];
+  console.log(`clientPool for this session = ${dumBass}`);
 
   // Send the existing message history to all new connections that join.
 
