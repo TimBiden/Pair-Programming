@@ -285,9 +285,9 @@ wss.on('connection', (ws) => {
   ws.on('message', (data) => {
     // Capture the data we received.
     // messages.push(data);
-    for (let wsc of clientPool[sessionID]) {
-      wsc.send(data);
-    }
+    // for (let wsc of clientPool[sessionID]) {
+    //   wsc.send(data);
+    // }
 
     sendTextarea(data);
 
