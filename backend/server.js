@@ -266,15 +266,9 @@ wss.on('connection', (ws) => {
 
   // Send the existing message history to all new connections that join.
 
-  let response = {};
-
   if (sessionID) {
     console.log('there are multiple messages');
     messages = ['Enter your code here...', sessionID];
-    response.type = 'SESSION_ID';
-    response.data = {
-      sessionID
-    };
   } else {
     messages = ['Enter your code here...'];
   }
@@ -283,32 +277,26 @@ wss.on('connection', (ws) => {
     ws.send(textBackToEditor);
     // messages = ['Enter your code here...'];
   } else {
-    ws.send(JSON.stringify(response));
-    // for (const message of messages) {
-    //   ws.send(message);
-    // }
-  }
-  // snip
-
-// frontend/websocket.js
-  socket.onmessage = (event) => {
-    const message = JSON.parse(event.data);
-    messages.push(message);
-
-    console.log('====================================');
-    console.log('message', message);
-    console.log('messages', messages);
-
-    if (message.type === 'SESSION_ID') {
-      feSessionID = message.data.sessionID;
-      console.log(`feSessionID = ${feSessionID}`);
-      urlChange();
+    for (const message of messages) {
+      ws.send(message);
     }
+  }
 
-    // Print message value to all textarea boxes in session
-    document.getElementById('mainTextArea').value = messages[0];
-    resizeTextBox();
-    getLines();
-    checkTime();
-  };
+  ws.on('message', (data) => {
+    // Capture the data we received.
+    // messages.push(data);
+    // for (let wsc of clientPool[sessionID]) {
+    //   wsc.send(data);
+    // }
+
+    sendTextarea(data);
+
+    // Broadcast to everyone else.
+    wss.clients.forEach((client) => {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(data);
+        sendTextarea(data);
+      }
+    });
+  });
 });
