@@ -37,13 +37,16 @@ window.onload = () => {
   // Receive messages
   messages = [];
   socket.onmessage = (event) => {
-    const message = event.data;
-    console.log(`message = ${message}`);
-    messages.push(message);
-    console.log(`Messages = ${messages}`);
+    const message = JSON.parse(event.data);
 
-    if (messages[1]) {
-      feSessionID = messages[1];
+    messages.push(message);
+
+    console.log('====================================');
+    console.log('message', message);
+    console.log('messages', messages);
+
+    if (message.type === 'SESSION_ID') {
+      feSessionID = message.data.sessionID;
       console.log(`feSessionID = ${feSessionID}`);
       urlChange();
     }

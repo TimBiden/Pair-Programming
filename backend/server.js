@@ -266,9 +266,15 @@ wss.on('connection', (ws) => {
 
   // Send the existing message history to all new connections that join.
 
+  let response = {};
+
   if (sessionID) {
     console.log('there are multiple messages');
     messages = ['Enter your code here...', sessionID];
+    response.type = 'SESSION_ID';
+    response.data = {
+      sessionID
+    };
   } else {
     messages = ['Enter your code here...'];
   }
@@ -277,9 +283,10 @@ wss.on('connection', (ws) => {
     ws.send(textBackToEditor);
     // messages = ['Enter your code here...'];
   } else {
-    for (const message of messages) {
-      ws.send(message);
-    }
+    ws.send(JSON.stringify(response));
+    // for (const message of messages) {
+    //   ws.send(message);
+    // }
   }
 
   ws.on('message', (data) => {
