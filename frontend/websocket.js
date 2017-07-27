@@ -37,13 +37,6 @@ window.onload = () => {
   // Receive messages
   messages = [];
   socket.onmessage = (event) => {
-
-    // Bug chasing
-    console.log(event); // Object data
-    console.log(event.data); // String data "Enter your code here..."
-    console.log(typeof event); // Object
-    console.log(typeof event.data); // String
-    console.log(JSON.parse(event.data));
     const message = JSON.parse(event.data);
 
     messages.push(message);
