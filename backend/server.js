@@ -269,7 +269,7 @@ wss.on('connection', (ws) => {
   if (!sessionID) {
     // console.log(`sessionID = ${sessionID}.`);
   } else {
-    messages = ['Enter your code here...'];
+    messages = 'Enter your code here...';
     console.log('No sessionID.');
   }
 
@@ -280,7 +280,10 @@ wss.on('connection', (ws) => {
   console.log(`response = ${JSON.stringify(response)}`);
 
   if (textBackToEditor) {
-    ws.send(textBackToEditor);
+    response.MESSAGES = textBackToEditor;
+    ws.send(JSON.stringify(response));
+    console.log(`response.data = ${response.data}`);
+    // ws.send(textBackToEditor);
     // messages = ['Enter your code here...'];
   } else {
     ws.send(JSON.stringify(response));

@@ -35,7 +35,7 @@ function sendData() {
  */
 window.onload = () => {
   // Receive messages
-  messages = [];
+  const messages = [];
   socket.onmessage = (event) => {
     console.log(JSON.stringify(event.data));
     console.log(typeof JSON.stringify(event.data));
@@ -45,8 +45,6 @@ window.onload = () => {
 
     console.log('====================================');
     console.log('message', message);
-    console.log('message - SESSION_ID', message.SESSION_ID);
-    console.log('message - MESSAGES', message.MESSAGES);
 
     if (message.SESSION_ID) {
       feSessionID = message.SESSION_ID;
