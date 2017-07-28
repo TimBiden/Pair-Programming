@@ -37,16 +37,19 @@ window.onload = () => {
   // Receive messages
   messages = [];
   socket.onmessage = (event) => {
+    console.log(JSON.stringify(event.data));
+    console.log(typeof JSON.stringify(event.data));
     const message = JSON.parse(event.data);
 
     messages.push(message);
 
     console.log('====================================');
     console.log('message', message);
-    console.log('messages', messages);
+    console.log('message - SESSION_ID', message.SESSION_ID);
+    console.log('message - MESSAGES', message.MESSAGES);
 
-    if (message.type === 'SESSION_ID') {
-      feSessionID = message.data.sessionID;
+    if (message.SESSION_ID) {
+      feSessionID = message.SESSION_ID;
       console.log(`feSessionID = ${feSessionID}`);
       urlChange();
     }
@@ -69,6 +72,6 @@ window.onload = () => {
 };
 
 function urlChange() {
-  console.log(`timing - feSessionID = ${feSessionID}`);
+  // console.log(`timing - feSessionID = ${feSessionID}`);
   history.pushState(null, null, feSessionID);
 }

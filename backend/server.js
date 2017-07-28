@@ -50,7 +50,7 @@ const httpServerConfig = (request, response) => {
   clientPool[sessionID] = clientPool[sessionID] || [];
 
   function checkURL() {
-    // load index.mthl when no session ID attached
+    // load index.html when no session ID attached
     if (filePath === '/') {
       newSession();
       filePath = 'index.html';
@@ -266,18 +266,18 @@ wss.on('connection', (ws) => {
 
   // Send the existing message history to all new connections that join.
 
-  let response = {};
-
-  if (sessionID) {
-    console.log('there are multiple messages');
-    messages = ['Enter your code here...', sessionID];
-    response.type = 'SESSION_ID';
-    response.data = {
-      sessionID
-    };
+  if (!sessionID) {
+    // console.log(`sessionID = ${sessionID}.`);
   } else {
     messages = ['Enter your code here...'];
+    console.log('No sessionID.');
   }
+
+  const response = {
+    SESSION_ID: sessionID,
+    MESSAGES: messages,
+  };
+  console.log(`response = ${JSON.stringify(response)}`);
 
   if (textBackToEditor) {
     ws.send(textBackToEditor);
