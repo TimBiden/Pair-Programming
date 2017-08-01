@@ -299,12 +299,18 @@ wss.on('connection', (ws) => {
     //   wsc.send(data);
     // }
 
+    let clientPayload = {
+      MESSAGES: data,
+      SESSION_ID: sessionID,
+    };
+    clientPayload = JSON.stringify(clientPayload);
+
     sendTextarea(data);
 
     // Broadcast to everyone else.
     wss.clients.forEach((client) => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(data);
+        client.send(clientPayload);
         sendTextarea(data);
       }
     });

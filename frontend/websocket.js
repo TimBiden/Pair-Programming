@@ -41,7 +41,9 @@ window.onload = () => {
     console.log(typeof JSON.stringify(event.data));
     const message = JSON.parse(event.data);
 
-    messages.push(message);
+    console.log(message);
+
+    messages.push(message.MESSAGES);
 
     console.log('====================================');
     console.log('message', message);
@@ -53,7 +55,7 @@ window.onload = () => {
     }
 
     // Print message value to all textarea boxes in session
-    document.getElementById('mainTextArea').value = messages[0];
+    document.getElementById('mainTextArea').value = message.MESSAGES;
     resizeTextBox();
     getLines();
     checkTime();
