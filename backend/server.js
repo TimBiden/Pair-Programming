@@ -38,13 +38,21 @@ const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
   const filePathString = request.url.substr(1);
 
+  // Get correct session ID
   if (sum === 0) {
     sessionID = request.url.substr(1);
   }
   sum += 1;
+
+  // Reset count for next session
+  if (sum > 0 && filePathString === 'frontend/timing.js') {
+    sum = 0;
+  }
+
+  // Get session ID from session.js
   if (sessionID === '') {
     fileID = sessionFile.sessionID();
-    sessionID = fileID
+    sessionID = fileID;
   }
 
   clientPool[sessionID] = clientPool[sessionID] || [];
