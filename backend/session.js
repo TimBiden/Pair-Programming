@@ -17,7 +17,7 @@ exports.sessionID = function sessionID() {
   }
 
   // Tests output of generated ID
-  console.log(`sessionID = ${genID}`);
+  console.log(`sessionID from session.js = ${genID}`);
 
   // Returns genID value to sessionID export variable.
   return genID;

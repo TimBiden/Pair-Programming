@@ -18,14 +18,14 @@ let textBackToEditor;
 
 // Database Variables
 const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
-let sessionIdString;
 let sessionID;
+let fileID;
 
 // Web Server Variables
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
-const httpPort = digitalOcean;
+const httpPort = localServer;
 // Standard Web Server Variables
 let messages = ['Enter your code here...'];
 let filePath = '';
@@ -38,20 +38,27 @@ const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
   const filePathString = request.url.substr(1);
 
+  // Get correct session ID
   if (sum === 0) {
-    sessionIdString = request.url.substr(1);
+    sessionID = request.url.substr(1);
   }
   sum += 1;
-  if (sessionIdString === '') {
-    sessionID = sessionFile.sessionID();
-    sessionIdString = sessionID
+
+  // Reset count for next session
+  if (sum > 0 && filePathString === 'frontend/timing.js') {
+    sum = 0;
   }
 
-  console.log(`sum = ${sum}`);
-  console.log(`sessionIdString =  ${sessionIdString}`);
+  // Get session ID from session.js
+  if (sessionID === '') {
+    fileID = sessionFile.sessionID();
+    sessionID = fileID;
+  }
+
+  clientPool[sessionID] = clientPool[sessionID] || [];
 
   function checkURL() {
-    // load index.mthl when no session ID attached
+    // load index.html when no session ID attached
     if (filePath === '/') {
       newSession();
       filePath = 'index.html';
@@ -64,7 +71,7 @@ const httpServerConfig = (request, response) => {
   function queryDB() {
     // Query DB by session ID
     Editor.findOne({
-      session: sessionIdString,
+      session: sessionID,
     }, (err, sessionData) => {
       if (err) throw err;
 
@@ -163,7 +170,7 @@ const textareaToDB = 'Enter your code here...';
 
 function newSession() {
   const editorInstance = new Editor({
-    session: sessionID,
+    session: fileID,
     codeBox: textareaToDB,
   });
 
@@ -206,57 +213,110 @@ function sendTextarea(data) {
     // editorInstance.save(onEditorSave);
     Editor.update({
       session: {
-        $eq: sessionIdString,
+        $eq: data.SESSION_ID,
       },
     }, {
       $set: {
-        codeBox: data,
+        codeBox: data.MESSAGES,
       },
     }, (err, result) => {
-      console.log(`${sessionIdString} Updated Successfully.`);
+      // console.log(`${sessionID} Updated Successfully.`);
       console.log(result);
-      console.log(' ');
       console.log(data);
+      console.log(' ');
     });
   }, 2000);
 }
+let connectionTimer;
+
+/**
+ * Check if connection dropped. If > 1 seconds,
+ * update database with current textarea and
+ * close WebSocket connection.
+ * @param {void}
+ * @returns {void}
+ */
+function closeConnection() {
+  clearTimeout(connectionTimer);
+  connectionTimer = setTimeout(() => {
+    wss.clients.forEach((ws) => {
+      ws.isAlive = false;
+      ws.ping('', false, true);
+    });
+  });
+}
+
+setInterval(() => {
+  closeConnection()
+}, 1000);
 
 //
 // WebSocket connection
 //
+
+// WS Constants & Variables
 const wss = new WebSocket.Server({
   server: server,
 });
+let clientPool = {};
+
+// WS Functions
+function heartbeat() {
+  this.isAlive = true;
+}
 
 wss.on('connection', (ws) => {
+  ws.isAlive = true;
+  ws.on('pong', heartbeat);
+
+  clientPool[sessionID].push(ws);
+  // console.log(clientPool[sessionID]);
+
   // Send the existing message history to all new connections that join.
 
-  if (sessionIdString) {
-    console.log('there are multiple messages');
-    messages = ['Enter your code here...', sessionIdString];
+  if (!sessionID) {
+    // console.log(`sessionID = ${sessionID}.`);
   } else {
-    messages = ['Enter your code here...'];
+    messages = 'Enter your code here...';
+    console.log('No sessionID.');
   }
 
+  const response = {
+    SESSION_ID: sessionID,
+    MESSAGES: messages,
+  };
+  console.log(`response = ${JSON.stringify(response)}`);
+
   if (textBackToEditor) {
-    ws.send(textBackToEditor);
+    response.MESSAGES = textBackToEditor;
+    ws.send(JSON.stringify(response));
+    console.log(`response.data = ${response.data}`);
+    // ws.send(textBackToEditor);
     // messages = ['Enter your code here...'];
   } else {
-    for (const message of messages) {
-      ws.send(message);
-    }
+    ws.send(JSON.stringify(response));
+    // for (const message of messages) {
+    //   ws.send(message);
+    // }
   }
 
   ws.on('message', (data) => {
-    // Capture the data we received.
-    messages.push(data);
-    sendTextarea(data);
+    // IMPORTANT: Gotta turn that string of data
+    // into an object we can work with.
+    const clientPayload = JSON.parse(data);
+
+    // sendTextarea now accepts an object. We needed
+    // to give it the session ID, in addition to the
+    // textarea content. The front-end now passes
+    // an object containing both pieces of data.
+    sendTextarea(clientPayload);
 
     // Broadcast to everyone else.
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(data);
-        sendTextarea(data);
+    clientPool[clientPayload.SESSION_ID].forEach((wsc) => {
+      // Don't send to the client who just sent the original message!
+      if (wsc !== ws) {
+        wsc.send(JSON.stringify(clientPayload));
+        sendTextarea(clientPayload);
       }
     });
   });
