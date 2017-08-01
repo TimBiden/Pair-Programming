@@ -29,17 +29,25 @@ const httpPort = localServer;
 // Standard Web Server Variables
 let messages = ['Enter your code here...'];
 let filePath = '';
-let sessionArray = [];
 
 //
 // Configure HTTP Server
 //
+let sum = 0;
 const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
   const filePathString = request.url.substr(1);
-  sessionArray.push(request.url.substr(1));
 
-  sessionID = sessionArray[0];
+  // Get correct session ID
+  if (sum === 0) {
+    sessionID = request.url.substr(1);
+  }
+  sum += 1;
+
+  // Reset count for next session
+  if (sum > 0 && filePathString === 'frontend/timing.js') {
+    sum = 0;
+  }
 
   // Get session ID from session.js
   if (sessionID === '') {
