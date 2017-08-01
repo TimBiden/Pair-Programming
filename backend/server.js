@@ -213,11 +213,11 @@ function sendTextarea(data) {
     // editorInstance.save(onEditorSave);
     Editor.update({
       session: {
-        $eq: sessionID,
+        $eq: data.SESSION_ID,
       },
     }, {
       $set: {
-        codeBox: data,
+        codeBox: data.MESSAGES,
       },
     }, (err, result) => {
       // console.log(`${sessionID} Updated Successfully.`);
@@ -301,25 +301,22 @@ wss.on('connection', (ws) => {
   }
 
   ws.on('message', (data) => {
-    // Capture the data we received.
-    // messages.push(data);
-    // for (let wsc of clientPool[sessionID]) {
-    //   wsc.send(data);
-    // }
+    // IMPORTANT: Gotta turn that string of data
+    // into an object we can work with.
+    const clientPayload = JSON.parse(data);
 
-    let clientPayload = {
-      MESSAGES: data,
-      SESSION_ID: sessionID,
-    };
-    clientPayload = JSON.stringify(clientPayload);
-
-    sendTextarea(data);
+    // sendTextarea now accepts an object. We needed
+    // to give it the session ID, in addition to the
+    // textarea content. The front-end now passes
+    // an object containing both pieces of data.
+    sendTextarea(clientPayload);
 
     // Broadcast to everyone else.
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(clientPayload);
-        sendTextarea(data);
+    clientPool[clientPayload.SESSION_ID].forEach((wsc) => {
+      // Don't send to the client who just sent the original message!
+      if (wsc !== ws) {
+        wsc.send(JSON.stringify(clientPayload));
+        sendTextarea(clientPayload);
       }
     });
   });
