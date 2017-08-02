@@ -30,6 +30,7 @@ const httpPort = localServer;
 let messages = ['Enter your code here...'];
 let filePath = '';
 const clientPool = {};
+let finalSessionID;
 
 //
 // Configure HTTP Server
@@ -47,7 +48,7 @@ const httpServerConfig = (request, response) => {
     // BUT only do it once
     if (sessionID === '') {
       fileID = sessionFile.sessionID();
-      sessionID = fileID;
+      finalSessionID = fileID;
     }
   }
   sum += 1;
@@ -57,7 +58,7 @@ const httpServerConfig = (request, response) => {
     sum = 0;
   }
 
-  clientPool[sessionID] = clientPool[sessionID] || [];
+  clientPool[finalSessionID] = clientPool[finalSessionID] || [];
 
   /**
    * Checks URL to find DB entry
@@ -85,7 +86,15 @@ const httpServerConfig = (request, response) => {
     }, (err, sessionData) => {
       if (err) throw err;
 
-      // console.log(`sessionData = ${sessionData}`);
+      console.log('');
+      console.log('sessionData...');
+      console.log(sessionData);
+
+      if (sessionData) {
+        finalSessionID = sessionID;
+      }
+
+      console.log(`sessionData = ${sessionData}`);
 
       checkForSessionData(sessionData);
     });
@@ -103,6 +112,11 @@ const httpServerConfig = (request, response) => {
     if (dbResults === null) {
       console.log(' ');
       console.log('Querying DB. Again.');
+      console.log(' ');
+      console.log(`sessionID = ${sessionID}`);
+      console.log(`finalSessionID = ${finalSessionID}`);
+      sessionID = finalSessionID;
+
       queryDB();
     }
     if (dbResults) {
@@ -287,20 +301,18 @@ wss.on('connection', (ws) => {
   ws.isAlive = true;
   ws.on('pong', heartbeat);
 
-  clientPool[sessionID].push(ws);
+  clientPool[finalSessionID].push(ws);
   // console.log(clientPool[sessionID]);
 
   // Send the existing message history to all new connections that join.
 
-  if (!sessionID) {
-    // console.log(`sessionID = ${sessionID}.`);
-  } else {
+  if (sessionID) {
     messages = 'Enter your code here...';
     // console.log('No sessionID.');
   }
 
   const response = {
-    SESSION_ID: sessionID,
+    SESSION_ID: finalSessionID,
     MESSAGES: messages,
   };
   // console.log(`response = ${JSON.stringify(response)}`);
