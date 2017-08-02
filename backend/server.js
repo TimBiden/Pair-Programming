@@ -52,7 +52,7 @@ const httpServerConfig = (request, response) => {
   sum += 1;
 
   // Reset count for next session
-  if (sum > 0 && filePathString === 'frontend/timing.js') {
+  if (sum === 6) {
     sum = 0;
   }
 
@@ -76,6 +76,8 @@ const httpServerConfig = (request, response) => {
     }, (err, sessionData) => {
       if (err) throw err;
 
+      console.log(`sessionData = ${sessionData}`);
+
       checkForSessionData(sessionData);
     });
   }
@@ -93,8 +95,13 @@ const httpServerConfig = (request, response) => {
       checkURL();
     }
     textBackToEditor = dbResults.codeBox;
-  }
+  };
 
+  /**
+   * Render full editor page
+   * @param {void}
+   * @returns {void}
+   */
   function pageRender() {
     // Start checking URL for session IDs or valid pages
     fs.readFile(filePath, (error, content) => {
