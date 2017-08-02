@@ -13,7 +13,7 @@ const WebSocket = require('ws');
 // Variables
 //
 // Websocket Variables
-const webSocketPort = 5000;
+// const webSocketPort = 5000;
 let textBackToEditor;
 
 // Database Variables
@@ -29,6 +29,7 @@ const httpPort = localServer;
 // Standard Web Server Variables
 let messages = ['Enter your code here...'];
 let filePath = '';
+const clientPool = {};
 
 //
 // Configure HTTP Server
@@ -58,6 +59,10 @@ const httpServerConfig = (request, response) => {
 
   clientPool[sessionID] = clientPool[sessionID] || [];
 
+  /**
+   * Checks URL to find DB entry
+   * @returns {void}
+   */
   function checkURL() {
     // load index.html when no session ID attached
     if (filePath === '/') {
@@ -69,6 +74,10 @@ const httpServerConfig = (request, response) => {
     }
   }
 
+  /**
+   * Checks DB to find entry corresponding to sessionID
+   * @returns {void} Assuming there's no error.
+   */
   function queryDB() {
     // Query DB by session ID
     Editor.findOne({
@@ -96,7 +105,6 @@ const httpServerConfig = (request, response) => {
 
   /**
    * Render full editor page
-   * @param {void}
    * @returns {void}
    */
   function pageRender() {
@@ -162,11 +170,11 @@ const editorSchema = mongoose.Schema({
   codeBox: String,
   created_at: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updated_at: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
 });
 
@@ -182,8 +190,8 @@ function newSession() {
   editorInstance.save((err) => {
     if (err) {
       return console.log(err);
-    // } else {
-    //   console.log('Session saved successfully');
+      // } else {
+      //   console.log('Session saved successfully');
     }
   });
 }
@@ -252,23 +260,21 @@ function closeConnection() {
 }
 
 setInterval(() => {
-  closeConnection()
+  closeConnection();
 }, 1000);
 
 //
 // WebSocket connection
 //
 
-// WS Constants & Variables
-const wss = new WebSocket.Server({
-  server: server,
-});
-let clientPool = {};
-
 // WS Functions
 function heartbeat() {
   this.isAlive = true;
 }
+
+const wss = new WebSocket.Server({
+  server: server,
+});
 
 wss.on('connection', (ws) => {
   ws.isAlive = true;
