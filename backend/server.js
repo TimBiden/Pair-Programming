@@ -89,11 +89,8 @@ const httpServerConfig = (request, response) => {
    */
   const checkForSessionData = function checkForSessionData(dbResults) {
     // If there's session data, get the existing code from the DB.
-    if (queryDB) {
-      const textToEditor = dbResults.codeBox;
-      filePath = '/';
-      checkURL();
-    }
+    filePath = '/';
+    checkURL();
     textBackToEditor = dbResults.codeBox;
   };
 
