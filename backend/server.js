@@ -76,7 +76,7 @@ const httpServerConfig = (request, response) => {
     }, (err, sessionData) => {
       if (err) throw err;
 
-      console.log(`sessionData = ${sessionData}`);
+      // console.log(`sessionData = ${sessionData}`);
 
       checkForSessionData(sessionData);
     });
@@ -181,9 +181,9 @@ function newSession() {
 
   editorInstance.save((err) => {
     if (err) {
-      console.log(err);
-    } else {
-      console.log('Session saved successfully');
+      return console.log(err);
+    // } else {
+    //   console.log('Session saved successfully');
     }
   });
 }
@@ -226,9 +226,9 @@ function sendTextarea(data) {
       },
     }, (err, result) => {
       // console.log(`${sessionID} Updated Successfully.`);
-      console.log(result);
-      console.log(data);
-      console.log(' ');
+      // console.log(result);
+      // console.log(data);
+      // console.log(' ');
     });
   }, 2000);
 }
@@ -283,19 +283,19 @@ wss.on('connection', (ws) => {
     // console.log(`sessionID = ${sessionID}.`);
   } else {
     messages = 'Enter your code here...';
-    console.log('No sessionID.');
+    // console.log('No sessionID.');
   }
 
   const response = {
     SESSION_ID: sessionID,
     MESSAGES: messages,
   };
-  console.log(`response = ${JSON.stringify(response)}`);
+  // console.log(`response = ${JSON.stringify(response)}`);
 
   if (textBackToEditor) {
     response.MESSAGES = textBackToEditor;
     ws.send(JSON.stringify(response));
-    console.log(`response.data = ${response.data}`);
+    // console.log(`response.data = ${response.data}`);
     // ws.send(textBackToEditor);
     // messages = ['Enter your code here...'];
   } else {
