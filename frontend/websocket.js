@@ -25,8 +25,13 @@ function sendData() {
   // retrieve data from textarea
   const message = messageField.value;
 
+  const payload = {
+    SESSION_ID: feSessionID,
+    MESSAGES: message,
+  };
+
   // Send message data through websocket
-  socket.send(message);
+  socket.send(JSON.stringify(payload));
 }
 
 /**
@@ -37,20 +42,20 @@ window.onload = () => {
   // Receive messages
   const messages = [];
   socket.onmessage = (event) => {
-    console.log(JSON.stringify(event.data));
-    console.log(typeof JSON.stringify(event.data));
+    // console.log(JSON.stringify(event.data));
+    // console.log(typeof JSON.stringify(event.data));
     const message = JSON.parse(event.data);
 
-    console.log(message);
+    // console.log(message);
 
     messages.push(message.MESSAGES);
 
-    console.log('====================================');
-    console.log('message', message);
+    // console.log('====================================');
+    // console.log('message', message);
 
     if (message.SESSION_ID) {
       feSessionID = message.SESSION_ID;
-      console.log(`feSessionID = ${feSessionID}`);
+      // console.log(`feSessionID = ${feSessionID}`);
       urlChange();
     }
 
