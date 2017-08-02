@@ -35,6 +35,15 @@ function sendData() {
 }
 
 /**
+ * Send new session ID to location bar.
+ * @returns {void}
+ */
+function urlChange() {
+  // console.log(`timing - feSessionID = ${feSessionID}`);
+  history.pushState(null, null, feSessionID);
+}
+
+/**
  * Send and receive message data through websocket
  * @returns {void}
  */
@@ -61,22 +70,17 @@ window.onload = () => {
 
     // Print message value to all textarea boxes in session
     document.getElementById('mainTextArea').value = message.MESSAGES;
-    resizeTextBox();
-    getLines();
-    checkTime();
+    resizeTextBox(); // Definned in other file.
+    getLines(); // Definned in other file.
+    checkTime(); // Definned in other file.
   };
 
   // Making magic happen!!!
   messageField.addEventListener('keyup', () => {
     sendData();
-    getLines();
+    getLines(); // Definned in other file.
   });
 
   // Run numbering function
-  getLines();
+  getLines(); // Is defined in textarea.js
 };
-
-function urlChange() {
-  // console.log(`timing - feSessionID = ${feSessionID}`);
-  history.pushState(null, null, feSessionID);
-}
