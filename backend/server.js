@@ -29,17 +29,25 @@ const httpPort = localServer;
 // Standard Web Server Variables
 let messages = ['Enter your code here...'];
 let filePath = '';
-let sessionArray = [];
 
 //
 // Configure HTTP Server
 //
+let sum = 0;
 const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
   const filePathString = request.url.substr(1);
-  sessionArray.push(request.url.substr(1));
 
-  sessionID = sessionArray[0];
+  // Get correct session ID
+  if (sum === 0) {
+    sessionID = request.url.substr(1);
+  }
+  sum += 1;
+
+  // Reset count for next session
+  if (sum > 0 && filePathString === 'frontend/timing.js') {
+    sum = 0;
+  }
 
   // Get session ID from session.js
   if (sessionID === '') {
@@ -205,11 +213,11 @@ function sendTextarea(data) {
     // editorInstance.save(onEditorSave);
     Editor.update({
       session: {
-        $eq: sessionID,
+        $eq: data.SESSION_ID,
       },
     }, {
       $set: {
-        codeBox: data,
+        codeBox: data.MESSAGES,
       },
     }, (err, result) => {
       // console.log(`${sessionID} Updated Successfully.`);
@@ -293,25 +301,22 @@ wss.on('connection', (ws) => {
   }
 
   ws.on('message', (data) => {
-    // Capture the data we received.
-    // messages.push(data);
-    // for (let wsc of clientPool[sessionID]) {
-    //   wsc.send(data);
-    // }
+    // IMPORTANT: Gotta turn that string of data
+    // into an object we can work with.
+    const clientPayload = JSON.parse(data);
 
-    let clientPayload = {
-      MESSAGES: data,
-      SESSION_ID: sessionID,
-    };
-    clientPayload = JSON.stringify(clientPayload);
-
-    sendTextarea(data);
+    // sendTextarea now accepts an object. We needed
+    // to give it the session ID, in addition to the
+    // textarea content. The front-end now passes
+    // an object containing both pieces of data.
+    sendTextarea(clientPayload);
 
     // Broadcast to everyone else.
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(clientPayload);
-        sendTextarea(data);
+    clientPool[clientPayload.SESSION_ID].forEach((wsc) => {
+      // Don't send to the client who just sent the original message!
+      if (wsc !== ws) {
+        wsc.send(JSON.stringify(clientPayload));
+        sendTextarea(clientPayload);
       }
     });
   });
