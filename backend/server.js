@@ -100,7 +100,14 @@ const httpServerConfig = (request, response) => {
     // If there's session data, get the existing code from the DB.
     filePath = '/';
     checkURL();
-    textBackToEditor = dbResults.codeBox;
+    if (dbResults === null) {
+      console.log(' ');
+      console.log('Querying DB. Again.');
+      queryDB();
+    }
+    if (dbResults) {
+      textBackToEditor = dbResults.codeBox;
+    }
   };
 
   /**
