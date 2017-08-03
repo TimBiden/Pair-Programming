@@ -4,6 +4,3 @@ node_modules
 DigitalOcean
 
 ###Ignore these files###
-Digital-Ocean-Commands.md
-RefactorNotes.md
-backend/server2.js
