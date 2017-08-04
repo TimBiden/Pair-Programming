@@ -24,9 +24,13 @@ const socket = new WebSocket(server);
 function sendData() {
   // retrieve data from textarea
   const message = messageField.value;
+  const payload = {
+    SESSION_ID: feSessionID,
+    MESSAGES: message,
+  };
 
   // Send message data through websocket
-  socket.send(message);
+  socket.send(JSON.stringify(payload));
 }
 
 /**
@@ -35,21 +39,27 @@ function sendData() {
  */
 window.onload = () => {
   // Receive messages
-  messages = [];
+  const messages = [];
   socket.onmessage = (event) => {
-    const message = event.data;
-    console.log(`message = ${message}`);
-    messages.push(message);
-    console.log(`Messages = ${messages}`);
+    // console.log(JSON.stringify(event.data));
+    // console.log(typeof JSON.stringify(event.data));
+    const message = JSON.parse(event.data);
 
-    if (messages[1]) {
-      feSessionID = messages[1];
-      console.log(`feSessionID = ${feSessionID}`);
+    // console.log(message);
+
+    messages.push(message.MESSAGES);
+
+    // console.log('====================================');
+    // console.log('message', message);
+
+    if (message.SESSION_ID) {
+      feSessionID = message.SESSION_ID;
+      // console.log(`feSessionID = ${feSessionID}`);
       urlChange();
     }
 
     // Print message value to all textarea boxes in session
-    document.getElementById('mainTextArea').value = messages[0];
+    document.getElementById('mainTextArea').value = message.MESSAGES;
     resizeTextBox();
     getLines();
     checkTime();
@@ -66,6 +76,6 @@ window.onload = () => {
 };
 
 function urlChange() {
-  console.log(`timing - feSessionID = ${feSessionID}`);
+  // console.log(`timing - feSessionID = ${feSessionID}`);
   history.pushState(null, null, feSessionID);
 }

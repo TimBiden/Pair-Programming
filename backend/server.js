@@ -18,91 +18,139 @@ let textBackToEditor;
 
 // Database Variables
 const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
-let sessionIdString;
-let sessionID;
 
 // Web Server Variables
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
-const httpPort = digitalOcean;
+const httpPort = localServer;
+
 // Standard Web Server Variables
-let messages = ['Enter your code here...'];
+const messages = ['Enter your code here...'];
+const clientPool = {};
+let sessionIdArray = [];
 let filePath = '';
+let finalSessionID;
+let filePathString;
+
+//
+// Web Server Functions
+//
+
+/**
+ * Set Session ID and file names
+ * @param {string} request The URL being requested
+ * @returns {dbResults.codeBox} Text to send back to editor.
+ */
+function setSessionID(request) {
+  filePath = (`${request.url}`);
+  filePathString = request.url.substr(1);
+  sessionIdArray.push(filePathString);
+
+  if (filePathString === 'favicon.ico' || filePathString === 'frontend/timing.js') {
+    sessionIdArray = [];
+  } else {
+    finalSessionID = sessionIdArray[0];
+  }
+
+  // Get session ID from session.js
+  if (request.url.substr(1) === '') {
+    sessionIdArray = [];
+    finalSessionID = sessionFile.sessionID();
+    sessionIdArray.push(finalSessionID);
+  }
+}
+
+/**
+ * Check URL for Session ID, filename...
+ * @returns {void} Text to send back to editor.
+ */
+function checkURL() {
+  // load index.html when no session ID attached
+  // Allow necessary files to pass without
+  // creating new session IDs.
+  if (filePath === '/') {
+    newSession();
+    filePath = 'index.html';
+  } else if (filePathString !== 'style/style.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
+    filePath = 'index.html';
+    queryDB();
+  }
+}
+
+/**
+ * Check for existing session data
+ * @param {string} dbResults Is the specified session ID valid?
+ * @returns {dbResults.codeBox} Text to send back to editor.
+ */
+const checkForSessionData = function checkForSessionData(dbResults) {
+  // If there's session data, get the existing code from the DB.
+  if (queryDB) {
+    // console.log(`queryDB = ${queryDB}`);
+    const textToEditor = dbResults.codeBox;
+    filePath = '/';
+    checkURL();
+  }
+  textBackToEditor = dbResults.codeBox;
+};
+
+/**
+ * Check URL for Session ID, filename...
+ * @returns {void} Text to send back to editor.
+ */
+function queryDB() {
+  // Query DB by session ID
+  Editor.findOne({
+    session: finalSessionID,
+  }, (err, sessionData) => {
+    if (err) throw err;
+
+    // console.log(`sessionData = ${sessionData}`);
+
+    let altSessionData = sessionData;
+
+    if (!sessionData) {
+      altSessionData = 'Enter your code here...';
+    }
+
+    checkForSessionData(altSessionData);
+  });
+}
+
+/**
+ * Renders files in page
+ * @param {string} response - HTML response codes
+ * @returns {void}
+ */
+function pageRender(response, contentType) {
+  // Start checking URL for session IDs or valid pages
+  fs.readFile(filePath, (error, content) => {
+    if (error) {
+      // http responses
+      response.writeHead(404);
+      response.end(content, 'utf-8');
+    } else {
+      // If the file exists, load that file
+      response.writeHead(200, {
+        'Content-Type': contentType,
+      });
+      response.end(content, 'utf-8');
+    }
+  });
+}
 
 //
 // Configure HTTP Server
 //
-let sum = 0;
+let count = 0;
 const httpServerConfig = (request, response) => {
-  filePath = (`${request.url}`);
-  const filePathString = request.url.substr(1);
+  setSessionID(request);
 
-  if (sum === 0) {
-    sessionIdString = request.url.substr(1);
-  }
-  sum += 1;
-  if (sessionIdString === '') {
-    sessionID = sessionFile.sessionID();
-    sessionIdString = sessionID
-  }
+  clientPool[finalSessionID] = clientPool[finalSessionID] || [];
 
-  console.log(`sum = ${sum}`);
-  console.log(`sessionIdString =  ${sessionIdString}`);
-
-  function checkURL() {
-    // load index.mthl when no session ID attached
-    if (filePath === '/') {
-      newSession();
-      filePath = 'index.html';
-    } else if (filePathString !== 'style/style.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
-      filePath = 'index.html';
-      queryDB();
-    }
-  }
-
-  function queryDB() {
-    // Query DB by session ID
-    Editor.findOne({
-      session: sessionIdString,
-    }, (err, sessionData) => {
-      if (err) throw err;
-
-      checkForSessionData(sessionData);
-    });
-  }
-
-  /**
-   * Check for existing session data
-   * @param {string} dbResults Is the specified session ID valid?
-   * @returns {dbResults.codeBox} Text to send back to editor.
-   */
-  const checkForSessionData = function checkForSessionData(dbResults) {
-    // If there's session data, get the existing code from the DB.
-    if (queryDB) {
-      const textToEditor = dbResults.codeBox;
-      filePath = '/';
-      checkURL();
-    }
-    textBackToEditor = dbResults.codeBox;
-  }
-
-  function pageRender() {
-    // Start checking URL for session IDs or valid pages
-    fs.readFile(filePath, (error, content) => {
-      if (error) {
-        // http responses
-        response.writeHead(404);
-        response.end(content, 'utf-8');
-      } else {
-        // If the file exists, load that file
-        response.writeHead(200, {
-          'Content-Type': contentType,
-        });
-        response.end(content, 'utf-8');
-      }
-    });
-  }
+  // console.log(' ');
+  console.log(`filePath is ${filePath}`);
+  console.log(`array length = ${sessionIdArray.length}`);
 
   checkURL();
 
@@ -120,7 +168,7 @@ const httpServerConfig = (request, response) => {
   const contentType = contentTypesByExtention[extname] || 'text/plain';
 
   filePath = path.join(__dirname, '..', filePath);
-  pageRender();
+  pageRender(response, contentType);
 };
 
 // Create http server
@@ -150,11 +198,11 @@ const editorSchema = mongoose.Schema({
   codeBox: String,
   created_at: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updated_at: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
 });
 
@@ -163,15 +211,13 @@ const textareaToDB = 'Enter your code here...';
 
 function newSession() {
   const editorInstance = new Editor({
-    session: sessionID,
+    session: finalSessionID,
     codeBox: textareaToDB,
   });
 
   editorInstance.save((err) => {
     if (err) {
       console.log(err);
-    } else {
-      console.log('Session saved successfully');
     }
   });
 }
@@ -206,57 +252,99 @@ function sendTextarea(data) {
     // editorInstance.save(onEditorSave);
     Editor.update({
       session: {
-        $eq: sessionIdString,
+        $eq: data.SESSION_ID,
       },
     }, {
       $set: {
-        codeBox: data,
+        codeBox: data.MESSAGES,
       },
     }, (err, result) => {
-      console.log(`${sessionIdString} Updated Successfully.`);
       console.log(result);
-      console.log(' ');
-      console.log(data);
+      // console.log(data);
+      // console.log(' ');
     });
   }, 2000);
 }
+let connectionTimer;
+
+/**
+ * Check if connection dropped. If > 1 seconds,
+ * update database with current textarea and
+ * close WebSocket connection.
+ * @param {void}
+ * @returns {void}
+ */
+function closeConnection() {
+  clearTimeout(connectionTimer);
+  connectionTimer = setTimeout(() => {
+    wss.clients.forEach((ws) => {
+      ws.isAlive = false;
+      ws.ping('', false, true);
+    });
+  });
+}
+
+setInterval(() => {
+  closeConnection()
+}, 1000);
 
 //
 // WebSocket connection
 //
+
+// WS Constants & Variables
 const wss = new WebSocket.Server({
   server: server,
 });
 
+// WS Functions
+function heartbeat() {
+  this.isAlive = true;
+}
+
 wss.on('connection', (ws) => {
+  ws.isAlive = true;
+  ws.on('pong', heartbeat);
+
+  clientPool[finalSessionID].push(ws);
+
   // Send the existing message history to all new connections that join.
 
-  if (sessionIdString) {
-    console.log('there are multiple messages');
-    messages = ['Enter your code here...', sessionIdString];
-  } else {
-    messages = ['Enter your code here...'];
-  }
+  const response = {
+    SESSION_ID: finalSessionID,
+    MESSAGES: messages,
+  };
 
   if (textBackToEditor) {
-    ws.send(textBackToEditor);
+    response.MESSAGES = textBackToEditor;
+    ws.send(JSON.stringify(response));
+    // console.log(`response.data = ${response.data}`);
+    // ws.send(textBackToEditor);
     // messages = ['Enter your code here...'];
   } else {
-    for (const message of messages) {
-      ws.send(message);
-    }
+    ws.send(JSON.stringify(response));
+    // for (const message of messages) {
+    //   ws.send(message);
+    // }
   }
 
   ws.on('message', (data) => {
-    // Capture the data we received.
-    messages.push(data);
-    sendTextarea(data);
+    // IMPORTANT: Gotta turn that string of data
+    // into an object we can work with.
+    const clientPayload = JSON.parse(data);
+
+    // sendTextarea now accepts an object. We needed
+    // to give it the session ID, in addition to the
+    // textarea content. The front-end now passes
+    // an object containing both pieces of data.
+    sendTextarea(clientPayload);
 
     // Broadcast to everyone else.
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(data);
-        sendTextarea(data);
+    clientPool[clientPayload.SESSION_ID].forEach((wsc) => {
+      // Don't send to the client who just sent the original message!
+      if (wsc !== ws && wsc.readyState === WebSocket.OPEN) {
+        wsc.send(JSON.stringify(clientPayload));
+        sendTextarea(clientPayload);
       }
     });
   });
