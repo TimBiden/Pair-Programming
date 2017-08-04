@@ -34,7 +34,7 @@ let finalSessionID;
 let filePathString;
 
 //
-// Server Functions
+// Web Server Functions
 //
 
 /**
@@ -47,7 +47,11 @@ function setSessionID(request) {
   filePathString = request.url.substr(1);
   sessionIdArray.push(filePathString);
 
-  finalSessionID = sessionIdArray[0];
+  if (filePathString === 'favicon.ico' || filePathString === 'frontend/timing.js') {
+    sessionIdArray = [];
+  } else {
+    finalSessionID = sessionIdArray[0];
+  }
 
   // Get session ID from session.js
   if (request.url.substr(1) === '') {
@@ -138,10 +142,15 @@ function pageRender(response, contentType) {
 //
 // Configure HTTP Server
 //
+let count = 0;
 const httpServerConfig = (request, response) => {
   setSessionID(request);
 
   clientPool[finalSessionID] = clientPool[finalSessionID] || [];
+
+  // console.log(' ');
+  console.log(`filePath is ${filePath}`);
+  console.log(`array length = ${sessionIdArray.length}`);
 
   checkURL();
 
