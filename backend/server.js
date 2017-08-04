@@ -112,6 +112,28 @@ function queryDB() {
   });
 }
 
+/**
+ * Renders files in page
+ * @param {string} response - HTML response codes
+ * @returns {void}
+ */
+function pageRender(response, contentType) {
+  // Start checking URL for session IDs or valid pages
+  fs.readFile(filePath, (error, content) => {
+    if (error) {
+      // http responses
+      response.writeHead(404);
+      response.end(content, 'utf-8');
+    } else {
+      // If the file exists, load that file
+      response.writeHead(200, {
+        'Content-Type': contentType,
+      });
+      response.end(content, 'utf-8');
+    }
+  });
+}
+
 //
 // Configure HTTP Server
 //
@@ -119,23 +141,6 @@ const httpServerConfig = (request, response) => {
   setSessionID(request);
 
   clientPool[finalSessionID] = clientPool[finalSessionID] || [];
-
-  function pageRender() {
-    // Start checking URL for session IDs or valid pages
-    fs.readFile(filePath, (error, content) => {
-      if (error) {
-        // http responses
-        response.writeHead(404);
-        response.end(content, 'utf-8');
-      } else {
-        // If the file exists, load that file
-        response.writeHead(200, {
-          'Content-Type': contentType,
-        });
-        response.end(content, 'utf-8');
-      }
-    });
-  }
 
   checkURL();
 
@@ -153,7 +158,7 @@ const httpServerConfig = (request, response) => {
   const contentType = contentTypesByExtention[extname] || 'text/plain';
 
   filePath = path.join(__dirname, '..', filePath);
-  pageRender();
+  pageRender(response, contentType);
 };
 
 // Create http server
