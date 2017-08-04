@@ -18,16 +18,16 @@ let textBackToEditor;
 
 // Database Variables
 const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
-let sessionID;
 
 // Web Server Variables
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
 const httpPort = localServer;
-let sessionArray = [];
+
 // Standard Web Server Variables
-let messages = ['Enter your code here...'];
+const messages = ['Enter your code here...'];
+let sessionIdArray = [];
 let filePath = '';
 let finalSessionID;
 
@@ -36,23 +36,24 @@ let finalSessionID;
 //
 const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
-  // console.log(filePath);
   const filePathString = request.url.substr(1);
-  sessionArray.push(filePathString);
+  sessionIdArray.push(filePathString);
 
-  finalSessionID = sessionArray[0];
+  finalSessionID = sessionIdArray[0];
 
   // Get session ID from session.js
   if (request.url.substr(1) === '') {
-    sessionArray = [];
+    sessionIdArray = [];
     finalSessionID = sessionFile.sessionID();
-    sessionArray.push(finalSessionID);
+    sessionIdArray.push(finalSessionID);
   }
 
   clientPool[finalSessionID] = clientPool[finalSessionID] || [];
 
   function checkURL() {
     // load index.html when no session ID attached
+    // Allow necessary files to pass without
+    // creating new session IDs.
     if (filePath === '/') {
       newSession();
       filePath = 'index.html';
