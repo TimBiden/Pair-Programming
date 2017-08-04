@@ -25,7 +25,7 @@ let sessionID;
 const digitalOcean = 80;
 const localServer = 5000;
 const httpPort = localServer;
-const sessionArray = [];
+let sessionArray = [];
 // Standard Web Server Variables
 let messages = ['Enter your code here...'];
 let filePath = '';
@@ -42,8 +42,10 @@ const httpServerConfig = (request, response) => {
   finalSessionID = sessionArray[0];
 
   // Get session ID from session.js
-  if (finalSessionID === '') {
+  if (request.url.substr(1) === '') {
+    sessionArray = [];
     finalSessionID = sessionFile.sessionID();
+    sessionArray.push(finalSessionID);
   }
 
   clientPool[finalSessionID] = clientPool[finalSessionID] || [];
