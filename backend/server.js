@@ -19,43 +19,34 @@ let textBackToEditor;
 // Database Variables
 const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
 let sessionID;
-let fileID;
 
 // Web Server Variables
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
 const httpPort = localServer;
+const sessionArray = [];
 // Standard Web Server Variables
 let messages = ['Enter your code here...'];
 let filePath = '';
+let finalSessionID;
 
 //
 // Configure HTTP Server
 //
-let sum = 0;
 const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
   const filePathString = request.url.substr(1);
+  sessionArray.push(filePathString);
 
-  // Get correct session ID
-  if (sum === 0) {
-    sessionID = request.url.substr(1);
-  }
-  sum += 1;
-
-  // Reset count for next session
-  if (sum > 0 && filePathString === 'frontend/timing.js') {
-    sum = 0;
-  }
+  finalSessionID = sessionArray[0];
 
   // Get session ID from session.js
-  if (sessionID === '') {
-    fileID = sessionFile.sessionID();
-    sessionID = fileID;
+  if (finalSessionID === '') {
+    finalSessionID = sessionFile.sessionID();
   }
 
-  clientPool[sessionID] = clientPool[sessionID] || [];
+  clientPool[finalSessionID] = clientPool[finalSessionID] || [];
 
   function checkURL() {
     // load index.html when no session ID attached
@@ -71,9 +62,12 @@ const httpServerConfig = (request, response) => {
   function queryDB() {
     // Query DB by session ID
     Editor.findOne({
-      session: sessionID,
+      session: finalSessionID,
     }, (err, sessionData) => {
       if (err) throw err;
+
+      console.log(`sessionData = ${sessionData}`);
+      console.log(`sessionData = ${sessionData.data}`);
 
       checkForSessionData(sessionData);
     });
@@ -170,7 +164,7 @@ const textareaToDB = 'Enter your code here...';
 
 function newSession() {
   const editorInstance = new Editor({
-    session: fileID,
+    session: finalSessionID,
     codeBox: textareaToDB,
   });
 
@@ -269,20 +263,20 @@ wss.on('connection', (ws) => {
   ws.isAlive = true;
   ws.on('pong', heartbeat);
 
-  clientPool[sessionID].push(ws);
+  clientPool[finalSessionID].push(ws);
   // console.log(clientPool[sessionID]);
 
   // Send the existing message history to all new connections that join.
 
-  if (!sessionID) {
-    // console.log(`sessionID = ${sessionID}.`);
-  } else {
-    messages = 'Enter your code here...';
-    console.log('No sessionID.');
-  }
+  // if (!sessionID) {
+  //   // console.log(`sessionID = ${sessionID}.`);
+  // } else {
+  //   messages = 'Enter your code here...';
+  //   console.log('No sessionID.');
+  // }
 
   const response = {
-    SESSION_ID: sessionID,
+    SESSION_ID: finalSessionID,
     MESSAGES: messages,
   };
   console.log(`response = ${JSON.stringify(response)}`);
