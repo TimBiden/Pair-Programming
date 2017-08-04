@@ -67,7 +67,10 @@ const httpServerConfig = (request, response) => {
       if (err) throw err;
 
       console.log(`sessionData = ${sessionData}`);
-      console.log(`sessionData = ${sessionData.data}`);
+
+      // if (!sessionData) {
+      //   sessionData = 'Enter your code here...';
+      // }
 
       checkForSessionData(sessionData);
     });
