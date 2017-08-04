@@ -308,7 +308,7 @@ wss.on('connection', (ws) => {
     // Broadcast to everyone else.
     clientPool[clientPayload.SESSION_ID].forEach((wsc) => {
       // Don't send to the client who just sent the original message!
-      if (wsc !== ws) {
+      if (wsc !== ws && wsc.readyState === WebSocket.OPEN) {
         wsc.send(JSON.stringify(clientPayload));
         sendTextarea(clientPayload);
       }
