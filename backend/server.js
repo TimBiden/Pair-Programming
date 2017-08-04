@@ -30,13 +30,20 @@ const messages = ['Enter your code here...'];
 let sessionIdArray = [];
 let filePath = '';
 let finalSessionID;
+let filePathString;
 
 //
-// Configure HTTP Server
+// Server Functions
 //
-const httpServerConfig = (request, response) => {
+
+/**
+ * Set Session ID and file names
+ * @param {string} request The URL being requested
+ * @returns {dbResults.codeBox} Text to send back to editor.
+ */
+function setSessionID(request) {
   filePath = (`${request.url}`);
-  const filePathString = request.url.substr(1);
+  filePathString = request.url.substr(1);
   sessionIdArray.push(filePathString);
 
   finalSessionID = sessionIdArray[0];
@@ -47,30 +54,45 @@ const httpServerConfig = (request, response) => {
     finalSessionID = sessionFile.sessionID();
     sessionIdArray.push(finalSessionID);
   }
+}
+
+/**
+ * Check URL for Session ID, filename...
+ * @returns {void} Text to send back to editor.
+ */
+function checkURL() {
+  // load index.html when no session ID attached
+  // Allow necessary files to pass without
+  // creating new session IDs.
+  if (filePath === '/') {
+    newSession();
+    filePath = 'index.html';
+  } else if (filePathString !== 'style/style.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
+    filePath = 'index.html';
+    queryDB();
+  }
+}
+
+//
+// Configure HTTP Server
+//
+const httpServerConfig = (request, response) => {
+  setSessionID(request);
 
   clientPool[finalSessionID] = clientPool[finalSessionID] || [];
 
-  function checkURL() {
-    // load index.html when no session ID attached
-    // Allow necessary files to pass without
-    // creating new session IDs.
-    if (filePath === '/') {
-      newSession();
-      filePath = 'index.html';
-    } else if (filePathString !== 'style/style.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
-      filePath = 'index.html';
-      queryDB();
-    }
-  }
-
-  function queryDB() {
+  /**
+   * Check URL for Session ID, filename...
+   * @returns {void} Text to send back to editor.
+   */
+   function queryDB() {
     // Query DB by session ID
     Editor.findOne({
       session: finalSessionID,
     }, (err, sessionData) => {
       if (err) throw err;
 
-      console.log(`sessionData = ${sessionData}`);
+      // console.log(`sessionData = ${sessionData}`);
 
       // if (!sessionData) {
       //   sessionData = 'Enter your code here...';
@@ -88,7 +110,7 @@ const httpServerConfig = (request, response) => {
   const checkForSessionData = function checkForSessionData(dbResults) {
     // If there's session data, get the existing code from the DB.
     if (queryDB) {
-      console.log(`queryDB = ${queryDB}`);
+      // console.log(`queryDB = ${queryDB}`);
       const textToEditor = dbResults.codeBox;
       filePath = '/';
       checkURL();
@@ -221,8 +243,8 @@ function sendTextarea(data) {
       },
     }, (err, result) => {
       console.log(result);
-      console.log(data);
-      console.log(' ');
+      // console.log(data);
+      // console.log(' ');
     });
   }, 2000);
 }
