@@ -36,6 +36,7 @@ let finalSessionID;
 //
 const httpServerConfig = (request, response) => {
   filePath = (`${request.url}`);
+  // console.log(filePath);
   const filePathString = request.url.substr(1);
   sessionArray.push(filePathString);
 
@@ -86,6 +87,7 @@ const httpServerConfig = (request, response) => {
   const checkForSessionData = function checkForSessionData(dbResults) {
     // If there's session data, get the existing code from the DB.
     if (queryDB) {
+      console.log(`queryDB = ${queryDB}`);
       const textToEditor = dbResults.codeBox;
       filePath = '/';
       checkURL();
@@ -176,8 +178,6 @@ function newSession() {
   editorInstance.save((err) => {
     if (err) {
       console.log(err);
-    } else {
-      console.log('Session saved successfully');
     }
   });
 }
@@ -219,7 +219,6 @@ function sendTextarea(data) {
         codeBox: data.MESSAGES,
       },
     }, (err, result) => {
-      // console.log(`${sessionID} Updated Successfully.`);
       console.log(result);
       console.log(data);
       console.log(' ');
@@ -269,27 +268,18 @@ wss.on('connection', (ws) => {
   ws.on('pong', heartbeat);
 
   clientPool[finalSessionID].push(ws);
-  // console.log(clientPool[sessionID]);
 
   // Send the existing message history to all new connections that join.
-
-  // if (!sessionID) {
-  //   // console.log(`sessionID = ${sessionID}.`);
-  // } else {
-  //   messages = 'Enter your code here...';
-  //   console.log('No sessionID.');
-  // }
 
   const response = {
     SESSION_ID: finalSessionID,
     MESSAGES: messages,
   };
-  console.log(`response = ${JSON.stringify(response)}`);
 
   if (textBackToEditor) {
     response.MESSAGES = textBackToEditor;
     ws.send(JSON.stringify(response));
-    console.log(`response.data = ${response.data}`);
+    // console.log(`response.data = ${response.data}`);
     // ws.send(textBackToEditor);
     // messages = ['Enter your code here...'];
   } else {
