@@ -149,8 +149,8 @@ const httpServerConfig = (request, response) => {
   clientPool[finalSessionID] = clientPool[finalSessionID] || [];
 
   // console.log(' ');
-  console.log(`filePath is ${filePath}`);
-  console.log(`array length = ${sessionIdArray.length}`);
+  // console.log(`filePath is ${filePath}`);
+  // console.log(`array length = ${sessionIdArray.length}`);
 
   checkURL();
 
@@ -217,7 +217,7 @@ function newSession() {
 
   editorInstance.save((err) => {
     if (err) {
-      console.log(err);
+      // console.log(err);
     }
   });
 }
@@ -259,7 +259,7 @@ function sendTextarea(data) {
         codeBox: data.MESSAGES,
       },
     }, (err, result) => {
-      console.log(result);
+      // console.log(result);
       // console.log(data);
       // console.log(' ');
     });
