@@ -73,6 +73,45 @@ function checkURL() {
   }
 }
 
+/**
+ * Check for existing session data
+ * @param {string} dbResults Is the specified session ID valid?
+ * @returns {dbResults.codeBox} Text to send back to editor.
+ */
+const checkForSessionData = function checkForSessionData(dbResults) {
+  // If there's session data, get the existing code from the DB.
+  if (queryDB) {
+    // console.log(`queryDB = ${queryDB}`);
+    const textToEditor = dbResults.codeBox;
+    filePath = '/';
+    checkURL();
+  }
+  textBackToEditor = dbResults.codeBox;
+};
+
+/**
+ * Check URL for Session ID, filename...
+ * @returns {void} Text to send back to editor.
+ */
+function queryDB() {
+  // Query DB by session ID
+  Editor.findOne({
+    session: finalSessionID,
+  }, (err, sessionData) => {
+    if (err) throw err;
+
+    // console.log(`sessionData = ${sessionData}`);
+
+    let altSessionData = sessionData;
+
+    if (!sessionData) {
+      altSessionData = 'Enter your code here...';
+    }
+
+    checkForSessionData(altSessionData);
+  });
+}
+
 //
 // Configure HTTP Server
 //
@@ -80,43 +119,6 @@ const httpServerConfig = (request, response) => {
   setSessionID(request);
 
   clientPool[finalSessionID] = clientPool[finalSessionID] || [];
-
-  /**
-   * Check URL for Session ID, filename...
-   * @returns {void} Text to send back to editor.
-   */
-   function queryDB() {
-    // Query DB by session ID
-    Editor.findOne({
-      session: finalSessionID,
-    }, (err, sessionData) => {
-      if (err) throw err;
-
-      // console.log(`sessionData = ${sessionData}`);
-
-      // if (!sessionData) {
-      //   sessionData = 'Enter your code here...';
-      // }
-
-      checkForSessionData(sessionData);
-    });
-  }
-
-  /**
-   * Check for existing session data
-   * @param {string} dbResults Is the specified session ID valid?
-   * @returns {dbResults.codeBox} Text to send back to editor.
-   */
-  const checkForSessionData = function checkForSessionData(dbResults) {
-    // If there's session data, get the existing code from the DB.
-    if (queryDB) {
-      // console.log(`queryDB = ${queryDB}`);
-      const textToEditor = dbResults.codeBox;
-      filePath = '/';
-      checkURL();
-    }
-    textBackToEditor = dbResults.codeBox;
-  }
 
   function pageRender() {
     // Start checking URL for session IDs or valid pages
@@ -181,11 +183,11 @@ const editorSchema = mongoose.Schema({
   codeBox: String,
   created_at: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updated_at: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
 });
 
