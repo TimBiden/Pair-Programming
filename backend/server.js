@@ -27,6 +27,7 @@ const httpPort = localServer;
 
 // Standard Web Server Variables
 const messages = ['Enter your code here...'];
+const clientPool = {};
 let sessionIdArray = [];
 let filePath = '';
 let finalSessionID;
@@ -286,7 +287,6 @@ setInterval(() => {
 const wss = new WebSocket.Server({
   server: server,
 });
-let clientPool = {};
 
 // WS Functions
 function heartbeat() {
