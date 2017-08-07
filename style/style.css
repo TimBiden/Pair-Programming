@@ -49,3 +49,12 @@ h1 {
 #CodingMessage {
   text-align: center;
 }
+
+#FileButtons {
+  display: inline-block;
+}
+
+.Thanks {
+  float: right;
+  text-align: right;
+}
