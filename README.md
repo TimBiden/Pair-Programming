@@ -1,13 +1,14 @@
 # Pair Programming
 
 I created a pair programming app for school because screen sharing isn't pair programming, it's show and tell.
-It's still missing a few things I think are necessary for it to be a working app, but for the school project, and the time being, it's completed.
+
+The project is still missing a few things I think are necessary for it to be a fully working app, but for the school project, and the time being, I think the functionality is completed. Still have to make it not quite so ugly.
 
 A few things it still needs to be truly usable:
 - Voice communications
 - Notification of what line is being edited by other person
-- Text highlighting
-- Language specific highlighting
+- Text highlighting (click & drag)
+- Language specific highlighting (like highlightjs or prismjs)
 
 ## MVP Implementation:
 
@@ -31,9 +32,9 @@ A few things it still needs to be truly usable:
 
 ## Beyond MVP:
 
-- Change textarea to contenteditable div
-- Make it attractive
-- Add shared text highlighting
-- Add voice communications
-- Add language specific highlighting
-- Keep session open for specified amount of time
+- Make it attractive. ⏸
+- Add voice communications. ⏸
+- Add shared text highlighting. ⏸
+- Add language specific highlighting. ⏸
+- Change textarea to contenteditable div. ⏸
+- Keep session open for specified amount of time. ⏸
