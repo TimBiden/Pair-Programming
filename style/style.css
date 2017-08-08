@@ -1,5 +1,6 @@
 .container {
   border: 3px solid grey;
+  /*background-color: #86CCDA;*/
 }
 
 .gutter {
@@ -13,12 +14,14 @@
   font-variant: normal;
   font-weight: 400;
   line-height: 24px;
+  /*background-color: #daad86;*/
 }
 
 .textBox {
   position: relative;
   margin-left: 57px;
   border: 1px solid black;
+  /*background-color: #daad86;*/
 }
 
 h1 {
@@ -35,7 +38,7 @@ h1 {
   outline: none;
   resize: none;
   overflow-y: hidden;
-  color: rgb(51,51,51);
+  /*background-color: #daad86;*/
   font-family: monospace;
   font-size: 15px;
   font-style: normal;
@@ -50,11 +53,10 @@ h1 {
   text-align: center;
 }
 
-#FileButtons {
-  display: inline-block;
+/*input[type=file] {
+    display: inline-block;
 }
 
-.Thanks {
-  float: right;
-  text-align: right;
-}
+input[type=text] {
+    display: inline-block;
+}*/

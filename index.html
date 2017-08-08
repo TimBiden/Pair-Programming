@@ -32,16 +32,21 @@
     </div>
     <p> </p>
 
-    <!-- Begin file save -->
-    <div>
-      <strong>File Name:</strong> <input type='text' id='fileNameTextBox'> <button onclick='saveTextAsFile()'>Save File</button>
-    </div>
-
     <!-- Begin file load -->
-    <div style="display: inline">
-      <strong>File to Load:</strong> <input type='file' id='fileToLoad'> <button onclick='loadFile()'>Load File</button>
-    </div>
+    <form class='form-inline'>
+      <strong>File to Load:</strong>
+      <input type='file' class='form-control mb-2 mr-sm-2 mb-sm-0'>
+      <button onclick='loadFile()'>Load File</button>
+    </form>
+
     <p> </p>
+
+    <!-- Begin file save -->
+    <form class='form-inline'>
+      <strong>File Name:</strong>
+      <input type='text' id='fileNameTextBox' class='form-control mb-2 mr-sm-2 mb-sm-0'>
+      <button onclick='saveTextAsFile()'>Save File</button>
+    </form>
   </section>
 
   <script src="./frontend/textarea.js"></script>
