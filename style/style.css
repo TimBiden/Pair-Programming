@@ -35,6 +35,7 @@ h1 {
   outline: none;
   resize: none;
   overflow-y: hidden;
+  color: rgb(51,51,51);
   font-family: monospace;
   font-size: 15px;
   font-style: normal;
@@ -47,4 +48,13 @@ h1 {
 
 #CodingMessage {
   text-align: center;
+}
+
+#FileButtons {
+  display: inline-block;
+}
+
+.Thanks {
+  float: right;
+  text-align: right;
 }
