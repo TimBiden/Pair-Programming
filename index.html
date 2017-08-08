@@ -34,20 +34,16 @@
       </tr>
     </div>
 
+    <!-- Begin file save -->
     <p> </p>
-
-    <table>
-      <tr>
-        <td><strong>File Name:</strong></td>
-        <td><input type='text' id='fileNameTextBox'></td>
-        <td><button onclick='saveTextAsFile()'>Save File</button></td>
-      </tr>
-      <tr>
-        <td><strong>File to Load:</strong></td>
-        <td><input type='file' id='fileToLoad'></td>
-        <td><button onclick='loadFile()'>Load File</button></td>
-      </tr>
-    </table>
+    <div>
+      <strong>File Name:</strong> <input type='text' id='fileNameTextBox'> <button onclick='saveTextAsFile()'>Save File</button>
+    </div>
+    <!-- Begin file load -->
+    <div style="display: inline">
+      <strong>File to Load:</strong> <input type='file' id='fileToLoad'> <button onclick='loadFile()'>Load File</button>
+    </div>
+    <p> </p>
     <!-- <div class="Thanks">
       <p>Many thanks to <a target="_blank" href="https://github.com/mikebranski">Mike Branski</a> for all his help!<br>Mike, I never would have gotten this far without you!</p>
     </div> -->
