@@ -15,7 +15,7 @@
 
   <section class="container">
     <div>
-      <p>This is a school project. And still a work in progress.<br>Please check the <a target="_blank" href="https://github.com/TimBiden/Pair-Programming/blob/master/README.md">README.md</a> on GitHub for updates.</p>
+      <p>This is a school project. And still very much a work in progress.<br>Please check the <a target="_blank" href="https://github.com/TimBiden/Pair-Programming/blob/master/README.md">README.md</a> on GitHub for updates.</p>
     </div>
 
     <div id="CodingMessage">
@@ -36,12 +36,13 @@
 
     <!-- Begin file save -->
     <p> </p>
-    <div id="FileButtons">
-      <strong>File Name:</strong> <input id='fileNameTextBox'></input> <button onclick='saveTextAsFile()'>Save File</button>
-      <br> <br>
-      <strong>File to load:</strong> <input type='file' id='fileToLoad'></input> <button onclick='loadFile()'>Load File</button>
+    <div>
+      <strong>File Name:</strong> <input type='text' id='fileNameTextBox'> <button onclick='saveTextAsFile()'>Save File</button>
     </div>
-    <p> </p>
+    <!-- Begin file load -->
+    <div style="display: inline">
+      <strong>File to Load:</strong> <input type='file' id='fileToLoad'> <button onclick='loadFile()'>Load File</button>
+    </div>
     <p> </p>
     <!-- <div class="Thanks">
       <p>Many thanks to <a target="_blank" href="https://github.com/mikebranski">Mike Branski</a> for all his help!<br>Mike, I never would have gotten this far without you!</p>
