@@ -23,7 +23,7 @@ const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
-const httpPort = digitalOcean;
+const httpPort = localServer;
 
 // Standard Web Server Variables
 const messages = ['Enter your code here...'];
