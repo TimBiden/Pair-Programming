@@ -23,7 +23,7 @@ const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
-const httpPort = digitalOcean;
+const httpPort = localServer;
 
 // Standard Web Server Variables
 const messages = ['Enter your code here...'];
@@ -46,6 +46,7 @@ function setSessionID(request) {
   filePath = (`${request.url}`);
   filePathString = request.url.substr(1);
   sessionIdArray.push(filePathString);
+  console.log(`filePathString = ${filePathString}`);
 
   if (filePathString === 'favicon.ico' || filePathString === 'frontend/timing.js') {
     sessionIdArray = [];
@@ -70,6 +71,7 @@ function checkURL() {
   // Allow necessary files to pass without
   // creating new session IDs.
   if (filePath === '/') {
+    textBackToEditor = 'Enter your code here...';
     newSession();
     filePath = 'index.html';
   } else if (filePathString !== 'style/style.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
