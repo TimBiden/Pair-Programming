@@ -71,6 +71,7 @@ function checkURL() {
   // Allow necessary files to pass without
   // creating new session IDs.
   if (filePath === '/') {
+    textBackToEditor = 'Enter your code here...';
     newSession();
     filePath = 'index.html';
   } else if (filePathString !== 'style/style.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
