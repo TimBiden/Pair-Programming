@@ -70,7 +70,7 @@ function checkURL() {
   // load index.html when no session ID attached
   // Allow necessary files to pass without
   // creating new session IDs.
-  if (filePath === '/') {
+  if (filePath === '/' || filePath === '') {
     textBackToEditor = 'Enter your code here...';
     newSession();
     filePath = 'index.html';
