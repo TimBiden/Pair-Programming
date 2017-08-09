@@ -32,10 +32,9 @@ function reBlock() {
  * @returns {void}
  */
 function blockMessage() {
-  const warnText = 'Someone else is currently coding.<br> <br>Please extinguish your hyperdrive and wait your turn.';
-  const warnBlock = warnText.fontcolor('red').bold();
+  const alertMessage = '<div class="alert alert-info" role="alert"><strong>Heads up!</strong><br>Someone else is currently coding.<br>Please extinguish your hyperdrive and wait your turn.<br>You can continue on your voyage as soon as they completed their jump to Hyperspace.</div>';
 
-  document.getElementById('CodingMessage').innerHTML = warnBlock;
+  document.getElementById('CodingMessage').innerHTML = alertMessage;
 }
 
 /**
