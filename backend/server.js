@@ -46,6 +46,7 @@ function setSessionID(request) {
   filePath = (`${request.url}`);
   filePathString = request.url.substr(1);
   sessionIdArray.push(filePathString);
+  console.log(`filePathString = ${filePathString}`);
 
   if (filePathString === 'favicon.ico' || filePathString === 'frontend/timing.js') {
     sessionIdArray = [];
