@@ -70,11 +70,11 @@ function checkURL() {
   // load index.html when no session ID attached
   // Allow necessary files to pass without
   // creating new session IDs.
-  if (filePath === '/') {
+  if (filePath === '/' || filePath === '') {
     textBackToEditor = 'Enter your code here...';
     newSession();
     filePath = 'index.html';
-  } else if (filePathString !== 'style/style.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
+  } else if (filePathString !== 'about.html' && filePathString !== 'style/style.css' && filePathString !== 'style/bootstrap-custom.css' && filePathString !== 'style/bootstrap.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
     filePath = 'index.html';
     queryDB();
   }

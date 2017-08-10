@@ -14,7 +14,7 @@ function unBlock() {
  * @returns {void}
  */
 function unBlockMessage() {
-  const warnText = 'You are now free to pair program with people around the planet. <br>Sorry. I can\'t afford interplanetary hosting yet. Care to donate?';
+  const warnText = '<div class="alert alert-info" role="alert"><strong>Hi there!</strong ><br>You are now free to pair program with people around the planet. <br>Sorry. I can\'t afford interplanetary hosting yet. Care to donate?';
 
   document.getElementById('CodingMessage').innerHTML = warnText;
 }
@@ -32,10 +32,9 @@ function reBlock() {
  * @returns {void}
  */
 function blockMessage() {
-  const warnText = 'Someone else is currently coding.<br> <br>Please extinguish your hyperdrive and wait your turn.';
-  const warnBlock = warnText.fontcolor('red').bold();
+  const alertMessage = '<div class="alert alert-info" role="alert"><strong>Heads up!</strong><br>Someone else is currently coding.<br>Please extinguish your hyperdrive and wait your turn.<br>You can continue on your voyage as soon as they completed their jump to Hyperspace.</div>';
 
-  document.getElementById('CodingMessage').innerHTML = warnBlock;
+  document.getElementById('CodingMessage').innerHTML = alertMessage;
 }
 
 /**
