@@ -127,12 +127,6 @@ function queryDB() {
 function pageRender(response, contentType) {
   // Start checking URL for session IDs or valid pages
   fs.readFile(filePath, (error, content) => {
-    if (httpPort === 80) {
-      response.writeHead(301, {
-        Location: 'http://pairprogrammingapp.com',
-      });
-    }
-
     if (error) {
       // http responses
       response.writeHead(404);
@@ -152,6 +146,13 @@ function pageRender(response, contentType) {
 //
 // let count = 0;
 const httpServerConfig = (request, response) => {
+  if (httpPort === 80) {
+    response.writeHead(301, {
+      Location: 'http://pairprogrammingapp.com'
+    });
+    response.end();
+  }
+
   setSessionID(request);
 
   clientPool[finalSessionID] = clientPool[finalSessionID] || [];
