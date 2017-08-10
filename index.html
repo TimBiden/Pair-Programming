@@ -3,13 +3,40 @@
 
 <head>
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
   <link rel="stylesheet" type="text/css" href="./style/style.css">
+  <link rel="stylesheet" type="text/css" href="./style/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="./style/bootstrap-custom.css">
 </head>
 
 <body>
+  <div class="bs-component">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+          <a class="navbar-brand" href="http://pairprogrammingapp.com/">New Document</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="http://pairprogrammingapp.com/about.html">About<span class="sr-only">(current)</span></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/TimBiden/Pair-Programming">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+  </div>
   <div>
-    <h1>Pair Programming Text Editor</h1>
+    <h1>Pair Programming App</h1>
     <!-- <h2>Branch build. Not Master.</h2> -->
   </div>
 
@@ -36,7 +63,7 @@
     <form class='form-inline'>
       <strong>File to Load:</strong>
       <input type='file' id='fileToLoad' class='form-control mb-2 mr-sm-2 mb-sm-0'>
-      <button onclick='loadFile()' type="button">Load File</button>
+      <button onclick='loadFile()' type="button" class="btn btn-primary">Load File</button>
     </form>
 
     <p> </p>
@@ -45,7 +72,7 @@
     <form class='form-inline'>
       <strong>File Name:</strong>
       <input type='text' id='fileNameTextBox' class='form-control mb-2 mr-sm-2 mb-sm-0'>
-      <button onclick='saveTextAsFile()' type="button">Save File</button>
+      <button onclick='saveTextAsFile()' type="button" class="btn btn-primary">Save File</button>
     </form>
 
     <p> </p>
