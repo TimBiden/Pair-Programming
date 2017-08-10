@@ -144,8 +144,15 @@ function pageRender(response, contentType) {
 //
 // Configure HTTP Server
 //
-let count = 0;
+// let count = 0;
 const httpServerConfig = (request, response) => {
+  if (httpPort === 80) {
+    response.writeHead(301, {
+      Location: 'http://pairprogrammingapp.com'
+    });
+    response.end();
+  }
+
   setSessionID(request);
 
   clientPool[finalSessionID] = clientPool[finalSessionID] || [];
