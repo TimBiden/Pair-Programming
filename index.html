@@ -39,8 +39,17 @@
   </div>
 
   <section class="container">
-    <div id="CodingMessage">
-      <p>You are now free to pair program with people around the planet. <br>Sorry. I can't afford interplanetary hosting yet. Care to donate?</p>
+    <div id="CodingMessage" class="alert alert-info" role="alert">
+      <p>
+        <strong>Hi there!</strong >
+      </p>
+        <p>
+          You are now free to pair program with people around the planet.
+        </p>
+        <p>
+          Sorry. I can\'t afford interplanetary hosting yet. Care to donate?
+        </p>
+
     </div>
 
     <div class="gutter" align="center">
@@ -58,18 +67,18 @@
       <strong>File to Load:</strong>
       <input type='file' id='fileToLoad' class='form-control mb-2 mr-sm-2 mb-sm-0'>
       <button onclick='loadFile()' type="button" class="btn btn-primary">Load File</button>
-    </form>
+      </form>
 
-    <p> </p>
+      <p> </p>
 
-    <!-- Begin file save -->
-    <form class='form-inline'>
-      <strong>File Name:</strong>
-      <input type='text' id='fileNameTextBox' class='form-control mb-2 mr-sm-2 mb-sm-0'>
-      <button onclick='saveTextAsFile()' type="button" class="btn btn-primary">Save File</button>
-    </form>
+      <!-- Begin file save -->
+      <form class='form-inline'>
+        <strong>File Name:</strong>
+        <input type='text' id='fileNameTextBox' class='form-control mb-2 mr-sm-2 mb-sm-0'>
+        <button onclick='saveTextAsFile()' type="button" class="btn btn-primary">Save File</button>
+      </form>
 
-    <p> </p>
+      <p> </p>
   </section>
 
   <script src="./frontend/textarea.js"></script>

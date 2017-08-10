@@ -14,7 +14,7 @@ function unBlock() {
  * @returns {void}
  */
 function unBlockMessage() {
-  const warnText = 'You are now free to pair program with people around the planet. <br>Sorry. I can\'t afford interplanetary hosting yet. Care to donate?';
+  const warnText = '<div class="alert alert-info" role="alert"><strong>Hi there!</strong ><br>You are now free to pair program with people around the planet. <br>Sorry. I can\'t afford interplanetary hosting yet. Care to donate?';
 
   document.getElementById('CodingMessage').innerHTML = warnText;
 }
