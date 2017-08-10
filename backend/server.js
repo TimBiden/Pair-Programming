@@ -23,7 +23,7 @@ const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
-const httpPort = digitalOcean;
+const httpPort = localServer;
 
 // Standard Web Server Variables
 const messages = ['Enter your code here...'];
@@ -144,8 +144,15 @@ function pageRender(response, contentType) {
 //
 // Configure HTTP Server
 //
-let count = 0;
+// let count = 0;
 const httpServerConfig = (request, response) => {
+  if (httpPort === 80) {
+    response.writeHead(301, {
+      Location: 'http://pairprogrammingapp.com'
+    });
+    response.end();
+  }
+
   setSessionID(request);
 
   clientPool[finalSessionID] = clientPool[finalSessionID] || [];
