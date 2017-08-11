@@ -2,6 +2,8 @@
 <html>
 
 <head>
+  <title>Free online Pair Programming App</title>
+  <meta name="description" content="You can Pair Program with a friend, student, mentor, or teacher. Just start a session and share the link to start coding together." />
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" type="text/css" href="./style/style.css">
   <link rel="stylesheet" type="text/css" href="./style/bootstrap.css">
@@ -65,26 +67,42 @@
     <!-- Begin file load -->
     <form class='form-inline'>
       <strong>File to Load:</strong>
-      <input type='file' id='fileToLoad' class='form-control mb-2 mr-sm-2 mb-sm-0'>
-      <button onclick='loadFile()' type="button" class="btn btn-primary">Load File</button>
-      </form>
+        <input type='file' id='fileToLoad' class='form-control mb-2 mr-sm-2 mb-sm-0'>
+        <button onclick='loadFile()' type="button" class="btn btn-primary">Load File</button>
+        </form>
 
-      <p> </p>
+        <p> </p>
 
-      <!-- Begin file save -->
-      <form class='form-inline'>
-        <strong>File Name:</strong>
-        <input type='text' id='fileNameTextBox' class='form-control mb-2 mr-sm-2 mb-sm-0'>
-        <button onclick='saveTextAsFile()' type="button" class="btn btn-primary">Save File</button>
-      </form>
+        <!-- Begin file save -->
+        <form class='form-inline'>
+          <strong>File Name:</strong>
+          <input type='text' id='fileNameTextBox' class='form-control mb-2 mr-sm-2 mb-sm-0'>
+          <button onclick='saveTextAsFile()' type="button" class="btn btn-primary">Save File</button>
+        </form>
 
-      <p> </p>
+        <p> </p>
   </section>
 
   <script src="./frontend/textarea.js"></script>
   <script src="./frontend/textsave.js"></script>
   <script src="./frontend/websocket.js"></script>
   <script src="./frontend/timing.js"></script>
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-104443010-1', 'auto');
+    ga('send', 'pageview');
+  </script>
 </body>
 
 </html>
