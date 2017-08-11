@@ -77,6 +77,8 @@ function checkURL() {
   } else if (filePathString !== 'about.html' && filePathString !== 'style/style.css' && filePathString !== 'style/bootstrap-custom.css' && filePathString !== 'style/bootstrap.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico' && filePathString !== 'googlece4e0a477119ea08.html') {
     filePath = 'index.html';
     queryDB();
+  } else {
+    filePath = filePathString;
   }
 }
 
