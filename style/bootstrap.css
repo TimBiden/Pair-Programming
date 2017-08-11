@@ -4959,11 +4959,12 @@ a.badge:focus {
   margin-left: 3px;
 }
 .jumbotron {
+  max-width: 1200px;
   padding-top: 30px;
   padding-bottom: 30px;
   padding-left: 30px;
   padding-right: 30px;
-  margin-bottom: 30px;
+  margin: 30px auto;
   color: inherit;
   background-color: #eeeeee;
 }
@@ -5072,6 +5073,8 @@ a.thumbnail.active {
   color: #356635;
 }
 .alert-info {
+  margin-top: 20px;
+  padding-top: 0px;
   background-color: #d9edf7;
   color: #3a87ad;
 }
