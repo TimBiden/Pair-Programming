@@ -6,6 +6,8 @@ The app, when I wrote this blog post, utilizes a few different technologies but 
 
 Because I'm admittedly not as artistic as I'd like to be, the appearance was created using <a href="http://getbootstrap.com/" target="_blank" rel="noopener">Bootstrap</a> with a <a href="https://bootswatch.com/" target="_blank" rel="noopener">Bootswatch</a> theme. Bootstrap and the theme did most of the hard work but to make it look closer to the way I wanted it, I had to modify the theme's CSS file a bit. It also utilizes a generic CSS file I created to format the text editor.
 
+The text editor box was created using HTML's textarea so I couldn't just implement a tool like HighlightJS or PrismJS. My mentor originally recommended that I use the contenteditable feature in HTML but I chose not to. In retrospect, that caused me a lot more work and I still have more work to do down the road but I was able to make it work on my own.
+
 The WebSocket connection necessary to make it a viable pair programming app uses <a href="https://github.com/websockets/ws" target="_blank" rel="noopener">WS</a>. It creates and verifies the connection so data can be sent almost instantaneously when someone types in the box without needing to create a new connection or send a new header with every edit.
 
 Because the MEAN stack is relatively popular right now, I chose to go with <a href="https://www.mongodb.com/" target="_blank" rel="noopener">MongoDB</a> as the database, and <a href="http://mongoosejs.com/" target="_blank" rel="noopener">MongooseJS</a> to interface with MongoDB.
