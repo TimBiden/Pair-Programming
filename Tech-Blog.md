@@ -10,7 +10,7 @@ Another issue involves having 2 people editing at the same time. It creates stra
 
 Preventing the person from editing it is rather simple as `textarea` has a `disabled` feature that prevents any editing. It is easily toggled in the timing.js file.
 
-Because I'm admittedly not as artistic as I'd like to be, the appearance was created using <a href="http://getbootstrap.com/" target="_blank" rel="noopener">Bootstrap</a> with a <a href="https://bootswatch.com/" target="_blank" rel="noopener">Bootswatch</a> theme. Bootstrap and the theme did most of the hard work but to make it look closer to the way I wanted it, I had to modify the theme's CSS file a bit. The app also utilizes a generic CSS file I created to format the text editor.
+Because I'm admittedly not as artistic as I'd like to be, the appearance is based on <a href="http://getbootstrap.com/" target="_blank" rel="noopener">Bootstrap</a> with a <a href="https://bootswatch.com/" target="_blank" rel="noopener">Bootswatch</a> theme. Bootstrap and the theme give the site its colors and do most of the artistic hard work. To make it look closer to the way I want, I use a few modifications to the theme's CSS file. The app also utilizes a generic CSS file to format the text editor.
 
 The text editor box was created using HTML's textarea. I didn't just implement a tool like HighlightSJ, though it would have saved me a lot of work. My mentor originally recommended that I use the contenteditable feature in HTML but I chose not to. In retrospect, I should have obeyed. That choice caused me to have an MVP that is slightly less than it could have been, which means there's still more work to do down the road. But, at least I can say that using textarea I was able to make it work on my own.
 
@@ -18,6 +18,6 @@ I'm currently not sure whether future versions will use HighlightSJ or PrismJS, 
 
 The WebSocket connection necessary to make it a viable pair programming app uses <a href="https://github.com/websockets/ws" target="_blank" rel="noopener">WS</a>. It creates and verifies the connection so data can be sent almost instantaneously when someone types in the box without needing to create a new connection or send a new header with every edit.
 
-A future version will include the ability to use voice communications so that a phone or another won't be necessary to truly work together.
+A future version will include the ability to use voice communications so that a phone or another communication app won't be necessary to truly work together. I'm not currently sure which packages will used to make this happen.
 
 I've enjoyed learning JavaScript and the MEAN stack is relatively popular right now so I chose to go with <a href="https://www.mongodb.com/" target="_blank" rel="noopener">MongoDB</a> as the database, and <a href="http://mongoosejs.com/" target="_blank" rel="noopener">MongooseJS</a> to interface with MongoDB. As I have time, among other changes I want to make to the app, it will be converted to use Express because I want to learn it and how to fully develop MEAN Stack apps. Of course, this means it'll be missing the Angular portion of the stack but I have a side project I'm working on that's fully MEAN compliant.
