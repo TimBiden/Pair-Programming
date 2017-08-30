@@ -1,5 +1,1 @@
 User-agent: *
-Disallow: /
-
-##Do not index this site, yet.##
-##Yes, that means you.##
