@@ -29,10 +29,10 @@ A few things it still needs to be truly usable:
 - Scope session to unique key from URL. ✅
 - Generate unique URL and store in database. ✅
 - Redirect root directory visitors to their specific URL. ✅
+- Make it attractive. ✅
 
 ## Beyond MVP:
 
-- Make it attractive. ⏸
 - Add voice communications. ⏸
 - Add shared text highlighting. ⏸
 - Add language specific highlighting. ⏸

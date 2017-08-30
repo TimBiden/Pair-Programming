@@ -23,7 +23,7 @@ const dbConfig = 'mongodb://127.0.0.1:27017/newTest';
 // Choose localServer or digitalOcean
 const digitalOcean = 80;
 const localServer = 5000;
-const httpPort = digitalOcean;
+const httpPort = localServer;
 
 // Standard Web Server Variables
 const messages = ['Enter your code here...'];
@@ -74,7 +74,7 @@ function checkURL() {
     textBackToEditor = 'Enter your code here...';
     newSession();
     filePath = 'index.html';
-  } else if (filePathString !== 'about.html' && filePathString !== 'style/style.css' && filePathString !== 'style/bootstrap-custom.css' && filePathString !== 'style/bootstrap.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico') {
+  } else if (filePathString !== 'about.html' && filePathString !== 'style/style.css' && filePathString !== 'style/bootstrap-custom.css' && filePathString !== 'style/bootstrap.css' && filePathString !== 'frontend/textarea.js' && filePathString !== 'frontend/textsave.js' && filePathString !== 'frontend/timing.js' && filePathString !== 'frontend/websocket.js' && filePathString !== 'robots.txt' && filePathString !== 'favicon.ico' && filePathString !== 'googlece4e0a477119ea08.html') {
     filePath = 'index.html';
     queryDB();
   }
